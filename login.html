@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>מורים פרטים תל חי</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/login_util.css">
+	<link rel="stylesheet" type="text/css" href="css/login.css">
+	<link rel="stylesheet" type="text/css" href="css/hebCss.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<!--===============================================================================================-->
+	
+
+
+</head>
+
+<body>
+
+
+
+
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<div class="login100-form validate-form">
+					<h1 id="login100-tital-head">ברוכים הבאים<br> כניסה </h1>
+					<span class="login100-form-title ">
+						
+						<a id="google-btn" href="#">
+							<img src="https://img.icons8.com/color/48/000000/google-logo.png">
+						</a>
+						
+						
+						<br><br>
+						Account Login 
+					</span>
+					
+					<p id="login-err" class="login100-form-err p-b-15">
+
+					</p>
+
+					<div id="first-namediv" class="wrap-input100 rs1-wrap-input100 validate-input m-b-20"
+						data-validate="Type user name">
+						<input id="first-name" class="input100" type="text" name="username" placeholder="Email">
+						<span class="focus-input100"></span>
+					</div>
+					<div id="passdiv" class="wrap-input100 rs2-wrap-input100 validate-input m-b-20"
+						data-validate="Type password">
+						<input id="pass" class="input100" type="password" name="pass" placeholder="Password">
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="container-login100-form-btn">
+						<button id="login" class="login100-form-btn">
+							Sign in
+						</button>
+					</div>
+
+					<div class="w-full text-center p-t-27 p-b-239">
+						<span id="forgot" class="txt1">
+							Forgot
+						</span>
+
+						<a id="username-password" href="#" class="txt2">
+							User name / password?
+						</a>
+						<div id="resetemaildiv" class="wrap-input100 rs3-wrap-input100  "
+							data-validate="Type user name">
+							<input id="resetemail" class="input100" type="text" name="email"
+								placeholder="email to send rest password">
+							<span class="focus-input100"></span>
+						</div>
+						<div class="container-login100-form-btn">
+							<button id="send-email" class="login100-form-btn-send">
+								send
+							</button>
+						</div>
+						<div id="" class="w-full text-center">
+							<a id="signup" href="#" class="txt3">
+								Sign Up
+							</a>
+						</div>
+					</div>
+
+				</div>
+
+
+				<div class="login100-more" style="background-image: url('images/bg-01.jpg');"></div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div id="dropDownSelect1"></div>
+
+
+	<!-- Add Firebase products that you want to use -->
+	<script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-database.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+	<!-- Add Firebase products that you want to use -->
+	<!--===============================================================================================-->
+	<!-- <script src="vendor/jquery/jquery-3.2.1.min.js"></script> -->
+	<!--===============================================================================================-->
+	<script src="vendor/animsition/js/animsition.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+	<script>
+		$(".selection-2").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect1')
+		});
+	</script>
+	<!--===============================================================================================-->
+	<script src="vendor/daterangepicker/moment.min.js"></script>
+	<script src="vendor/daterangepicker/daterangepicker.js"></script>
+	<!--===============================================================================================-->
+	<script src="vendor/countdowntime/countdowntime.js"></script>
+	<!--===============================================================================================-->
+	 <script src="js/login/login_tools.js"></script>
+	<script src="js/login.js"></script>
+	<!-- <script src="js/jquery-3.4.1.min.js"></script> -->
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+
+	<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+
+
+</body>
+
+</html>
