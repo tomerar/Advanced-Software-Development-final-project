@@ -1,6 +1,5 @@
 $(document).ready(function () {
   var firebase_init = new FirebaseInit(); 
-  let login = new LoginTools();
   firebase.database().ref("/users").on('value', function(snapshot) {
     console.log(snapshot);
     
