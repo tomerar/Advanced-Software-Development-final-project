@@ -1,9 +1,7 @@
+var subjectList = [];
 $(document).ready(function () {
-  var firebase_init = new FirebaseInit(); 
-  firebase.database().ref("/users").on('value', function(snapshot) {
-    console.log(snapshot);
-    
-});
+  var firebase_init = new FirebaseInit();
+  setSelectOptions();
   $('.datepicker').datepicker("setDate", new Date());
   var current_fs, next_fs, previous_fs; //fieldsets
   var opacity;
@@ -14,8 +12,8 @@ $(document).ready(function () {
   // setTimeout(() => {
   //   console.log(l.getDataFromDB("lessons"));
   // },10000);
-  
-  
+
+
 
   $(".next").click(function () {
 
@@ -84,4 +82,19 @@ $(document).ready(function () {
   })
 
 });
+
+async function setSelectOptions() {
+  await firebase.database().ref("/lessons/").on('value', function (snapshot) {
+    snapshot.forEach(function (item) {
+      subjectList.push(item.key);
+    });
+    let optionsElements = document.getElementById("selectSubject");
+    for (var i = 0; i < subjectList.length; i++) {
+      var opt = document.createElement('option');
+      opt.value = subjectList[i];
+      opt.innerHTML = subjectList[i];
+      optionsElements.appendChild(opt);
+    }
+  });;
+}
 
