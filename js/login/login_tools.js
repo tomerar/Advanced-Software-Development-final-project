@@ -5,7 +5,7 @@ var FirebaseInit = function(){
      * Variables accessible
      * in the class
      */
-    this.user = "none";
+    var user_class = "none";
     var vars = {};
  
     /*
@@ -21,37 +21,59 @@ var FirebaseInit = function(){
     this.construct = function(){
         this.init_firebase();
         this.logout();
+        swith_btn();
     };
  
 
-    this.if_have_user_name_show_me = function (user) {
-        setTimeout(function(){
-            if (user.displayName != null){
-                $("#hello-user").text("שלום "+ user.displayName);
-                $("#hello-user").css("display","block");
+    var add_user_name_on_nav = function(user){
+        let data 
+        firebase.database().ref("user/"+user.uid).once('value').then(function (snapshot) {
+            data = snapshot.val();
+        }).then(function () {
+            if (data.name != null){
+                if(data.job.localeCompare("client")==0){
+                    $("#hello-user").text("שלום המורה "+ data.name );
+                    $("#hello-user").css("display","block");
+                    $("#hello-user").css("color","yellow");
+                }else{
+                    $("#hello-user").text("שלום התלמיד "+ data.name);
+                    $("#hello-user").css("display","block");
+                    $("#hello-user").css("color","blue");
+                }
             }
-        },1000);
+        });
+    }
+    var swith_btn = function () {
+        $("#switch-btn").on("click", function () {
+            let data ;
+            let new_job = "client";
+            firebase.database().ref("user/"+user_class.uid).once('value').then(function (snapshot) {
+                data = snapshot.val();
+            }).then(function () {
+                console.log("data.job.localeCompare(new_job)==0)");
+                if(data.job.localeCompare(new_job)==0){
+                    new_job = "teacher"
+                }else{
+                    new_job = "client"
+                }
+                console.log(" firebase.database().ref(");
+                console.log(new_job);
+                
+                firebase.database().ref("user/"+user_class.uid).update({
+                    job: new_job
+    
+                }).then(function () {
+                    console.log("add_user_name_on_nav");
+                    console.log(new_job);
+                    add_user_name_on_nav(user_class)
+                });
+            });
+            
+            
+          });
     }
 
 
-    this.update_name = function (){
-        setTimeout(function () {
-            var user = firebase.auth().currentUser;
-            console.log(user.displayName)
-            console.log(localStorage.getItem("fullname"))
-            if (user.displayName == null){
-                user.updateProfile({
-                    displayName: localStorage.getItem("fullname")
-                  }).then(function () {
-                    console.log("work update user name");
-                  }).catch(function (error) {
-                    // An error happened.
-                    console.log("error update user name");
-                  });
-            }
-            this.if_have_user_name_show_me(user)
-        },3000);
-    }
 
     this.init_firebase = function() {
         var firebaseConfig = {
@@ -77,7 +99,7 @@ var FirebaseInit = function(){
 
          firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
-                this.user = user
+                user_class = user
                 console.log(user);
                 add_user_name_on_nav(user);
                 $("#logout-btn").css("display", "block");
@@ -112,12 +134,7 @@ var FirebaseInit = function(){
           });
     }
 
-    var add_user_name_on_nav = function(user){
-        if (user.displayName != null){
-            $("#hello-user").text("שלום "+ user.displayName);
-            $("#hello-user").css("display","block");
-        }
-    }
+    
  
  
     /*
@@ -284,14 +301,10 @@ var SignUpTools = function(){
     this.signup_prosses_btn = function () {
       $("#signup2").click(function () {
         $("#login-err").css("display", "none");
-        var radios = document.getElementsByName('genderS');
-        var gender;
-        for (var i = 0, length = radios.length; i < length; i++) {
-            if (radios[i].checked) {
-                gender = radios[i].value;
-                break;
-            }
-        }
+       
+        var job;
+        job = $('input[name=job]:checked', '#job_sign_up').val()
+        
         var email = $("#first-nameup").val();
         var password = $("#passup").val();
         var password2 = $("#pass2up").val();
@@ -347,19 +360,7 @@ var SignUpTools = function(){
             $("#login-err").css("display", "block");
             return;
         }
-
-
-
-
-        localStorage.setItem("email", email);
-        localStorage.setItem("password", password);
-        localStorage.setItem("fullname", fullname);
-        localStorage.setItem("bday", bday);
-        localStorage.setItem("gender", gender);
-        localStorage.setItem("signup","yes");
-        firstTime = true;
        
-
         var okToMove = true;
         firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
             // Handle Errors here.
@@ -375,20 +376,32 @@ var SignUpTools = function(){
             $("#login-err").css("display", "block");
 
 
-        });
+        }).then(function () {
+            console.log("createUserWithEmailAndPassword work sign up the user");
+            var userId = firebase.auth().currentUser.uid;
+            console.log("userId" + userId);
+            update_db_and_goto("user/"+userId,
+            {
+                name : fullname,
+                email: email,
+                bday : bday,
+                job : job
+            },"index.html");
+          }).catch(function (error) {
+            // An error happened.
+            console.log(error);
+            
+            console.log("error  sign up");
+          });
 
-        setTimeout(function () {
-
-
-            if (okToMove === true) {
-                
-                console.log("profile");
-                window.location.href = "index.html";
-            }
-        }, 3000)
+        
     });
     }
-
+    var update_db_and_goto = function(path,data,goto) {
+        firebase.database().ref(path).set(data).then(function () {
+            window.location.href = goto;
+        });
+    }
 
     var IsEmail = function (email) {
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
