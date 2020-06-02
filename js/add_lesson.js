@@ -1,7 +1,9 @@
 var subjectList = [];
+var firebase_init
 $(document).ready(function () {
-  var firebase_init = new FirebaseInit();
+  firebase_init = new FirebaseInit();
   setSelectOptions();
+  initEvent();
   $('.datepicker').datepicker("setDate", new Date());
   var current_fs, next_fs, previous_fs; //fieldsets
   var opacity;
@@ -9,12 +11,6 @@ $(document).ready(function () {
   var steps = $("fieldset").length;
   setProgressBar(current);
   let l = new LoginTools();
-  // setTimeout(() => {
-  //   console.log(l.getDataFromDB("lessons"));
-  // },10000);
-
-
-
   $(".next").click(function () {
 
     current_fs = $(this).parent();
@@ -96,5 +92,24 @@ async function setSelectOptions() {
       optionsElements.appendChild(opt);
     }
   });;
+}
+function initEvent(){
+  $('#submit').click(function () {
+    let userID = firebase.auth().currentUser.uid;
+    let selectedTime = document.getElementById("selctedDate").value;
+    let selectedSubject = document.getElementById("selectSubject").value;
+    let numberOfStudent = document.getElementById("numberOfStudent").value;
+    let urlLink = document.getElementById("urlLink").value;;
+    var rootRef = firebase.database().ref();
+    var storesRef = rootRef.child('/user/' + userID + '/lessons');
+    var newStoreRef = storesRef.push();
+
+    newStoreRef.set({
+      date: selectedTime,
+      subject: selectedSubject,
+      number_of_student: numberOfStudent,
+      link:urlLink
+    });
+  });
 }
 
