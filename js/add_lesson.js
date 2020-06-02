@@ -96,21 +96,23 @@ async function setSelectOptions() {
 function initEvent(){
   $('#submit').click(function () {
     let userID = firebase.auth().currentUser.uid;
-    let selectedTime = document.getElementById("selctedDate").value;
+    let selectedDate = document.getElementById("selctedDate").value;
     let selectedSubject = document.getElementById("selectSubject").value;
     let numberOfStudent = document.getElementById("numberOfStudent").value;
     let urlLink = document.getElementById("urlLink").value;
     let aboutMe = document.getElementById("aboutMe").value;
+    let selectedTime = document.getElementById("mettingTime").value;
     var rootRef = firebase.database().ref();
     var storesRef = rootRef.child('/user/' + userID + '/lessons');
     var newStoreRef = storesRef.push();
 
     newStoreRef.set({
-      date: selectedTime,
+      date: selectedDate,
       subject: selectedSubject,
       number_of_student: numberOfStudent,
       link:urlLink,
-      about_me : aboutMe
+      about_me : aboutMe,
+      time: selectedTime
     });
   });
 }

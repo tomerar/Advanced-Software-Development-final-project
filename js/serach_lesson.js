@@ -1,5 +1,5 @@
 var subjectList = [];
-var firebase_init
+var firebase_init;
 $(document).ready(function () {
   firebase_init = new FirebaseInit();
   getTeacherFromDB();
