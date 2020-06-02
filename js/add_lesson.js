@@ -99,7 +99,8 @@ function initEvent(){
     let selectedTime = document.getElementById("selctedDate").value;
     let selectedSubject = document.getElementById("selectSubject").value;
     let numberOfStudent = document.getElementById("numberOfStudent").value;
-    let urlLink = document.getElementById("urlLink").value;;
+    let urlLink = document.getElementById("urlLink").value;
+    let aboutMe = document.getElementById("aboutMe").value;
     var rootRef = firebase.database().ref();
     var storesRef = rootRef.child('/user/' + userID + '/lessons');
     var newStoreRef = storesRef.push();
@@ -108,7 +109,8 @@ function initEvent(){
       date: selectedTime,
       subject: selectedSubject,
       number_of_student: numberOfStudent,
-      link:urlLink
+      link:urlLink,
+      about_me : aboutMe
     });
   });
 }
