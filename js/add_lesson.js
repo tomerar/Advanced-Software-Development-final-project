@@ -5,6 +5,10 @@ $(document).ready(function () {
   setSelectOptions();
   initEvent();
   $('.datepicker').datepicker("setDate", new Date());
+  initProgressBar();
+
+});
+function initProgressBar(){
   var current_fs, next_fs, previous_fs; //fieldsets
   var opacity;
   var current = 1;
@@ -12,13 +16,10 @@ $(document).ready(function () {
   setProgressBar(current);
   let l = new LoginTools();
   $(".next").click(function () {
-
     current_fs = $(this).parent();
     next_fs = $(this).parent().next();
-
     //Add Class Active
     $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-
     //show the next fieldset
     next_fs.show();
     //hide the current fieldset with style
@@ -26,7 +27,6 @@ $(document).ready(function () {
       step: function (now) {
         // for making fielset appear animation
         opacity = 1 - now;
-
         current_fs.css({
           'display': 'none',
           'position': 'relative'
@@ -37,7 +37,6 @@ $(document).ready(function () {
     });
     setProgressBar(++current);
   });
-
   $(".previous").click(function () {
 
     current_fs = $(this).parent();
@@ -45,16 +44,13 @@ $(document).ready(function () {
 
     //Remove class active
     $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
-
     //show the previous fieldset
     previous_fs.show();
-
     //hide the current fieldset with style
     current_fs.animate({ opacity: 0 }, {
       step: function (now) {
         // for making fielset appear animation
         opacity = 1 - now;
-
         current_fs.css({
           'display': 'none',
           'position': 'relative'
@@ -76,9 +72,7 @@ $(document).ready(function () {
   $(".submit").click(function () {
     return false;
   })
-
-});
-
+}
 async function setSelectOptions() {
   await firebase.database().ref("/lessons/").on('value', function (snapshot) {
     snapshot.forEach(function (item) {

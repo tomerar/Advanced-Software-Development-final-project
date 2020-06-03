@@ -165,12 +165,12 @@ p {
 
 #progressbar #personal:before {
   font-family: FontAwesome;
-  content: "\f007"
+  content: "\f0c0"
 }
 
 #progressbar #payment:before {
   font-family: FontAwesome;
-  content: "\f030"
+  content: "\f017"
 }
 
 #progressbar #confirm:before {
