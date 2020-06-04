@@ -1,9 +1,9 @@
-var subjectMap = new Map();
+var subjectMapByGroup = new Map();
+var subjectMapById = new Map();
+var counterLesson = 0;
 $(document).ready(function () {
   firebase_init = new FirebaseInit();
   getLessonsFromDB();
-  initEvent();
-
 });
 function getLessonsFromDB() {
   firebase.database().ref("/user/").on('value', function (snapshot) {
@@ -12,16 +12,41 @@ function getLessonsFromDB() {
       if (lessons != null) {
         for (var key in lessons) {
           let subjectName = lessons[key].subject;
-          if (!subjectMap.has(subjectName)) {
+          let newLesson = new Lesson(lessons[key], key, counterLesson)
+          if (!subjectMapByGroup.has(subjectName)) {
             let newSubject = new Subject();
-            subjectMap.set(subjectMap, newSubject);
-            newSubject.addLesson(new Lesson(lessons[key]));
-            console.log(lessons[key]);
+            subjectMapByGroup.set(subjectMapByGroup, newSubject);
+            newSubject.addLesson(newLesson);
           }
+          else {
+            subjectMapByGroup.get(subjectName).addLesson(newLesson);
+          }
+          let lessonId = 'lesson_' + counterLesson + '';
+          subjectMapById.set(lessonId, newLesson);
+          counterLesson++;
         }
       }
     });
+    for (let index = 0; index < counterLesson; index++) {
+      let lessonId = '#lesson_' + index + '';
+      $(lessonId).click(function () {
+        event.preventDefault();
+        var e = $(this);
+        var title = e.data('title');
+        var body = e.data('value');
+        let lesson = subjectMapById.get(this.id);
+        $("#myModal").modal("show");
+        $('.modal-title').html(lesson.getLessonName());
+        $('.modal-body').html(this.id);
+      });
+    }
   });;
+
+  function addEvent() {
+
+  }
+
+
 }
 
 
