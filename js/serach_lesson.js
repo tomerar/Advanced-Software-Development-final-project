@@ -8,6 +8,7 @@ $(document).ready(function () {
 });
 async function getLessonsFromDB() {
   firebase.database().ref("/user/teacher/").on('value', function (snapshot) {
+    $("#teachersPictures").html("")
     snapshot.forEach(function (user) {
       let lessons = user.val().lessons;
       if (lessons != null) {

@@ -88,26 +88,34 @@ async function setSelectOptions() {
     }
   });;
 }
-function initEvent(){
+function initEvent() {
   $('#submit').click(function () {
-    let userID = firebase.auth().currentUser.uid;
-    let selectedDate = document.getElementById("selctedDate").value;
-    let selectedSubject = document.getElementById("selectSubject").value;
-    let numberOfStudent = document.getElementById("numberOfStudent").value;
-    let urlLink = document.getElementById("urlLink").value;
-    let aboutMe = document.getElementById("aboutMe").value;
-    let selectedTime = document.getElementById("mettingTime").value;
-    var rootRef = firebase.database().ref();
-    var storesRef = rootRef.child('/user/teacher/' + userID + '/lessons');
-    var newStoreRef = storesRef.push();
+    var userID = firebase.auth().currentUser.uid;
+    var teacher_data;
+    firebase.database().ref("/user/teacher/" + userID ).once('value').then(function (snapshot) {
+      teacher_data = snapshot.val();
+    }).then(function () {
+      let selectedDate = document.getElementById("selctedDate").value;
+      let selectedSubject = document.getElementById("selectSubject").value;
+      let numberOfStudent = document.getElementById("numberOfStudent").value;
+      let urlLink = document.getElementById("urlLink").value;
+      let aboutMe = document.getElementById("aboutMe").value;
+      let selectedTime = document.getElementById("mettingTime").value;
+      var rootRef = firebase.database().ref();
+      var storesRef = rootRef.child('/user/teacher/' + userID + '/lessons');
+      var newStoreRef = storesRef.push();
 
-    newStoreRef.set({
-      date: selectedDate,
-      subject: selectedSubject,
-      number_of_student: numberOfStudent,
-      link:urlLink,
-      about_me : aboutMe,
-      time: selectedTime
+      newStoreRef.set({
+        date: selectedDate,
+        subject: selectedSubject,
+        number_of_student: numberOfStudent,
+        link: urlLink,
+        about_me: aboutMe,
+        time: selectedTime,
+        teacher_uid: userID,
+        teacher_name: teacher_data.name
+      });
+
     });
   });
 }
