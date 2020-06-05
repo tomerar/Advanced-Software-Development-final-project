@@ -36,11 +36,11 @@ var FirebaseInit = function () {
             }).then(function () {
                 if (data_teacher.name != null) {
                     if (data_client.current_stage == false) {
-                        $("#hello-user").text("שלום המורה " + data_teacher.name);
+                        $("#hello-user").text("hi teacher " + data_teacher.name);
                         $("#hello-user").css("display", "block");
                         $("#hello-user").css("color", "yellow");
                     } else {
-                        $("#hello-user").text("שלום התלמיד " + data_client.name);
+                        $("#hello-user").text("hi student " + data_client.name);
                         $("#hello-user").css("display", "block");
                         $("#hello-user").css("color", "blue");
                     }
