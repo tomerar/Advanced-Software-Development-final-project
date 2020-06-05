@@ -2,7 +2,8 @@ var subjectMapByGroup = new Map();
 var subjectMapById = new Map();
 var counterLesson = 0;
 $(document).ready(function () {
-  firebase_init = new FirebaseInit();
+  var firebase_init = new FirebaseInit();
+  firebase_init.is_login(null,null);
   getLessonsFromDB();
 });
 function getLessonsFromDB() {

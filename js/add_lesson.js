@@ -2,6 +2,7 @@ var subjectList = [];
 var firebase_init
 $(document).ready(function () {
   firebase_init = new FirebaseInit();
+  firebase_init.is_login(null,null);
   setSelectOptions();
   initEvent();
   $('.datepicker').datepicker("setDate", new Date());

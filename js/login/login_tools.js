@@ -114,7 +114,7 @@ var FirebaseInit = function () {
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
                 user_class = user
-                console.log(user);
+                console.log(user);                
                 add_user_name_on_nav(user);
                 $("#logout-btn").css("display", "block");
                 $("#login-btn").css("display", "none");
@@ -319,7 +319,7 @@ var SignUpTools = function () {
 
             var job;
             job = $('input[name=job]:checked', '#job_sign_up').val()
-            
+
             var email = $("#first-nameup").val();
             var password = $("#passup").val();
             var password2 = $("#pass2up").val();
