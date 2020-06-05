@@ -3,7 +3,7 @@ var subjectMapById = new Map();
 var counterLesson = 0;
 $(document).ready(function () {
   var firebase_init = new FirebaseInit();
-  firebase_init.is_login(null,null);
+  firebase_init.is_login(null,"index.html");
   getLessonsFromDB();
 });
 function getLessonsFromDB() {
