@@ -97,7 +97,7 @@ function initEvent(){
     let aboutMe = document.getElementById("aboutMe").value;
     let selectedTime = document.getElementById("mettingTime").value;
     var rootRef = firebase.database().ref();
-    var storesRef = rootRef.child('/user/' + userID + '/lessons');
+    var storesRef = rootRef.child('/user/teacher/' + userID + '/lessons');
     var newStoreRef = storesRef.push();
 
     newStoreRef.set({

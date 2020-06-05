@@ -319,7 +319,7 @@ var SignUpTools = function () {
 
             var job;
             job = $('input[name=job]:checked', '#job_sign_up').val()
-
+            
             var email = $("#first-nameup").val();
             var password = $("#passup").val();
             var password2 = $("#pass2up").val();
