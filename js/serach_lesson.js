@@ -3,11 +3,11 @@ var subjectMapById = new Map();
 var counterLesson = 0;
 $(document).ready(function () {
   var firebase_init = new FirebaseInit();
-  firebase_init.is_login(null,"index.html");
+  firebase_init.is_login(null,"index.html"); 
   getLessonsFromDB();
 });
-function getLessonsFromDB() {
-  firebase.database().ref("/user/").on('value', function (snapshot) {
+async function getLessonsFromDB() {
+  firebase.database().ref("/user/teacher/").on('value', function (snapshot) {
     snapshot.forEach(function (user) {
       let lessons = user.val().lessons;
       if (lessons != null) {

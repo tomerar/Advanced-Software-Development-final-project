@@ -6,6 +6,7 @@ var FirebaseInit = function () {
      * in the class
      */
     var user_class = "none";
+   
     var vars = {};
 
     /*
@@ -24,6 +25,9 @@ var FirebaseInit = function () {
         
     };
 
+    this.get_user =function () {
+        return user_class
+    }
 
     var add_user_name_on_nav = function (user) {
         let data_client;
