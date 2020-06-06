@@ -101,6 +101,7 @@ function initEvent() {
       let urlLink = document.getElementById("urlLink").value;
       let aboutMe = document.getElementById("aboutMe").value;
       let selectedTime = document.getElementById("mettingTime").value;
+      let lesson_title = document.getElementById("selectTitle").value;
       var rootRef = firebase.database().ref();
       var storesRef = rootRef.child('/user/teacher/' + userID + '/lessons');
       var newStoreRef = storesRef.push();
@@ -116,6 +117,7 @@ function initEvent() {
         teacher_name: teacher_data.name,
         pic_url:teacher_data.pic_url,
         lesson_id: lesson_id,
+        lesson_title:lesson_title
       });
 
     });

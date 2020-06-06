@@ -28,6 +28,8 @@ class Lesson{
       '<div class="card-body">'+
         '<h4 class="card-title">'+
           '<p>' + this.data.subject +  '</p>'+
+          '<p>Title: ' + this.data.lesson_title +  '</p>'+
+          '<p id="lesson_id" style="display:none;">' + this.data.lesson_id +  '</p>'+
         '</h4>'+
         '<h5>Teacher name: '+ this.data.teacher_name+' </h5>'+
         '<h5>about the lesson: '+ about_me+' </h5>'+
