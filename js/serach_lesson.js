@@ -2,19 +2,20 @@ var subjectMapByGroup = new Map();
 var subjectMapById = new Map();
 var counterLesson = 0;
 var teachers_data_form_DB;
-var fillter_and_sort ;
+
 $(document).ready(function () {
+  var fillter_and_sort = new FillterAndSort();
+  fillter_and_sort.set_update_to_db(getLessonsFromDB);
   var firebase_init = new FirebaseInit();
   firebase_init.is_login(null,"index.html"); 
-  firebase.database().ref("/user/teacher/").once('value', function (snapshot) {
-    console.log("get form db");
-    console.log(snapshot);
+  firebase.database().ref("/user/teacher/").once('value', function (snapshot) { 
+    fillter_and_sort.set_data(snapshot.val())
     teachers_data_form_DB = snapshot.val()
   }).then(function () {
     getLessonsFromDB(teachers_data_form_DB);
-    
   });
-  
+  fillter_and_sort.active_all_lesson();
+  fillter_and_sort.filter_by_key();
 });
 function getLessonsFromDB(teachers_data) {
   
