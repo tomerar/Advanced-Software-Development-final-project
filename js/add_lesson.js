@@ -104,7 +104,7 @@ function initEvent() {
       var rootRef = firebase.database().ref();
       var storesRef = rootRef.child('/user/teacher/' + userID + '/lessons');
       var newStoreRef = storesRef.push();
-
+      var lesson_id = newStoreRef.key;
       newStoreRef.set({
         date: selectedDate,
         subject: selectedSubject,
@@ -114,7 +114,8 @@ function initEvent() {
         time: selectedTime,
         teacher_uid: userID,
         teacher_name: teacher_data.name,
-        pic_url:teacher_data.pic_url
+        pic_url:teacher_data.pic_url,
+        lesson_id: lesson_id,
       });
 
     });
