@@ -142,11 +142,11 @@ p {
   margin-bottom: 30px;
   margin-left: 100px;
   overflow: hidden;
-  color: lightgrey
+  color: lightgrey;
 }
 
 #progressbar .active {
-  color: #673AB7
+  color: #673AB7;
 }
 
 #progressbar li {
@@ -160,21 +160,25 @@ p {
 
 #progressbar #account:before {
   font-family: FontAwesome;
+  text-align: center !important;
   content: "\f13e"
 }
 
 #progressbar #personal:before {
   font-family: FontAwesome;
+  text-align: center !important;
   content: "\f0c0"
 }
 
 #progressbar #payment:before {
   font-family: FontAwesome;
+  text-align: center !important;
   content: "\f017"
 }
 
 #progressbar #confirm:before {
   font-family: FontAwesome;
+  text-align: center !important;
   content: "\f00c"
 }
 
