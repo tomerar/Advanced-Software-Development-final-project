@@ -295,7 +295,7 @@ var SignUpTools = function () {
      * in the class
      */
     var vars = {};
-
+    var url_sign_up ="";
     /*
      * Can access this.method
      * inside other methods using
@@ -309,12 +309,59 @@ var SignUpTools = function () {
     this.construct = function () {
         this.back_login_btn();
         this.signup_prosses_btn();
+        upload_photo();
     };
 
     this.back_login_btn = function () {
         $("#login2").click(function () {
             window.location.href = "login.html";
         });
+    }
+    var upload_photo = function () {
+
+        /**upload file */
+        var urlNow;
+        var fileButton = document.getElementById('photo-upload');
+        var uploader = document.getElementById('uploader');
+        fileButton.addEventListener('change', function (e) {
+            var file = e.target.files[0];
+            var path_pic = 'users/profile_img/'+ Math.floor(100000 + Math.random() * 900000) + file.name ;
+            console.log(path_pic);
+            
+            var storageRef = firebase.storage().ref(path_pic);
+
+            var task = storageRef.put(file);
+
+            task.on('state_changed',
+                function progress(snapshot) {
+                    var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    uploader.value = percentage;
+                },
+                function error(err) {
+                    console.log(err);
+                },
+                function complete() {
+                    console.log("complete");
+
+                    firebase.storage().ref(path_pic).getDownloadURL().then(function (url) {
+
+                        url_sign_up =url;
+                        urlNow = url;
+                        setTimeout(function () {
+                            uploader.value = 0;
+                        }, 3000);
+                    }).catch(function (error) {
+                        console.log("on change pic  " + error);
+                    });
+                }
+            );
+
+
+        });
+
+
+    
+
     }
 
     this.signup_prosses_btn = function () {
@@ -427,7 +474,8 @@ var SignUpTools = function () {
                                 bday: bday,
                                 job: "client",
                                 uid: userId,
-                                current_stage: job_cilent
+                                current_stage: job_cilent,
+                                pic_url: url_sign_up
                     },
                     "user/teacher/"+userId,
                     {
@@ -437,7 +485,8 @@ var SignUpTools = function () {
                                 bday: bday,
                                 job: "teacher",
                                 uid: userId,
-                                current_stage: job_teacher
+                                current_stage: job_teacher,
+                                pic_url: url_sign_up
                     }
                     ,"index.html");
 

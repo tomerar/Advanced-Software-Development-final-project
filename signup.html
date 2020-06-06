@@ -76,8 +76,16 @@
                         <br>
                         <input type="radio" name="job" value="teacher" >teacher
                     </div>
-
-
+                    <h5>upload profile photo</h5>
+                    <div id="uploader_pic" class="w-full text-center">
+                        <input id="photo-upload" type="file" placeholder="photo">
+                        <progress id="uploader" value="0" max="100">0%</progress>
+                    </div>
+                    
+                    <br>
+                    <br>
+                    
+                    
                     <div class="container-login100-form-btn">
                         <button id="signup2" class="login100-form-btn">
                             Sign up
@@ -117,6 +125,7 @@
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-storage.js"></script>
     <!-- Add Firebase products that you want to use -->
     <!--===============================================================================================-->
     <!-- <script src="vendor/jquery/jquery-3.2.1.min.js"></script> -->

@@ -113,7 +113,8 @@ function initEvent() {
         about_me: aboutMe,
         time: selectedTime,
         teacher_uid: userID,
-        teacher_name: teacher_data.name
+        teacher_name: teacher_data.name,
+        pic_url:teacher_data.pic_url
       });
 
     });
