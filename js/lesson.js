@@ -10,8 +10,6 @@ class Lesson{
    
     var about_me
     var profile_pic  = "images/blank-profile.png";
-    console.log(this.data);
-    
     if("pic_url" in this.data){
       if (this.data.pic_url.length != 0) {
         profile_pic = this.data.pic_url;

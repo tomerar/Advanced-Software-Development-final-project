@@ -1,16 +1,26 @@
 var subjectMapByGroup = new Map();
 var subjectMapById = new Map();
 var counterLesson = 0;
+var teachers_data_form_DB;
+var fillter_and_sort ;
 $(document).ready(function () {
   var firebase_init = new FirebaseInit();
   firebase_init.is_login(null,"index.html"); 
-  getLessonsFromDB();
+  firebase.database().ref("/user/teacher/").once('value', function (snapshot) {
+    console.log("get form db");
+    console.log(snapshot);
+    teachers_data_form_DB = snapshot.val()
+  }).then(function () {
+    getLessonsFromDB(teachers_data_form_DB);
+    
+  });
+  
 });
-async function getLessonsFromDB() {
-  firebase.database().ref("/user/teacher/").on('value', function (snapshot) {
+function getLessonsFromDB(teachers_data) {
+  
     $("#teachersPictures").html("")
-    snapshot.forEach(function (user) {
-      let lessons = user.val().lessons;
+    $.each(teachers_data, function( index, user ) {
+      let lessons = user.lessons;
       if (lessons != null) {
         for (var key in lessons) {
           let subjectName = lessons[key].subject;
@@ -42,7 +52,6 @@ async function getLessonsFromDB() {
         $('.modal-body').html(this.id);
       });
     }
-  });;
 
   function addEvent() {
 
