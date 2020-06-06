@@ -9,7 +9,6 @@ $(document).ready(function () {
   initEvent();
   $('.datepicker').datepicker("setDate", new Date());
   initProgressBar();
-
 });
 function initProgressBar(){
   var current_fs, next_fs, previous_fs; //fieldsets
@@ -91,6 +90,7 @@ async function setSelectOptions() {
       opt.innerHTML = subjectList[i];
       optionsElements.appendChild(opt);
     }
+    disaplayContent();
   });;
 }
 function initEvent() {
@@ -142,5 +142,10 @@ function isValidTime(){
     return false;
   }
   return true;
+}
+
+function disaplayContent(){
+  document.getElementById("allContent").style.display = "block";
+  document.getElementById("loader").style.display = "none";
 }
 

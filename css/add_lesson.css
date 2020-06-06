@@ -236,3 +236,7 @@ p {
 .form-control{
   background-color: #ECEFF1;
 }
+
+#allContent{
+  display: none;
+}

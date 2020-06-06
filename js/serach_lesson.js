@@ -13,6 +13,7 @@ $(document).ready(function () {
     teachers_data_form_DB = snapshot.val()
   }).then(function () {
     getLessonsFromDB(teachers_data_form_DB);
+    disaplayContent();
   });
   fillter_and_sort.active_all_lesson();
   fillter_and_sort.filter_by_key();
@@ -54,11 +55,11 @@ function getLessonsFromDB(teachers_data) {
       });
     }
 
-  function addEvent() {
+}
 
-  }
-
-
+function disaplayContent(){
+  document.getElementById("allContent").style.display = "block";
+  document.getElementById("loader").style.display = "none";
 }
 
 
