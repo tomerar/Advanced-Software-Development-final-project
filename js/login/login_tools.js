@@ -1,4 +1,4 @@
-
+var firebase;
 var FirebaseInit = function () {
     console.log("FirebaseInit create");
     /*
@@ -6,7 +6,7 @@ var FirebaseInit = function () {
      * in the class
      */
     var user_class = "none";
-   
+
     var vars = {};
 
     /*
@@ -27,6 +27,51 @@ var FirebaseInit = function () {
 
     this.get_user =function () {
         return user_class
+    }
+
+    this.getCurrentClientVariable = async function (func,variableName="") {
+        firebase.database().ref("/user/client/" + user_class.uid + "/" + variableName ).once('value').then(function (snapshot) {
+            func(snapshot.val())
+        });
+    }
+
+    this.getCurrentTeacherVariable =async function (func,variableName="") {
+        return firebase.database().ref("/user/teacher/" + user_class.uid + "/" + variableName ).once('value').then(function (snapshot) {
+            func( snapshot.val());
+        });
+    }
+
+    this.getCurrentTeacherLessons = async function (myFunc) {
+        firebase.database().ref("/user/teacher/" + user_class.uid + "/lessons" ).once('value').then(function (snapshot) {
+            myFunc( snapshot.val());
+        });
+    }
+
+    this.setTeacherVariable = async function (myFunc,map) {
+        // for (var key in map) {
+        //     firebase.database().ref("/user/teacher/" + user_class.uid).set({
+        //         key:map.get(key)
+        //       });
+        // }
+        map.forEach(writeToDB)
+          myFunc();
+       
+    }
+
+    function writeToDB (value,key,map) {
+            switch (key) {
+                case "bday":
+                    firebase.database().ref("/user/client/" + user_class.uid).update({
+                        bday:value
+                      });
+                    break;
+            
+                default:
+                    break;
+            }
+           
+       
+       
     }
 
     var add_user_name_on_nav = function (user) {
