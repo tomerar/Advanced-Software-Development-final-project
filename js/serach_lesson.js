@@ -151,5 +151,3 @@ function disaplayContent() {
   document.getElementById("allContent").style.display = "block";
   document.getElementById("loader").style.display = "none";
 }
-
-
