@@ -113,8 +113,54 @@ var FillterAndSort = function () {
             getLessonsFromDB(final);
         });
     };
+    
+    this.filter_by_subject = function (subject_data) {
+      //update options
+      append_options ="<option value='all' selected>All Subjects</option> ";
+      for(subject in subject_data){
+        append_options +=  "<option value='"+subject_data[subject] +"'>"+subject_data[subject]+"</option> "
+      }
+      $("#group-filter-lesson").html(append_options)
+      $('.selectpicker').selectpicker('refresh');
+     
+      //on change selet options
+      $("#group-filter-lesson").on('change', function () {
+          // let current_search = $(this).val();
+        console.log("start");
+        
+        let list_group = $("#group-filter-lesson").val();
+        console.log(list_group);
+        if (list_group.indexOf("all") >= 0) {
+          getLessonsFromDB(data_lessons);
+          return data_lessons;
+        }
+        let index_teacher;
+         let final= {};
+          let lessons = {};
+          $.each(data_lessons, function (index, co) {
+              index_teacher = index
+              if("lessons" in co){
+                  for (var key in co.lessons){
+                      
+                      if("subject" in co.lessons[key]){
+                       
+                          if (list_group.indexOf(co.lessons[key].subject) >= 0) { //if chosen all 
+                            
+                            lessons[key]= co.lessons[key];
+                             
+                          }
+                      }
 
-
+                  }
+              }
+          });
+          final[index_teacher]= {lessons:lessons}; 
+          console.log("final");
+          console.log(final);
+          
+          getLessonsFromDB(final);
+      });
+  };
 
 
     /*

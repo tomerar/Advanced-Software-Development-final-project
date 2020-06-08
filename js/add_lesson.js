@@ -4,7 +4,7 @@ var current = 1;
 var DATE_CUURENT_TAB = 2;
 $(document).ready(function () {
   firebase_init = new FirebaseInit();
-  firebase_init.is_login(null,"index.html");
+  firebase_init.is_login(null,"login.html");
   setSelectOptions();
   initEvent();
   $('.datepicker').datepicker("setDate", new Date());
