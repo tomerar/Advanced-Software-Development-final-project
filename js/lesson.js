@@ -1,8 +1,14 @@
 class Lesson{
   constructor(lessonSnapshot, key,lessonIdInDom){
     this.data = lessonSnapshot;
+    this.class_list = [];
+    if ("class_list" in this.data){
+      this.class_list = this.data.class_list;
+    }
     this.key = key;
     this.lessonIdInDom = lessonIdInDom;
+    this.about_me_class;
+    this.profile_pic_class;
     this.addToDom();
   }
 
@@ -20,7 +26,8 @@ class Lesson{
     } else {
       about_me = this.data.about_me;
     }
-
+    this.about_me_class = about_me;
+    this.profile_pic_class = profile_pic;
      
     document.getElementById("teachersPictures").innerHTML += '<div class="col-lg-4 col-md-6 mb-4">' + 
     '<div class="card h-100">' + 
@@ -41,8 +48,54 @@ class Lesson{
       '</div>'+
   '</div>';
   }
-
-  getLessonName(){
+  getAvailablePlaces(){
+    if (parseInt(this.data.number_of_student) > this.class_list.length){
+      console.log(this.data.number_of_student);
+      console.log(this.class_list.length);
+      
+      return '<h5 class="text-success">Available places: '+(parseInt(this.data.number_of_student) - this.class_list.length)+'</h5>';
+    }else{
+      return '<h5 class="text-danger">Available places: '+0+'</h5>';
+    }
+    
+  }
+  getLessonTeacherUid(){
+    return this.data.teacher_uid;
+  }
+  getNumberStudent(){
+    return this.data.number_of_student;
+  }
+  getLink(){
+    return this.data.link;
+  }
+  getNumberStudent(){
+    return this.data.number_of_student;
+  }
+  getLessonTeacher(){    
+    return this.data.teacher_name;
+  }
+  getLessonTitle(){
+    return this.data.lesson_title;
+  }
+  getLessonSubject(){
     return this.data.subject;
+  }
+  getAboutMe(){
+    return this.data.about_me;
+  }
+  getProfilePic(){
+    return this.profile_pic_class;
+  }
+  getLessonID(){
+    return this.data.lesson_id;
+  }
+  getLessonDate(){
+    return this.data.date;
+  }
+  getLessonTime(){
+    return this.data.time;
+  }
+  getLessonHtmlID(){
+    return 'lesson_' + this.lessonIdInDom ;
   }
 }
