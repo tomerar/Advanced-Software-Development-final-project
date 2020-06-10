@@ -48,3 +48,7 @@
 	display: none;
 	text-align: center;
   }
+
+  #allContent{
+	display:none;	  
+ }

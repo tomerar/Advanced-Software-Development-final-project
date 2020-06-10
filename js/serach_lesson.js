@@ -17,14 +17,18 @@ $(document).ready(function () {
    });
 
   firebase.database().ref("/user/teacher/").once('value', function (snapshot) { 
-    fillter_and_sort.set_data(snapshot.val())
-    teachers_data_form_DB = snapshot.val()
+    teachers_data_form_DB =fillter_and_sort.remove_old_lessons(snapshot.val());
+    fillter_and_sort.set_data(teachers_data_form_DB);
   }).then(function () {
     getLessonsFromDB(teachers_data_form_DB);
     disaplayContent();
   });
   fillter_and_sort.active_all_lesson();
   fillter_and_sort.filter_by_key();
+  fillter_and_sort.filter_by_date_and_time();
+  fillter_and_sort.sort_by_time_big_to_small();
+  fillter_and_sort.sort_by_time_small_to_big();
+
 });
 function getLessonsFromDB(teachers_data) {
   counterLesson = 0;
