@@ -158,7 +158,7 @@ var FillterAndSort = function () {
               for (var key in lessons) {
                   temp_arr_filter[key] = lessons[key];
               }
-            };
+            }
         });
         return temp_arr_filter;
     }

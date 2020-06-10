@@ -16,7 +16,7 @@ function initProgressBar(){
   
   var steps = $("fieldset").length;
   setProgressBar(current);
-  let l = new LoginTools();
+  new LoginTools();
   $(".next").click(function () {
     if(isValidTime()){
       current_fs = $(this).parent();
@@ -91,7 +91,7 @@ async function setSelectOptions() {
       optionsElements.appendChild(opt);
     }
     disaplayContent();
-  });;
+  });
 }
 function initEvent() {
   $('#submit').click(function () {
@@ -136,14 +136,32 @@ function initEvent() {
 }
 
 function isValidTime(){
+  if(current != DATE_CUURENT_TAB) return true;
   let selectedDate = document.getElementById("selctedDate").value;
+  let year = selectedDate.split("/")[2];
+  let month = selectedDate.split("/")[0];
+  let day = selectedDate.split("/")[1];
+  let selectedTime = document.getElementById("mettingTime").value;
+  let hour = selectedTime.split(":")[0];
+  let minute = selectedTime.split(":")[0];
   let actualDate = new Date();
-  if(Date.parse(selectedDate) < actualDate && current == DATE_CUURENT_TAB){
-    return false;
-  }
-  return true;
+  if(year < actualDate.getFullYear()) return false;
+  else if(year > actualDate.getFullYear()) return true;
+  else if(month < actualDate.getMonth() + 1) return false;
+  else if(month > actualDate.getMonth() + 1) return true;
+  else if(day < actualDate.getDate()) return false;
+  else if(day > actualDate.getDate()) return true;
+  else if(hour < actualDate.getHours()) return false;
+  else if(hour > actualDate.getHours()) return true;
+  else if(minute < actualDate.getMinutes()) return false;
+  else if(minute > actualDate.getMinutes()) return true;
+
+  return false;
 }
 
+function getDate(){
+
+}
 function disaplayContent(){
   document.getElementById("allContent").style.display = "block";
   document.getElementById("loader").style.display = "none";

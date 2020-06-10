@@ -1,20 +1,17 @@
 module.exports = {
-    "env": {
-        "browser": true,
-        "commonjs": true,
-        "es6": true,
-        "jquery": true
+    parser: "babel-eslint",
+  parserOptions: {
+    sourceType: "module",
+    allowImportExportEverywhere: false,
+    ecmaFeatures: {
+      globalReturn: false,
     },
-    "extends": "eslint:recommended",
-    "parserOptions": {
-        "ecmaVersion": 11,
-        "sourceType": "module"
+    babelOptions: {
+      configFile: "path/to/config.js",
     },
-    "plugins": [
-        "vue"
-    ],
-    "rules": {
-        // 'max-len': ["error", { "code": 90 }],
-        "no-unused-vars": ["error", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }]
-    }
+  },
+  //"extends": "jquery",
+  "rules": {
+    "no-unused-vars": ["error", { "vars": "local"}]
+}
 };

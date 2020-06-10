@@ -1,4 +1,3 @@
-
 class Subject{
   constructor(){
     this.lessonList = [];
