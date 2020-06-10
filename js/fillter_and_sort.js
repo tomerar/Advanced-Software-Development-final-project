@@ -23,6 +23,7 @@ var FillterAndSort = function () {
      * inside other methods using
      * root.method()
      */
+    var counter_date = 0;
     var update_to_db
     var root = this;
     this.set_update_to_db =function (params) {
@@ -173,9 +174,10 @@ var FillterAndSort = function () {
                 if("lessons" in co){
                     for (var key in co.lessons){
                         if("lesson_title" in co.lessons[key]){
-                            if (co.lessons[key].lesson_title.includes(current_search))
+                            if (co.lessons[key].lesson_title.includes(current_search)){
+                              lessons[key]= co.lessons[key];
+                            }
                                 
-                            lessons[key]= co.lessons[key];
                         }
 
                     }
@@ -185,8 +187,52 @@ var FillterAndSort = function () {
             getLessonsFromDB(final);
         });
     };
-    
+  this.filter_by_date_and_time = function () {
+    console.log("filter_by_date_and_time");
+    var date_range;
+    var date_list;
+    var date_start;
+    var date_end;
+
+    $("#daterange").on('change', function () {
+      counter_date++;
+      if(counter_date > 1){
+
+        date_range =  $("#daterange").val();
+        date_list = date_range.split("-");
+        date_start = new Date(Date.parse(date_list[0]));
+        date_end = new Date(Date.parse(date_list[1]));
+      
+        let index_teacher;
+           let final= {};
+            let lessons = {};
+            $.each(data_lessons, function (index, co) {
+                index_teacher = index
+                if("lessons" in co){
+                    for (var key in co.lessons){
+                        if("time" in co.lessons[key] && "time" in co.lessons[key]){
+                            if (is_in_range(date_start,date_end,co.lessons[key].time,co.lessons[key].date)){
+                              lessons[key]= co.lessons[key];
+
+                            }
+                                
+                        }
+
+                    }
+                }
+            });
+            final[index_teacher]= {lessons:lessons}; 
+            getLessonsFromDB(final);
+      }
+      
+    });
+  }
+  var is_in_range= function (date_start,date_end,lessons_time,lessons_date) {
+    let date_check = new Date(Date.parse(lessons_date+" "+lessons_time))
+    return date_check > date_start && date_check < date_end
+  }
     this.filter_by_subject = function (subject_data) {
+
       //update options
       append_options ="<option value='all' selected>All Subjects</option> ";
       for(subject in subject_data){
@@ -232,6 +278,9 @@ var FillterAndSort = function () {
           
           getLessonsFromDB(final);
       });
+
+
+
   };
 
 

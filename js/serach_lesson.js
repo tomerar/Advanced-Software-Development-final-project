@@ -25,6 +25,7 @@ $(document).ready(function () {
   });
   fillter_and_sort.active_all_lesson();
   fillter_and_sort.filter_by_key();
+  fillter_and_sort.filter_by_date_and_time();
 });
 function getLessonsFromDB(teachers_data) {
   counterLesson = 0;
