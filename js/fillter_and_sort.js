@@ -10,8 +10,10 @@ var FillterAndSort = function () {
     var vars = {};
     
     var data_lessons;
+    var data_lessons_after_filter;
     this.set_data = function (data_temp) {
        data_lessons = data_temp;
+       data_lessons_after_filter = data_temp;
     };
     this.get_data = function () {
         
@@ -149,6 +151,7 @@ var FillterAndSort = function () {
     this.active_all_lesson = function () {
         $("#all_lessons_btn").on( "click", function () {
             getLessonsFromDB(data_lessons);
+            data_lessons_after_filter = data_lessons;
         } );
     };
     var get_all_lessons =function () {
@@ -162,6 +165,62 @@ var FillterAndSort = function () {
             };
         });
         return temp_arr_filter;
+    }
+  this.remove_old_lessons = function(get_all_lessons) {
+
+    let index_teacher;
+    let final = {};
+    let lessons = {};
+    $.each(get_all_lessons, function (index, co) {
+      index_teacher = index
+      if ("lessons" in co) {
+        for (var key in co.lessons) {
+          if ("lesson_title" in co.lessons[key]) {
+            if (is_not_expired(co.lessons[key].time, co.lessons[key].date)) {
+              lessons[key] = co.lessons[key];
+            }
+
+          }
+
+        }
+      }
+    });
+    final[index_teacher] = { lessons: lessons };
+    return final;
+  }
+  var date_comp = function( a, b ) {
+    let a_date =new Date(Date.parse(a.date+" "+a.time));
+    let b_date = new Date(Date.parse(b.date+" "+b.time));
+    if ( a_date < b_date ){
+      return -1;
+    }
+    if ( a_date > b_date ){
+      return 1;
+    }
+    return 0;
+  }
+  var date_comp2 = function( a, b ) {
+    let a_date =new Date(Date.parse(a.date+" "+a.time));
+    let b_date = new Date(Date.parse(b.date+" "+b.time));
+    if ( a_date > b_date ){
+      return -1;
+    }
+    if ( a_date < b_date ){
+      return 1;
+    }
+    return 0;
+  }
+    var is_not_expired = function (lessons_time, lessons_date) {
+      let today = new Date()
+      let date_check = new Date(Date.parse(lessons_date+" "+lessons_time))
+      return today < date_check;
+    }
+    var is_in_range= function (date_start,date_end,lessons_time,lessons_date) {
+      let date_check = new Date(Date.parse(lessons_date+" "+lessons_time))
+      return date_check > date_start && date_check < date_end
+    }
+    var is_big = function (date_one,date_two) {
+      return date_one < date_two;
     }
     this.filter_by_key = function () {
         $("#search-lesson").keyup('change', function () {
@@ -185,6 +244,7 @@ var FillterAndSort = function () {
             });
             final[index_teacher]= {lessons:lessons}; 
             getLessonsFromDB(final);
+            data_lessons_after_filter = final;
         });
     };
   this.filter_by_date_and_time = function () {
@@ -223,14 +283,12 @@ var FillterAndSort = function () {
             });
             final[index_teacher]= {lessons:lessons}; 
             getLessonsFromDB(final);
+            data_lessons_after_filter = final;
       }
       
     });
   }
-  var is_in_range= function (date_start,date_end,lessons_time,lessons_date) {
-    let date_check = new Date(Date.parse(lessons_date+" "+lessons_time))
-    return date_check > date_start && date_check < date_end
-  }
+  
     this.filter_by_subject = function (subject_data) {
 
       //update options
@@ -277,12 +335,62 @@ var FillterAndSort = function () {
           console.log(final);
           
           getLessonsFromDB(final);
+          data_lessons_after_filter = final;
       });
 
 
 
   };
 
+  this.sort_by_time_big_to_small = function() {
+    
+    $("#sort_time_b_to_s").on('click', function () {
+        let list_to_sort = [];
+        
+        let index_teacher;
+           let final= {};
+            let lessons = {};
+            $.each(data_lessons_after_filter, function (index, co) {
+                index_teacher = index
+                if("lessons" in co){
+                    for (var key in co.lessons){
+                        if("time" in co.lessons[key] && "time" in co.lessons[key]){
+                              list_to_sort.push(co.lessons[key]);
+                        }
+                    }
+                }
+            });
+            list_to_sort.sort(date_comp2);
+            lessons = Object.assign({},list_to_sort);
+            final[index_teacher]= {lessons:lessons}; 
+            getLessonsFromDB(final); 
+    });
+
+  }
+  this.sort_by_time_small_to_big = function() {
+    $("#sort_time_s_to_b").on('click', function () {
+      let list_to_sort = [];
+      
+      let index_teacher;
+         let final= {};
+          let lessons = {};
+          $.each(data_lessons_after_filter, function (index, co) {
+              index_teacher = index
+              if("lessons" in co){
+                  for (var key in co.lessons){
+                      if("time" in co.lessons[key] && "time" in co.lessons[key]){
+                            list_to_sort.push(co.lessons[key]);
+                      }
+                  }
+              }
+          });
+          list_to_sort.sort(date_comp);
+          lessons = Object.assign({},list_to_sort);
+          final[index_teacher]= {lessons:lessons}; 
+          getLessonsFromDB(final); 
+  });
+  }
+  
 
     /*
      * Constructor
