@@ -302,10 +302,10 @@ var FillterAndSort = function () {
       //on change selet options
       $("#group-filter-lesson").on('change', function () {
           // let current_search = $(this).val();
-        console.log("start");
+        
         
         let list_group = $("#group-filter-lesson").val();
-        console.log(list_group);
+        
         if (list_group.indexOf("all") >= 0) {
           getLessonsFromDB(data_lessons);
           return data_lessons;
@@ -331,8 +331,6 @@ var FillterAndSort = function () {
               }
           });
           final[index_teacher]= {lessons:lessons}; 
-          console.log("final");
-          console.log(final);
           
           getLessonsFromDB(final);
           data_lessons_after_filter = final;
