@@ -32,182 +32,178 @@
 </head>
 
 <body>
-<div id="loader"></div>
-<div id="allContent">
-  
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="index.html">Private teachers Tel Hai</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a id="hello-user" class="nav-link" href="#"
-              style="font-weight: bold;color: white;border-radius:14px;display: none;"></a>
-          </li>
-          <li class="nav-item">
-            <a id="login-btn" class="nav-link" href="#"
-              style="font-weight: bold;color: green;border-radius:14px;display: none;">Login</a>
-          </li>
-          <li class="nav-item">
-            <a id="logout-btn" class="nav-link" href="#"
-              style="font-weight: bold;color: red;border-radius:14px;display: none;">Logout</a>
-          </li>
-          <li class="nav-item">
-            <a id="switch-btn" class="nav-link" href="#"
-              style="font-weight: bold;color: #46afcc;border-radius:14px;">Switch roll</a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="index.html">Home
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="#">Profile
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="add_lesson.html">Add a lesson</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="search_lesson.html">Search lesson</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">My history</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Statistics</a>
-          </li>
+  <div id="loader"></div>
+  <div id="allContent">
 
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Private teachers Tel Hai</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+          aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a id="hello-user" class="nav-link" href="#"
+                style="font-weight: bold;color: white;border-radius:14px;display: none;"></a>
+            </li>
+            <li class="nav-item">
+              <a id="login-btn" class="nav-link" href="#"
+                style="font-weight: bold;color: green;border-radius:14px;display: none;">Login</a>
+            </li>
+            <li class="nav-item">
+              <a id="logout-btn" class="nav-link" href="#"
+                style="font-weight: bold;color: red;border-radius:14px;display: none;">Logout</a>
+            </li>
+            <li class="nav-item">
+              <a id="switch-btn" class="nav-link" href="#"
+                style="font-weight: bold;color: #46afcc;border-radius:14px;">Switch roll</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link" href="#">Profile
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="add_lesson.html">Add a lesson</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="search_lesson.html">Search lesson</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">My history</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Statistics</a>
+            </li>
 
-
-  <!-- Header -->
-  <header class="bg-primary py-5 mb-5">
-    <div class="container h-100">
-      <div class="row h-100 align-items-center">
-        <div class="col-lg-12">
-          <h1 class="display-4 text-white mt-5 mb-2">Private teachers Tel Hai <br> Students for students</h1>
+            </li>
+          </ul>
         </div>
       </div>
-    </div>
-  </header>
-  <!-- Page Content -->
-  <div class="container">
-    <!-- loader -->
- 
+    </nav>
 
-    <!-- end loader -->
-    <div class="container-fluid">
-      <div class="row justify-content-center">
-        <div class="col-11 col-sm-10 col-md-10 col-lg-6 col-xl-5 text-center p-0 mt-3 mb-2">
-          <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
-            <h2 id="heading">Create new lecture</h2>
-            <p>Fill all form field to go to next step</p>
-            <form id="msform">
-              <!-- progressbar -->
-              <ul id="progressbar">
-                <li class="active" id="personal"><strong>Meeting Information</strong></li>
-                <li id="payment"><strong>Schedule</strong></li>
-                <li id="confirm"><strong>Finish</strong></li>
-              </ul>
-              <div class="progress">
-                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                  aria-valuemin="0" aria-valuemax="100"></div>
-              </div> <br> <!-- fieldsets -->
-              <fieldset>
-                <div class="form-card">
-                  <div class="row">
-                    <div class="col-7">
-                      <h2 class="fs-title">Meeting Information:</h2>
+
+    <!-- Header -->
+    <header class="bg-primary py-5 mb-5">
+      <div class="container h-100">
+        <div class="row h-100 align-items-center">
+          <div class="col-lg-12">
+            <h1 class="display-4 text-white mt-5 mb-2">Private teachers Tel Hai <br> Students for students</h1>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Page Content -->
+    <div class="container">
+      <!-- loader -->
+
+
+      <!-- end loader -->
+      <div class="container-fluid">
+        <div class="row justify-content-center">
+          <div class="col-11 col-sm-10 col-md-10 col-lg-6 col-xl-5 text-center p-0 mt-3 mb-2">
+            <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+              <h2 id="heading">Create new lecture</h2>
+              <p>Fill all form field to go to next step</p>
+              <form id="msform">
+                <!-- progressbar -->
+                <ul id="progressbar">
+                  <li class="active" id="personal"><strong>Meeting Information</strong></li>
+                  <li id="payment"><strong>Schedule</strong></li>
+                  <li id="confirm"><strong>Finish</strong></li>
+                </ul>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                    aria-valuemin="0" aria-valuemax="100"></div>
+                </div> <br> <!-- fieldsets -->
+                <fieldset>
+                  <div class="form-card">
+                    <div class="row">
+                      <div class="col-7">
+                        <h2 class="fs-title">Meeting Information:</h2>
+                      </div>
+                      <div class="col-5">
+                        <h2 class="steps">Step 1 - 3</h2>
+                      </div>
                     </div>
-                    <div class="col-5">
-                      <h2 class="steps">Step 1 - 3</h2>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="sel1">Select subject (select one):</label>
+                    <label class="fieldlabels">Select subject (select one):</label>
                     <select class="form-control" id="selectSubject">
                     </select>
-                    <label class="fieldlabels">Select a title:</label>
+                    <br>
+                    <label class="fieldlabels">Select a title: *</label>
+                    <textarea class="form-control" rows="1" id="selectTitle" value=""></textarea>
+                    <label class="fieldlabels">Number of students: *</label>
+                    <input type="number" name="uname" placeholder="1" min="1" max="10" id="numberOfStudent" value="1" />
+                    <label class="fieldlabels">About me:</label>
                     <div class="form-group">
-                      <textarea class="form-control" rows="1" id="selectTitle" value=""></textarea>
+                      <textarea class="form-control" rows="5" id="aboutMe" value=""></textarea>
                     </div>
-
-                  </div>
-                  <label class="fieldlabels">Number of students: *</label>
-                  <input type="number" name="uname" placeholder="1" min="1" max="10" id="numberOfStudent" value="1" />
-                  <label class="fieldlabels">About me:</label>
-                  <div class="form-group">
-                    <textarea class="form-control" rows="5" id="aboutMe" value=""></textarea>
-                  </div>
-                </div> <input type="button" name="next" class="next action-button" value="Next" />
-              </fieldset>
-              <fieldset>
-                <div class="form-card">
-                  <div class="row">
-                    <div class="col-7">
-                      <h2 class="fs-title">Link to lecture:</h2>
+                  </div> <input type="button" name="next" class="next action-button" value="Next" />
+                </fieldset>
+                <fieldset>
+                  <div class="form-card">
+                    <div class="row">
+                      <div class="col-7">
+                        <h2 class="fs-title">Link to lecture:</h2>
+                      </div>
+                      <div class="col-5">
+                        <h2 class="steps">Step 2 - 3</h2>
+                      </div>
                     </div>
-                    <div class="col-5">
-                      <h2 class="steps">Step 2 - 3</h2>
-                    </div>
-                  </div>
-                  <label class="fieldlabels">Link: *</label>
-                  <input type="url" name="link" placeholder="Insert lecture link" id="urlLink" />
-                  <label class="fieldlabels">Date: *</label>
-                  <input class="datepicker" id="selctedDate" />
-                  <label class="fieldlabels">Time: *</label>
-                  <input type="time" id="mettingTime" name="appt" value="12:00">
-                </div> <input id="submit" type="button" name="next" class="next action-button" value="Submit" /> <input
-                  type="button" name="previous" class="previous action-button-previous" value="Previous" />
-              </fieldset>
-              <fieldset>
-                <div class="form-card">
-                  <div class="row">
-                    <div class="col-7">
-                      <h2 class="fs-title">Finish:</h2>
-                    </div>
-                    <div class="col-5">
-                      <h2 class="steps">Step 3 - 3</h2>
-                    </div>
-                  </div> <br><br>
-                  <h2 class="purple-text text-center"><strong>SUCCESS !</strong></h2> <br>
-                  <div class="row justify-content-center">
-                    <div class="col-3"> <img src="https://i.imgur.com/GwStPmg.png" class="fit-image"> </div>
-                  </div> <br><br>
-                  <div class="row justify-content-center">
-                    <div class="col-7 text-center">
-                      <h5 class="purple-text text-center">You Have Successfully Signed Up Your Lesson</h5>
+                    <label class="fieldlabels">Link: *</label>
+                    <input type="url" name="link" placeholder="Insert lecture link" id="urlLink" />
+                    <label class="fieldlabels">Date: *</label>
+                    <input class="datepicker" id="selctedDate" />
+                    <label class="fieldlabels">Time: *</label>
+                    <input type="time" id="mettingTime" name="appt" value="12:00">
+                  </div> <input id="submit" type="button" name="next" class="next action-button" value="Submit" />
+                  <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+                </fieldset>
+                <fieldset>
+                  <div class="form-card">
+                    <div class="row">
+                      <div class="col-7">
+                        <h2 class="fs-title">Finish:</h2>
+                      </div>
+                      <div class="col-5">
+                        <h2 class="steps">Step 3 - 3</h2>
+                      </div>
+                    </div> <br><br>
+                    <h2 class="purple-text text-center"><strong>SUCCESS !</strong></h2> <br>
+                    <div class="row justify-content-center">
+                      <div class="col-3"> <img src="https://i.imgur.com/GwStPmg.png" class="fit-image"> </div>
+                    </div> <br><br>
+                    <div class="row justify-content-center">
+                      <div class="col-7 text-center">
+                        <h5 class="purple-text text-center">You Have Successfully Signed Up Your Lesson</h5>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </fieldset>
-            </form>
+                </fieldset>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+      </div>
+      <!-- /.container -->
+    </footer>
   </div>
-  <!-- Footer -->
-  <footer class="py-5 bg-dark">
-    <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
-    </div>
-    <!-- /.container -->
-  </footer>
-</div>
   </div>
-  
+
 
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
