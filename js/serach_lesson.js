@@ -7,7 +7,7 @@ var subject_data;
 $(document).ready(function () {
   var fillter_and_sort = new FillterAndSort();
   var firebase_init = new FirebaseInit();
-  firebase_init.is_login(null,"login.html");
+  firebase_init.is_login(null, "login.html");
 
   firebase.database().ref("/lessons/").once('value', function (snapshot) {
 
@@ -17,7 +17,7 @@ $(document).ready(function () {
   });
 
   firebase.database().ref("/user/teacher/").once('value', function (snapshot) {
-    teachers_data_form_DB =fillter_and_sort.remove_old_lessons(snapshot.val());
+    teachers_data_form_DB = fillter_and_sort.remove_old_lessons(snapshot.val());
     fillter_and_sort.set_data(teachers_data_form_DB);
   }).then(function () {
     getLessonsFromDB(teachers_data_form_DB);
@@ -33,7 +33,7 @@ $(document).ready(function () {
 function getLessonsFromDB(teachers_data) {
   counterLesson = 0;
   $("#teachersPictures").html("")
-  $.each(teachers_data, function( index, user ) {
+  $.each(teachers_data, function (index, user) {
     let lessons = user.lessons;
     if (lessons != null) {
       for (var key in lessons) {
@@ -65,20 +65,20 @@ function getLessonsFromDB(teachers_data) {
       $("#myModal").modal("show");
       $('.modal-title').html(lesson.getLessonTitle());
       $('.modal-subject').html(lesson.getLessonSubject());
-      $('.modal-teacher').html("Teacher: "+lesson.getLessonTeacher());
-      $('.modal-about').html("<h5>Lesson info:</h5> "+lesson.getAboutMe());
+      $('.modal-teacher').html("Teacher: " + lesson.getLessonTeacher());
+      $('.modal-about').html("<h5>Lesson info:</h5> " + lesson.getAboutMe());
       $('.modal-available').html(lesson.getAvailablePlaces());
-      $('.modal-date').html("Date: "+lesson.getLessonDate());
-      $('.modal-time').html("Time: "+lesson.getLessonTime());
-      $('.modal-lessonid').html("Lesson ID: "+lesson.getLessonID());
+      $('.modal-date').html("Date: " + lesson.getLessonDate());
+      $('.modal-time').html("Time: " + lesson.getLessonTime());
+      $('.modal-lessonid').html("Lesson ID: " + lesson.getLessonID());
 
 
     });
   }
 
 }
-async function add_to_calender(lesson,userID) {
-  let ref_lesson_addres = "/user/teacher/" +lesson.getLessonTeacherUid()+"/lessons/"+lesson.getLessonID();
+async function add_to_calender(lesson, userID) {
+  let ref_lesson_addres = "/user/teacher/" + lesson.getLessonTeacherUid() + "/lessons/" + lesson.getLessonID();
   let ref_student_addres = "/user/client/" + userID;
   var lesson_in_db;
   var user_in_db;
@@ -92,8 +92,8 @@ async function add_to_calender(lesson,userID) {
   })
 
   //check if in the lesson
-  if( "class_list" in lesson_in_db){
-    if((parseInt(lesson_in_db.number_of_student) - lesson_in_db.class_list.length)<=0){
+  if ("class_list" in lesson_in_db) {
+    if ((parseInt(lesson_in_db.number_of_student) - lesson_in_db.class_list.length) <= 0) {
       $(".modal-eror").html("lesson is full!!")
 
       setTimeout(() => {
@@ -104,8 +104,8 @@ async function add_to_calender(lesson,userID) {
     }
   }
   //check if in the lesson
-  if( "class_list" in lesson_in_db){
-    if(lesson_in_db.class_list.indexOf(userID) >= 0){
+  if ("class_list" in lesson_in_db) {
+    if (lesson_in_db.class_list.indexOf(userID) >= 0) {
       $(".modal-eror").html("you all ready in the lesson")
 
       setTimeout(() => {
@@ -119,22 +119,19 @@ async function add_to_calender(lesson,userID) {
   if ("class_list" in lesson_in_db) {
 
     lesson_in_db.class_list.push(userID)
-    await firebase.database().ref(ref_lesson_addres+"/class_list").set(lesson_in_db.class_list);
-  }else{
+    await firebase.database().ref(ref_lesson_addres + "/class_list").set(lesson_in_db.class_list);
+  } else {
     updates_class_list = { "class_list": [userID] };
     await firebase.database().ref(ref_lesson_addres).update(updates_class_list);
   }
 
-  if ("my_lessons_list" in user_in_db) {
-    user_in_db.my_lessons_list.push({
-      lessonId :lesson.getLessonID(),
-      teacherId : lesson.getLessonTeacherUid()
-    })
-    await firebase.database().ref(ref_student_addres+"/my_lessons_list").set(user_in_db.my_lessons_list);
-  }else{
-    updates_my_lessons_list = { "my_lessons_list": [lesson.getLessonID()] };
-    await firebase.database().ref(ref_student_addres).update(updates_my_lessons_list);
-  }
+  var rootRef = firebase.database().ref();
+  var storesRef = rootRef.child(ref_student_addres + "/my_lessons_list");
+  var newStoreRef = storesRef.push();
+  newStoreRef.set({
+    lessonId: lesson.getLessonID(),
+    teacherId: lesson.getLessonTeacherUid()
+  })
   //update need to loacl lesson
   lesson.class_list.push(userID)
   $('.modal-available').html(lesson.getAvailablePlaces());
@@ -145,12 +142,12 @@ function addLessonBtn(lessonId) {
   let lesson = subjectMapById.get($(lessonId).attr('id'));
   var userID = firebase.auth().currentUser.uid;
 
-  $("#add-lesson-btn").on("click",function () {
-    add_to_calender(lesson,userID);
+  $("#add-lesson-btn").on("click", function () {
+    add_to_calender(lesson, userID);
     $("#add-lesson-btn").unbind('click');
   });
 }
-function disaplayContent(){
+function disaplayContent() {
   document.getElementById("allContent").style.display = "block";
   document.getElementById("loader").style.display = "none";
 }
