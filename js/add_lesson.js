@@ -13,7 +13,7 @@ $(document).ready(function () {
 function initProgressBar(){
   var current_fs, next_fs, previous_fs; //fieldsets
   var opacity;
-  
+
   var steps = $("fieldset").length;
   setProgressBar(current);
   new LoginTools();
@@ -125,7 +125,7 @@ function initEvent() {
           lesson_id: lesson_id,
           lesson_title:lesson_title
         });
-  
+
       });
 
     }
@@ -159,9 +159,6 @@ function isValidTime(){
   return false;
 }
 
-function getDate(){
-
-}
 function disaplayContent(){
   document.getElementById("allContent").style.display = "block";
   document.getElementById("loader").style.display = "none";

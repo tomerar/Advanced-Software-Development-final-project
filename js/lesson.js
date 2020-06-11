@@ -13,7 +13,7 @@ class Lesson{
   }
 
   addToDom(){
-   
+
     var about_me
     var profile_pic  = "images/blank-profile.png";
     if("pic_url" in this.data){
@@ -28,9 +28,9 @@ class Lesson{
     }
     this.about_me_class = about_me;
     this.profile_pic_class = profile_pic;
-     
-    document.getElementById("teachersPictures").innerHTML += '<div class="col-lg-4 col-md-6 mb-4">' + 
-    '<div class="card h-100">' + 
+
+    document.getElementById("teachersPictures").innerHTML += '<div class="col-lg-4 col-md-6 mb-4">' +
+    '<div class="card h-100">' +
     '<a  id="lesson_' + this.lessonIdInDom +'"><img class="card-img-top" src="'+profile_pic+'" alt=""></a>'+
       '<div class="card-body">'+
         '<h4 class="card-title">'+
@@ -52,12 +52,12 @@ class Lesson{
     if (parseInt(this.data.number_of_student) > this.class_list.length){
       console.log(this.data.number_of_student);
       console.log(this.class_list.length);
-      
+
       return '<h5 class="text-success">Available places: '+(parseInt(this.data.number_of_student) - this.class_list.length)+'</h5>';
     }else{
       return '<h5 class="text-danger">Available places: '+0+'</h5>';
     }
-    
+
   }
   getLessonTeacherUid(){
     return this.data.teacher_uid;
@@ -71,7 +71,7 @@ class Lesson{
   getNumberStudent(){
     return this.data.number_of_student;
   }
-  getLessonTeacher(){    
+  getLessonTeacher(){
     return this.data.teacher_name;
   }
   getLessonTitle(){

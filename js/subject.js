@@ -6,5 +6,5 @@ class Subject{
   addLesson(lesson){
     this.lessonList.push(lesson);
   }
-  
+
 }
