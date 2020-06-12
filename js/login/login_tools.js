@@ -22,6 +22,9 @@ var FirebaseInit = function () {
   this.construct = function () {
     this.init_firebase();
     this.logout();
+    
+
+    
 
   };
 
@@ -152,6 +155,17 @@ var FirebaseInit = function () {
 
   };
 
+  var update_status_db = function(user_uid,status){
+    firebase.database().ref("/user/client/" + user_uid ).update({
+      status:status
+    });
+  }
+  var update_on_disconnect_status_db = function(user_uid,status){
+    firebase.database().ref("/user/client/" + user_uid ).onDisconnect().update({
+      status:status
+    });
+  }
+
   this.is_login = function name(login_page, logout_page) {
     /// is login check
 
@@ -159,6 +173,8 @@ var FirebaseInit = function () {
       if (user) {
         user_class = user
         console.log(user);
+        update_on_disconnect_status_db(user.uid,"offline");
+        update_status_db(user.uid,"online");
         add_user_name_on_nav(user);
         $("#logout-btn").css("display", "block");
         $("#login-btn").css("display", "none");
@@ -184,7 +200,7 @@ var FirebaseInit = function () {
   }
   this.logout = function () {
     $("#logout-btn").on("click", function () {
-      var user = firebase.auth().currentUser;
+      update_status_db(user_class.uid,"offline")
       firebase.auth().signOut().then(function () {
         console.log("logout successful")
       }).catch(function (error) {
@@ -490,8 +506,8 @@ var SignUpTools = function () {
           job_teacher = true;
         }
         var currentdate = new Date();
-        let currnet_date = currentdate.getDate() + "/"
-                    + (currentdate.getMonth() + 1) + "/"
+        let currnet_date = (currentdate.getMonth() + 1) + "/"
+                    + currentdate.getDate() + "/"
                     + currentdate.getFullYear() + "-"
                     + currentdate.getHours() + ":"
                     + currentdate.getMinutes() + ":"

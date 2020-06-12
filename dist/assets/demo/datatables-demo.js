@@ -11,6 +11,8 @@ $(document).ready(function() {
 
 function create_user(database) {
   let index_user = {};
+      if("status" in database.client[key])
+        index_user["status"] = database.client[key].status;
       index_user["date_create_user"] = database.client[key].create_date_user;
       index_user["user_id"] = database.client[key].uid;
       index_user["name"] = database.client[key].name;
@@ -27,16 +29,20 @@ function create_user(database) {
 function add_user_data_table_html(all_users) {
   $("#user_data_table").empty();
   all_users.forEach(element => {
+    let status_html = 'old version';
+    if (element.hasOwnProperty('status')) {
+      if (element.status.localeCompare("online")==0) {
+        status_html = '<img src=../images/iconfinder_status_online.png>';
+      }else{
+        status_html = '<img src=../images/iconfinder_status_offline.png>' ;
+      }
+    }
       let stage = (element.stage ? 'student' : 'teacher');
-      // if ("lessons_create" in element.lessons_create) {
-          
-      // }else{
-
-      // }
       let lessons_create = ((element.hasOwnProperty('lessons_create')) ? element.lessons_create : "None")
       let lessons_signed_up = ((element.hasOwnProperty('lessons_signed_up')) ? element.lessons_signed_up : "None")
       $("#user_data_table").append(
           '<tr>' +
+          '<td>' + status_html + '</td>' +
           '<td>' + element.date_create_user + '</td>' +
           '<td>' + element.user_id + '</td>' +
           '<td>' + element.name + '</td>' +
@@ -51,7 +57,6 @@ function add_user_data_table_html(all_users) {
 }
 function user_data_table_init(database) {
   var all_users = new Array();
-  let index_user = {};
   for (key in database.client) {
       all_users.push(create_user(database));
   }

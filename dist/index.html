@@ -103,37 +103,37 @@
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Primary Card</div>
+                                    <div class="card-body"><h2>Users</h2></div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                        <h3 id="user_summary" class=" text-white stretched-link" href="#">11</h3>
+                                        <div class="small text-white"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
-                                <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">Warning Card</div>
+                                <div class="card bg-primary text-white mb-4">
+                                    <div  class="card-body"><h2>Online users</h2></div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                        <h3 id="online_user_summary" class=" text-white stretched-link" href="#">12</h3>
+                                        <div class="small text-white"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Success Card</div>
+                                <div class="card bg-primary text-white mb-4">
+                                    <div  class="card-body"><h2>Lessons create all time</h2></div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                        <h3 id="lessons_all_summary" class=" text-white stretched-link" href="#">13</h3>
+                                        <div class="small text-white"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
-                                <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Danger Card</div>
+                                <div class="card bg-primary text-white mb-4">
+                                    <div class="card-body"><h2>Lessons active now</h2></div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                        <h3  id="lessons_active_summary" class=" text-white stretched-link" href="#">14</h3>
+                                        <div class="small text-white"></div>
                                     </div>
                                 </div>
                             </div>
@@ -141,13 +141,13 @@
                         <div class="row">
                             <div class="col-xl-6">
                                 <div class="card mb-4">
-                                    <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Area Chart Example</div>
+                                    <div class="card-header"><i class="fas fa-chart-area mr-1"></i>Count user at lest 14 days</div>
                                     <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
                                 </div>
                             </div>
                             <div class="col-xl-6">
                                 <div class="card mb-4">
-                                    <div class="card-header"><i class="fas fa-chart-bar mr-1"></i>Bar Chart Example</div>
+                                    <div class="card-header"><i class="fas fa-chart-bar mr-1"></i>Counts Lessons per month 2020 </div>
                                     <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
                                 </div>
                             </div>
@@ -159,7 +159,8 @@
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>user id</th>
+                                                <th>Status</th>
+                                                <th>User id</th>
                                                 <th>Date create user</th>
                                                 <th>Name</th>
                                                 <th>Email</th>
@@ -172,7 +173,8 @@
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                <th>user id</th>
+                                                <th>Status</th>
+                                                <th>User id</th>
                                                 <th>Date create user</th>
                                                 <th>Name</th>
                                                 <th>Email</th>
@@ -215,6 +217,7 @@
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
         <script src="assets/demo/datatables-demo.js"></script>
+        <script src="assets/demo/summry_info.js"></script>
 
 
         <!--firebase-->
