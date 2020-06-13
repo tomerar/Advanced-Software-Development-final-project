@@ -32,9 +32,9 @@ function add_user_data_table_html(all_users) {
     let status_html = 'old version';
     if (element.hasOwnProperty('status')) {
       if (element.status.localeCompare("online")==0) {
-        status_html = '<img src=../images/iconfinder_status_online.png>';
+        status_html = '<img src=../images/iconfinder_status_online.png>online';
       }else{
-        status_html = '<img src=../images/iconfinder_status_offline.png>' ;
+        status_html = '<img src=../images/iconfinder_status_offline.png>offline' ;
       }
     }
       let stage = (element.stage ? 'student' : 'teacher');
