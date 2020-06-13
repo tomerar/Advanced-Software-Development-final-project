@@ -126,9 +126,10 @@ async function add_to_calender(lesson, userID) {
   }
 
   var rootRef = firebase.database().ref();
-  var storesRef = rootRef.child(ref_student_addres + "/my_lessons_list");
-  var newStoreRef = storesRef.push();
-  newStoreRef.set({
+  var storesRef = rootRef.child(ref_student_addres + "/my_lessons_list/" + lesson.getLessonID());
+  // var newStoreRef = storesRef;
+  // newStoreRef.set({
+  storesRef.set({
     lessonId: lesson.getLessonID(),
     teacherId: lesson.getLessonTeacherUid()
   })
