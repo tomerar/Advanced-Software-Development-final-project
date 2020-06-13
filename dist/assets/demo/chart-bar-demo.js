@@ -48,7 +48,7 @@ function make_chart_bar() {
     data: {
       labels: monthNames,
       datasets: [{
-        label: "Revenue",
+        label: "Lessons",
         backgroundColor: "rgba(2,117,216,1)",
         borderColor: "rgba(2,117,216,1)",
         data: get_data_lesson_per_month(),

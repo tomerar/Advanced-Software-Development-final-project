@@ -6,6 +6,7 @@ $(document).ready(function() {
     starCountRef.on('value', function(snapshot) {
         summry_database = snapshot.val();
         upddate_summrys(summry_database);
+        disaplayContent();
     });
         
   });
@@ -29,7 +30,6 @@ function update_all_lessons(summry_database) {
     for(key in summry_database["teacher"])
     {
         if("lessons" in summry_database["teacher"][key] ){
-            console.log(summry_database["teacher"][key].lessons);
             
             count_all_lessons+= Object.keys(summry_database["teacher"][key].lessons).length;
         }
@@ -41,7 +41,6 @@ function update_all_lessons_active(summry_database) {
     for(key in summry_database["teacher"])
     {
         if("lessons" in summry_database["teacher"][key] ){
-            console.log(summry_database["teacher"][key].lessons);
             for(key_lesson in summry_database["teacher"][key].lessons){
                 let temp_date = summry_database["teacher"][key].lessons[key_lesson].date;
                 let temp_time = summry_database["teacher"][key].lessons[key_lesson].time;
@@ -65,4 +64,9 @@ var upddate_summrys = function (summry_database) {
     $("#lessons_all_summary").append(update_all_lessons(summry_database));
     $("#lessons_active_summary").append(update_all_lessons_active(summry_database));
       
+  }
+
+  function disaplayContent(){
+    document.getElementById("allContent").style.display = "block";
+    document.getElementById("loader").style.display = "none";
   }

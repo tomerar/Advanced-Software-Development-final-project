@@ -5,11 +5,10 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
 var database;
+
 var today_date = new Date();
 var month_name = monthNames[today_date.getMonth()];
-var oneWeekAgo = new Date();
 var N_DAY = 14 ;
-oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 // Area Chart Example
 $(document).ready(function () {
   var starCountRef = firebase.database().ref("/user/");
@@ -25,18 +24,23 @@ const datesAreOnSameDay = (first, second) =>
 
 function get_data_user_create(n_day_back) {
 
- 
+  
     let date_arr = new Array();
-    let date_arr_count = new Array(n_day_back).fill(0);
+    let date_arr_count = new Array();
+    for (let index = 0; index < n_day_back; index++) {
+      date_arr_count.push(0);
+      
+    }
+    
     for (let index = 0; index < n_day_back; index++) {
       let temp_date = new Date
       temp_date.setDate(today_date.getDate() - index)
       date_arr.push(temp_date);
     }
+    
     date_arr = date_arr.reverse();
     for (key in database["client"]) {
       let temp_user_date = new Date(Date.parse(database["client"][key].create_date_user));
-
 
       for (let index = 0; index < date_arr.length; index++) {
 
@@ -59,6 +63,7 @@ function get_array_date_back_by_n(n_day_back) {
     temp_date.setDate(today_date.getDate() - index)
     date_arr.push(monthNames[temp_date.getMonth()]+" "+temp_date.getDate()); 
   }
+  
   return date_arr.reverse();
 }
 function make_chart() {
@@ -69,7 +74,7 @@ function make_chart() {
       data: {
         labels: get_array_date_back_by_n(N_DAY),
         datasets: [{
-          label: "Sessions",
+          label: "Users",
           lineTension: 0.3,
           backgroundColor: "rgba(2,117,216,0.2)",
           borderColor: "rgba(2,117,216,1)",
@@ -93,7 +98,7 @@ function make_chart() {
               display: true
             },
             ticks: {
-              maxTicksLimit: 20
+              maxTicksLimit: N_DAY
             }
           }],
           yAxes: [{
@@ -118,3 +123,13 @@ function make_chart() {
       }
     });
 }
+
+$(document).on('input', '#range_chart_area', function() {
+  database_range =database;
+  N_DAY = $(this).val()
+  $('#chart_area_count_user').html(
+    '<i class="fas fa-chart-area mr-1"></i>Count user at lest '+N_DAY+' days</div>'
+  );
+  make_chart();
+});
+
