@@ -5,7 +5,7 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
 var database;
-
+var myLineChart
 var today_date = new Date();
 var month_name = monthNames[today_date.getMonth()];
 var N_DAY = 14 ;
@@ -66,10 +66,22 @@ function get_array_date_back_by_n(n_day_back) {
   
   return date_arr.reverse();
 }
+
+
+$(document).on('input', '#range_chart_area', function() {
+  myLineChart.destroy();
+  database_range =database;
+  N_DAY = $(this).val()
+  $('#chart_area_count_user').html(
+    '<i class="fas fa-chart-area mr-1"></i>Count user at last '+N_DAY+' days</div>'
+  );
+  make_chart();
+});
+
+
 function make_chart() {
-  
     var ctx = document.getElementById("myAreaChart");
-    var myLineChart = new Chart(ctx, {
+    myLineChart = new Chart(ctx, {
       type: 'line',
       data: {
         labels: get_array_date_back_by_n(N_DAY),
@@ -123,13 +135,4 @@ function make_chart() {
       }
     });
 }
-
-$(document).on('change', '#range_chart_area', function() {
-  database_range =database;
-  N_DAY = $(this).val()
-  $('#chart_area_count_user').html(
-    '<i class="fas fa-chart-area mr-1"></i>Count user at lest '+N_DAY+' days</div>'
-  );
-  make_chart();
-});
 
