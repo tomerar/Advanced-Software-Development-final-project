@@ -7,7 +7,7 @@ var database_bar;
 $(document).ready(function () {
 
   var starCountRef = firebase.database().ref("/user/");
-    starCountRef.on('value', function(snapshot) {
+    starCountRef.once('value', function(snapshot) {
       database_bar = snapshot.val();
       make_chart_bar();
     });

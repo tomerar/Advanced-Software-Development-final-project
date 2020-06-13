@@ -12,7 +12,7 @@ var N_DAY = 14 ;
 // Area Chart Example
 $(document).ready(function () {
   var starCountRef = firebase.database().ref("/user/");
-    starCountRef.on('value', function(snapshot) {
+    starCountRef.once('value', function(snapshot) {
       database = snapshot.val();
       make_chart();
     });
@@ -124,7 +124,7 @@ function make_chart() {
     });
 }
 
-$(document).on('input', '#range_chart_area', function() {
+$(document).on('change', '#range_chart_area', function() {
   database_range =database;
   N_DAY = $(this).val()
   $('#chart_area_count_user').html(
