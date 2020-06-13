@@ -40,6 +40,7 @@ function add_user_data_table_html(all_users) {
       let stage = (element.stage ? 'student' : 'teacher');
       let lessons_create = ((element.hasOwnProperty('lessons_create')) ? element.lessons_create : "None")
       let lessons_signed_up = ((element.hasOwnProperty('lessons_signed_up')) ? element.lessons_signed_up : "None")
+      let photo_url_pic = (element.photo_url? element.photo_url : "../images/blank-profile.png")
       $("#user_data_table").append(
           '<tr>' +
           '<td>' + status_html + '</td>' +
@@ -50,7 +51,7 @@ function add_user_data_table_html(all_users) {
           '<td>' + stage + '</td>' +
           '<td>' + lessons_create + '</td>' +
           '<td>' + lessons_signed_up + '</td>' +
-          '<td>' + element.photo_url + '</td>' +
+          '<td><img src=' + photo_url_pic + ' style="max-height: 80px; max-width: 80px;"></td>' +
           '</tr>'
       );
   });
