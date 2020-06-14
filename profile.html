@@ -11,6 +11,7 @@
 		
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+		<link href="css/profile.css" rel="stylesheet">
 		<link href="css/loader.css" rel="stylesheet">
 	</head>
 	
@@ -85,29 +86,76 @@
 	
 	<!-- Page Content -->
 	
-	<div class="container">
-		<div class="">
-			<center>
-				<div class="">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-							<h4 class="modal-title" id="myModalLabel">More About Joe</h4>
+	<section class="section about-section gray-bg" id="about">
+		<div class="container">
+			<div class="row align-items-center flex-row-reverse">
+				<div class="col-lg-6">
+					<div class="about-text go-to">
+						<h3 class="dark-color">My Profile</h3>
+						<button type="button" class="btn btn-primary">edit profile</button>
+						
+						<p>here you can see your account info</p>
+						<div class="row about-list">
+							<div class="col-md-6">
+								<div class="media">
+									<label>Birthday</label>
+									<p id="profile_bday">4th april 1998</p>
+								</div>
+								<div class="media">
+									<label>Age</label>
+									<p id="profile_age">22 Yr</p>
+								</div>
+								<div class="media">
+									<label>name</label>
+									<p id="profile_name">Canada</p>
+								</div>
+								
+							</div>
+							<div class="col-md-6">
+								<div class="media">
+									<label>E-mail</label>
+									<p id="profile_email">info@domain.com</p>
+								</div>
+								<div class="media">
+									<label>sign up date</label>
+									<p id="profile_sign_up_date">California, USA</p>
+								</div>
+							</div>
 						</div>
-						<div class="modal-body">
-							<center>
-								<img src=""	id="image" width="140" height="140" border="0"></a>
-							<h3 id="name"></h3>
-							<h5 id="email-address"></h5>
-							<span id="bdate"></span>							
-						</center
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="about-avatar">
+						<img id="profile_url" src="images/blank-profile.png" style="max-height: 500px;max-width: 500px;" title="" alt="">
 					</div>
 				</div>
 			</div>
-		</center>
-	</div>	
+			<div class="counter">
+				<div class="row">
+					<div class="col-6 col-lg-4">
+						<div class="count-data text-center">
+							<h6 id="lessons_opened" class="count h2" data-to="500" data-speed="500">0</h6>
+							<p class="m-0px font-w-600">Lessons I opened</p>
+						</div>
+					</div>
+					<div class="col-6 col-lg-4">
+						<div class="count-data text-center">
+							<h6 id="lessons_signed_up" class="count h2" data-to="150" data-speed="150">0</h6>
+							<p class="m-0px font-w-600">Lessons I signed up for</p>
+						</div>
+					</div>
+					<div class="col-6 col-lg-4">
+						<div class="count-data text-center">
+							<h6 id="user_life" class="count h2" data-to="850" data-speed="850">0</h6>
+							<p class="m-0px font-w-600">User life in days</p>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</section>
 	<!-- /.row -->	
-</div>
 <!-- /.container -->
 
 <!-- Footer -->
@@ -117,6 +165,7 @@
 	</div>
 </footer>
 
+</div>
 <!-- AllContent -->
 </div>
 
