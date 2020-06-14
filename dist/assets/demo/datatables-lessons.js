@@ -1,15 +1,19 @@
 // Call the dataTables jQuery plugin
 var teacher_db;
 $(document).ready(function() {
-    firebase.database().ref("/user/teacher" ).once('value').then(function (snapshot) {
-        teacher_db = snapshot.val();
-    }).then(function () { 
-        lesson_data_table_init(get_all_lesson(teacher_db));
-    }).then(function () {
-        
-      $('#dataTable_lesson').DataTable();
-    });
+  download_db();
   });
+  function download_db() {
+          firebase.database().ref("/user/teacher" ).once('value').then(function (snapshot) {
+            teacher_db = snapshot.val();
+        }).then(function () { 
+            lesson_data_table_init(get_all_lesson(teacher_db));
+        }).then(function () {
+          disaplayContent();
+          $('#dataTable_lesson').DataTable();
+          remove_lesoson();
+        });
+  }
   function get_all_lesson(data_lessons) {
     let index_teacher;
     let final= {};
@@ -74,18 +78,58 @@ $(document).ready(function() {
             '<td>' + element.teacher_name + '</td>' +
             '<td>' + element.teacher_uid + '</td>' +
             '<td><img src=' + photo_url_pic + ' style="max-height: 80px; max-width: 80px;"></td>' +
-            '<td><button type="button" class="btn btn-danger">Delete</button></td>' +
+            '<td><button type="button" class="btn btn-danger remove_lesson_btn" data_t_uid="'+element.teacher_uid+'" data_l_uid="'+element.lesson_id+'">Delete</button></td>' +
             '</tr>'
         );
     });
   }
+  function remove_lesoson() {
+    console.log("remove_lesson_btn");
+    $(".remove_lesson_btn").on("click",function () {
+      console.log("click remove_lesson_btn");
+      
+      let lesson_id = $(this).attr("data_l_uid")
+      let teacher_id = $(this).attr("data_t_uid")
+
+      console.log(lesson_id);
+      console.log(teacher_id);
+      console.log("/user/teacher/"+teacher_id+"/lessons/"+lesson_id);
+      var teacher_db;
+      firebase.database().ref("/user/teacher/"+teacher_id+"/lessons/"+lesson_id).once("value",function (DB) {
+        teacher_db=DB.val();
+      }).then(function () {
+        console.log(teacher_db);
+        
+        if('class_list' in teacher_db){
+          for(key in teacher_db.class_list){
+            console.log("/user/client/"+teacher_db.class_list[key]+"/my_lessons_list/"+lesson_id);
+            
+            firebase.database().ref("/user/client/"+teacher_db.class_list[key]+"/my_lessons_list/"+lesson_id).once("value",function (client_db) {
+             console.log(client_db.val());
+             firebase.database().ref("/user/client/"+teacher_db.class_list[key]+"/my_lessons_list/"+lesson_id).remove();
+             
+            })
+          }
+        }
+      }).then(function () {
+
+        firebase.database().ref("/user/teacher/"+teacher_id+"/lessons/"+lesson_id).remove()
+      }).then(function () {
+        download_db();
+      })
+      
+    })
+    
+  }
   function lesson_data_table_init(database) {
     var all_lessons = new Array();
     for (key in database) {
-        console.log(database[key]);
         all_lessons.push(create_lesson(database[key]));
     }
-    console.log(all_lessons);
     
     add_lesson_data_table_html(all_lessons);
+  }
+  function disaplayContent(){
+    document.getElementById("allContent").style.display = "block";
+    document.getElementById("loader").style.display = "none";
   }
