@@ -8,7 +8,7 @@
 		<meta name="author" content="">
 		
 		<title>Private teachers Tel Hai</title>
-		
+		<link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 		<link href="css/profile.css" rel="stylesheet">
@@ -88,11 +88,34 @@
 	
 	<section class="section about-section gray-bg" id="about">
 		<div class="container">
+			<div id="myModal" class="modal" tabindex="-1" role="dialog">
+				<div class="modal-dialog" role="document">
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <h5 class="modal-title">edit profile</h5>
+					  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					  </button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="change_name_input">change name</label>
+							<input type="email" class="form-control" id="change_name_input" placeholder="enter a new name">
+						</div>
+					</div>
+					<div class="modal-footer">
+					  <button id="save_changes_btn" type="button" class="btn btn-primary">Save changes</button>
+					  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					</div>
+				  </div>
+				</div>
+			  </div>
 			<div class="row align-items-center flex-row-reverse">
 				<div class="col-lg-6">
 					<div class="about-text go-to">
 						<h3 class="dark-color">My Profile</h3>
-						<button type="button" class="btn btn-primary">edit profile</button>
+						<button type="button" id="edit_profile_btn" class="btn btn-primary">edit profile</button>
+						<button type="button" id="reset_password_btn" class="btn btn-primary">reset password</button>
 						
 						<p>here you can see your account info</p>
 						<div class="row about-list">
@@ -169,11 +192,13 @@
 <!-- AllContent -->
 </div>
 
+
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="js/login/login_tools.js"></script>
 <script src="js/profile.js"></script>
 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
 <!--firebase-->
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/7.5.2/firebase-app.js"></script>

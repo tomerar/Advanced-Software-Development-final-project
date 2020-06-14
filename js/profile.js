@@ -1,12 +1,13 @@
 var database;
 var user_uid;
 $(document).ready(function () {
+	firebase_init =  new FirebaseInit();
+	firebase_init.is_login(null,"login.html");
 	download_db();  
 });
 
 function download_db(){
-	firebase_init =  new FirebaseInit();
-	firebase_init.is_login(null,"index.html");
+	
 	firebase.database().ref("/user").once('value', function (snapshot) {
 		database = snapshot.val();
 	  }).then(function () {
@@ -22,7 +23,35 @@ function calculateAge(birthday) { // birthday is a date
     var ageDate = new Date(ageDifMs); // miliseconds from epoch
     return Math.abs(ageDate.getUTCFullYear() - 1970);
 }
+function add_click_to_edit__profile_btn(class_user_uid) {
+	$("#edit_profile_btn").on("click",function () {
+		$("#myModal").modal("show");
+
+	});
+	$("#save_changes_btn").on("click",function () {
+		let new_name = $("#change_name_input").val();
+		$("#myModal").modal('toggle');
+		if (new_name.length == 0) {
+			alert("name is empty");
+			return false;
+		}
+		firebase.database().ref("/user/client/"+class_user_uid).update({name:new_name})
+		firebase.database().ref("/user/teacher/"+class_user_uid).update({name:new_name})
+		download_db();  		
+	});
+}
+function add_click_to_reset_resest_password_send_email_btn(emailAddress) {
+	$("#reset_password_btn").on("click",function () {
+		firebase.auth().sendPasswordResetEmail(emailAddress).then(function() {
+			alert("send email to reset password");
+		  }).catch(function(error) {
+			alert(error);
+		  });
+	});
+}
 function update_profile(client_db,teacher_db, class_user_uid) {
+	add_click_to_reset_resest_password_send_email_btn(client_db[class_user_uid].email);
+	add_click_to_edit__profile_btn(class_user_uid);
 	if (client_db[class_user_uid].pic_url.length!=0) {
 		$("#profile_url").attr("src",client_db[class_user_uid].pic_url);
 	}	
