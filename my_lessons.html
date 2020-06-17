@@ -179,8 +179,100 @@
             <button id="cancel_btn" type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
             <button id="remove_btn" type="button" class="btn btn-danger" data-dismiss="modal">Remove From
               calendar</button>
+            <button id="edit_btn" type="button" class="btn btn-primary" data-dismiss="modal">edit lesson</button>
+
           </div>
 
+        </div>
+      </div>
+    </div>
+
+    <!--edit Modal-->
+    <!-- The Modal -->
+    <div class="modal" id="editModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- edit Modal Header -->
+          <div class="modal-header">
+            <div class="container-fluid">
+
+              <div class="row">
+                <div class="col-md-4">
+                  <h4 class="edit-modal-subject">Modal Heading</h4>
+                </div>
+                <div class="col-md-4 ">
+                  <h4 class="edit-modal-title">Modal Heading</h4>
+                </div>
+
+              </div>
+              <!-- <h4 class="modal-title">Modal Heading</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+            </div>
+          </div>
+
+          <!-- <div>
+                <h4 class="modal-subject">Modal Heading</h4>
+              </div> -->
+
+          <!-- edit Modal body -->
+          <div class="modal-body">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-4">
+                  <h5 class="edit-modal-teacher">Modal Heading</h5>
+                </div>
+                <div class="col-md-2 ">
+
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <input class="datepicker" id="selctedDate" type="date" />
+                </div>
+                <div class="col-md-2 "></div>
+                <div class="col-md-4 ">
+                  <input type="time" id="edit-metting-Time" name="appt" value="12:00">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <h5 class="edit-modal-link">Lesson ID:</h5>
+                  <input type="url" name="link" placeholder="Insert lecture link" id="urlLink" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <h5 class="edit-nos">Number of students:</5>
+                </div>
+                <div class="col-md-12">
+                  <input type="number" class="edit-nos" name="uname" placeholder="1" min="1" max="10"
+                    id="numberOfStudent" value="1" />
+                </div>
+              </div>
+              <div class="row">
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <p class="edit-modal-about">Modal Heading</p>
+                  <div class="form-group">
+                    <textarea class="form-control" rows="5" id="editAboutMe" value=""></textarea>
+                  </div>
+                </div>
+
+                <div class="col-md-12">
+                  <h2 class="modal-eror text-danger">
+                    </p>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- edit Modal footer -->
+          <div class="modal-footer">
+            <button id="edit_cancel_btn" type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            <button id="apply_btn" type="button" class="btn btn-danger" data-dismiss="modal">apply changes</button>
+          </div>
         </div>
       </div>
     </div>

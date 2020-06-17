@@ -27,19 +27,25 @@ function disaplayContent() {
 }
 
 function updateCalendar() {
+
+
   my_lessons_as_teacher = [];
   my_lessons_as_student = [];
   firebase.database().ref("/user/teacher/").once('value').then(function (snapshot) {
     as_teacher_data = snapshot.val();
   }).then(function () {
+
     user_uid = firebase_init.get_user().uid;
     fetch_lessons(user_uid, true);
   }).then(function () {
     let path = "/user/client/" + user_uid + "/"
     firebase.database().ref(path).once('value').then(function (snapshot) {
       as_student_data = snapshot.val();
+
     }).then(function () {
       fetch_lessons(user_uid, false);
+    }).then(function () {
+      createCalendar();
     });
   });
 }
@@ -47,15 +53,16 @@ function updateCalendar() {
 function fetch_lessons(userID, as_teacher) {
   switch (as_teacher) {
     case true:
+
       if ("lessons" in as_teacher_data[userID]) {
         let lessons_user = as_teacher_data[userID].lessons
-        console.log(lessons_user);
         for (var key in lessons_user) {
           let time = lessons_user[key].time;
           let subjectName = "Teacher - Subject: "
             + lessons_user[key].subject + ", Title: "
             + lessons_user[key].lesson_title;
           let date = lessons_user[key].date;
+
           let splitDate = date.split("/");
           var currentLesson = ({
             title: subjectName,
@@ -82,10 +89,8 @@ function fetch_lessons(userID, as_teacher) {
       if ("my_lessons_list" in as_student_data) {
         let lessons_user = as_student_data.my_lessons_list
         for (var lesson_details in lessons_user) {
-          console.log(user_uid);
           let lesson_teacher = lessons_user[lesson_details].teacherId;
           let lesson_ID = lessons_user[lesson_details].lessonId;
-          console.log("lessons: ", as_teacher_data[lesson_teacher].lessons);
 
           lesson = as_teacher_data[lesson_teacher].lessons[lesson_ID];
           let time = lesson.time;
@@ -116,11 +121,10 @@ function fetch_lessons(userID, as_teacher) {
       break;
   }
   disaplayContent();
-  createCalendar();
+  // createCalendar();
 }
 
 function createCalendar() {
-
   if (calendar) calendar.destroy();
   calendarEl = document.getElementById('calendar');
   calendar = new FullCalendar.Calendar(calendarEl, {
@@ -164,7 +168,7 @@ function event_click_handler(info) {
   $('.modal-title').html(info.event.extendedProps.lesson_title);
   $('.modal-subject').html(info.event.extendedProps.subject);
   $('.modal-teacher').html("Teacher: " + info.event.extendedProps.teacher_name);
-  $('.modal-date').html("Date: " + info.event.extendedProps.date);
+  $('.modal-date').html(info.event.extendedProps.date);
   $('.modal-time').html("Time: " + info.event.extendedProps.time);
   $('.modal-link').html("Link: " + info.event.extendedProps.link);
   $('.modal-about').html("<h5>Lesson info:</h5> " + info.event.extendedProps.about);
@@ -172,25 +176,20 @@ function event_click_handler(info) {
     $("#remove_btn").html("Cancel this lesson");
   } else {
     $("#remove_btn").html("Cancel my participate");
+    $("#edit_btn").hide();
   }
 }
 
 function delete_from_DB_click(event) {
-  console.log("start delete_from_DB_click");
-  console.log(event.teacher_uid);
-  console.log(user_uid);
-
   let teacher_of_selected_lesson = (user_uid.localeCompare(event.teacher_uid) == 0);
+
   switch (teacher_of_selected_lesson) {
     case true:
-      console.log("delete as teacher");
       let lesson_path = "user/teacher/" + user_uid + "/lessons/" + event.lessonId;
-      console.log(lesson_path);
       searchAndDeleteLessonPatrticipate(lesson_path, user_uid, event.lessonId);
       break;
 
     case false:
-      console.log("delete as student");
       let teacher_path = "user/teacher/" + event.teacher_uid
         + "/lessons/" + event.lessonId + "/class_list";
       let student_path = "user/client/" + user_uid + "/my_lessons_list/" + event.lessonId;
@@ -204,30 +203,29 @@ function delete_from_DB_click(event) {
 
 function searchAndDeleteLessonPatrticipate(path, user_uid, lesson_id) {
   let participates;
+
   firebase.database().ref(path).once('value', function (snapshot) {
     lesson = snapshot.val();
   }).then(function () {
     for (var key in lesson.class_list) {
-      console.log("key:", key);
       update_in_student_path = "user/client/" + lesson.class_list[key] + "/my_lessons_list/" + lesson_id;
-      console.log("update_in_student_path: ", update_in_student_path);
       let ref = firebase.database().ref(update_in_student_path);
       ref.remove();
     }
-    console.log("teacher remove path: ", path);
     let ref = firebase.database().ref(path);
     ref.remove();
-    console.log("removed from all");
     updateCalendar();
   });
 }
 
 function searchAndDeleteFromList(path, user_uid) {
   let class_list_DB;
+
   firebase.database().ref(path).once('value', function (snapshot) {
     class_list_DB = snapshot.val();
   }).then(function () {
     let index = class_list_DB.indexOf(user_uid);
+
     class_list_DB.splice(index, 1);
     firebase.database().ref(path).set(class_list_DB);
   });
@@ -237,10 +235,137 @@ function addButtonsFunctions(event) {
   $("#remove_btn").click(function () {
     delete_from_DB_click(event);
     $("#remove_btn").off("click");
+    $("#cancel_btn").off("click");
+    $("#edit_btn").off("click");
   });
   $("#cancel_btn").click(function () {
     $("#remove_btn").off("click");
     $("#cancel_btn").off("click");
+    $("#edit_btn").off("click");
+  });
+  $("#edit_btn").click(function () {
+    edit_lesson_click(event);
+    $("#remove_btn").off("click");
+    $("#edit_btn").off("click");
+    $("#cancel_btn").off("click");
+  });
+
+}
+
+function edit_lesson_click(event) {
+  let day = event.date.split("/")[1];
+  let month = event.date.split("/")[0];
+  let year = event.date.split("/")[2];
+  let dateControl = document.querySelector('input[type="date"]');
+  dateControl.value = year + '-' + month + '-' + day;
+  let timeControl = document.querySelector('input[type="time"]');
+  timeControl.value = event.time + ":00.00";
+  let linkControl = document.querySelector('input[type="url"]');
+  linkControl.value = event.link;
+  let nosControl = document.querySelector('input[type="number"]');
+  nosControl.value = event.nos;
+
+  addEditButtonsFunctions(event);
+  $("#editModal").modal("show");
+  $('.edit-modal-title').html(event.lesson_title);
+  $('.edit-modal-subject').html(event.subject);
+  $('.edit-modal-teacher').html("Teacher: " + event.teacher_name);
+  $('.edit-modal-about').html("<h5>Lesson info:</h5>");
+  $('#editAboutMe').val(event.about)
+
+}
+
+function addEditButtonsFunctions(event) {
+  $("#edit_cancel_btn").click(function () {
+    $("#apply_btn").off("click");
+    $("#edit_cancel_btn").off("click");
+  });
+  $("#apply_btn").click(function () {
+    update_edit_lesson(event);
+    $("#apply_btn").off("click");
+    $("#edit_cancel_btn").off("click");
   });
 }
 
+function update_edit_lesson(event) {
+
+  if (verify_date_edit() && verify_nos_edit(event)) {
+    updateEvent(event);
+  } else {
+    setTimeout(function () { edit_lesson_click(event); }, 200);
+  }
+}
+
+function verify_date_edit() {
+  let currentDate = new Date();
+  let dateAlert = "Invalid date&time, must be schedule for future time.\n Please change";
+  let dateControl = document.querySelector('input[type="date"]');
+  let pickedDate = dateControl.value;
+  let year = pickedDate.split('-')[0];
+  let month = pickedDate.split('-')[1];
+  let day = pickedDate.split('-')[2];
+  let timeControl = document.querySelector('input[type="time"]');
+  let pockedtime = timeControl.value;
+  let hour = pockedtime.split(":")[0];
+  let minute = pockedtime.split(":")[1];
+
+  if (year < currentDate.getFullYear()) {
+    alert(dateAlert);
+    return false;
+  }
+  else if (year > currentDate.getFullYear()) return true;
+  else if (month < currentDate.getMonth() + 1) {
+    alert(dateAlert);
+    return false;
+  }
+  else if (month > currentDate.getMonth() + 1) return true;
+  else if (day < currentDate.getDate()) {
+    alert(dateAlert);
+    return false;
+  }
+  else if (day > currentDate.getDate()) return true;
+  else if (hour < currentDate.getHours()) {
+    alert(dateAlert);
+    return false;
+  }
+  else if (hour > currentDate.getHours()) return true;
+  else if (minute < currentDate.getMinutes()) {
+    alert(dateAlert);
+    return false;
+  }
+  else if (minute > actualDate.getMinutes()) return true;
+
+}
+
+function verify_nos_edit(prevEvent) {
+  let nosAlert = "Number of students in class can't decrease.\nPlease change"
+  let nosControl = document.querySelector('input[type="number"]');
+  let nos = nosControl.value;
+
+  if (nos < prevEvent.nos) {
+    alert(nosAlert);
+    return false;
+  }
+  return true;
+}
+
+function updateEvent(prevEvent) {
+  let pathToUpdate = "user/teacher/" + user_uid + "/lessons/" + prevEvent.lessonId;
+  let updateDate = document.querySelector('input[type="date"]').value;
+  let formatDate = updateDate.split("-")[1] + "/" + updateDate.split("-")[2] + "/" + updateDate.split("-")[0];
+  let updateTime = document.querySelector('input[type="time"]').value;
+  updateTime = updateTime.substring(0, 5);
+  let updateURL = document.querySelector('input[type="url"]').value;
+  let updateNOS = document.querySelector('input[type="number"]').value;
+  let updateAbout = $('#editAboutMe').val();
+
+  firebase.database().ref(pathToUpdate).update({
+    date: formatDate,
+    time: updateTime,
+    link: updateURL,
+    number_of_student: updateNOS,
+    about_me: updateAbout
+  }).then(function () {
+    updateCalendar();
+  });
+}
