@@ -124,7 +124,9 @@ $(document).ready(function() {
   function lesson_data_table_init(database) {
     var all_lessons = new Array();
     for (key in database) {
+      if (database[key] ) {
         all_lessons.push(create_lesson(database[key]));
+      }
     }
     
     add_lesson_data_table_html(all_lessons);

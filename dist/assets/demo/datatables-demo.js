@@ -9,20 +9,22 @@ $(document).ready(function() {
   });
 });
 
-function create_user(database) {
+function create_user(client_user,teacher_user) {
   let index_user = {};
-      if("status" in database.client[key])
-        index_user["status"] = database.client[key].status;
-      index_user["date_create_user"] = database.client[key].create_date_user;
-      index_user["user_id"] = database.client[key].uid;
-      index_user["name"] = database.client[key].name;
-      index_user["email"] = database.client[key].email;
-      index_user["stage"] = database.client[key].current_stage;
-      if ("lessons" in database.teacher[key])
-          index_user["lessons_create"] = Object.keys(database.teacher[key].lessons).length ;
-      if ("my_lessons_list" in database.client[key])
-          index_user["lessons_signed_up"] = Object.keys(database.client[key].my_lessons_list).length ;
-      index_user["photo_url"] = database.client[key].pic_url;
+      if("status" in client_user)
+        index_user["status"] = client_user.status;
+      index_user["date_create_user"] = client_user.create_date_user;
+      index_user["user_id"] = client_user.uid;
+      index_user["name"] = client_user.name;
+      index_user["email"] = client_user.email;
+      index_user["stage"] = client_user.current_stage;
+  
+      if ("lessons" in teacher_user)
+          index_user["lessons_create"] = Object.keys(teacher_user.lessons).length ;
+          
+      if ("my_lessons_list" in client_user)
+          index_user["lessons_signed_up"] = Object.keys(client_user.my_lessons_list).length ;
+      index_user["photo_url"] = client_user.pic_url;
       
       return index_user;
 }
@@ -59,7 +61,10 @@ function add_user_data_table_html(all_users) {
 function user_data_table_init(database) {
   var all_users = new Array();
   for (key in database.client) {
-      all_users.push(create_user(database));
+
+      if (database.teacher[key] && database.client[key]) {
+        all_users.push(create_user(database.client[key],database.teacher[key]));
+      }
   }
   add_user_data_table_html(all_users);
 }
