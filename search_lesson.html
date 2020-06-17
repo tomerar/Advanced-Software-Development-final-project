@@ -46,58 +46,70 @@
   <div id="allContent">
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="index.html">Private teachers Tel Hai</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-          aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a id="hello-user" class="nav-link" href="#"
-                style="font-weight: bold;color: white;border-radius:14px;display: none;"></a>
-            </li>
-            <li class="nav-item">
-              <a id="login-btn" class="nav-link" href="#"
-                style="font-weight: bold;color: green;border-radius:14px;display: none;">Login</a>
-            </li>
-            <li class="nav-item">
-              <a id="logout-btn" class="nav-link" href="#"
-                style="font-weight: bold;color: red;border-radius:14px;display: none;">Logout</a>
-            </li>
-            <li class="nav-item">
-              <a id="switch-btn" class="nav-link" href="#"
-                style="font-weight: bold;color: #46afcc;border-radius:14px;">Switch roll</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="index.html">Home
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link" href="#">Profile
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="add_lesson.html">Add a lesson</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="search_lesson.html">Search lesson</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="my_lessons.html">My history</a </li>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Statistics</a>
-            </li>
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Private teachers Tel Hai</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a id="hello-user" class="nav-link" href="#"
+              style="font-weight: bold;color: white;border-radius:14px;display: none;"></a>
+          </li>
+          <li class="nav-item">
+            <a id="login-btn" class="nav-link" href="#"
+              style="font-weight: bold;color: green;border-radius:14px;display: none;">Login</a>
+          </li>
+          <li class="nav-item">
+            <a id="logout-btn" class="nav-link" href="#"
+              style="font-weight: bold;color: red;border-radius:14px;display: none;">Logout</a>
+          </li>
+          <li class="nav-item">
+            <a id="switch-btn" class="nav-link" href="#"
+              style="font-weight: bold;color: #46afcc;border-radius:14px;">Switch roll</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="index.html">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="profile.html">Profile
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="add_lesson.html">Add a lesson</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="search_lesson.html">Search lesson</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="my_lessons.html">My history</a >
+          </li>
+          <li class="nav-item dropdown ">
+            <span id="message_note" class="badge badge-pill badge-primary"
+              style="float:right;margin-bottom:-10px; visibility: hidden;">1</span> <!-- your badge -->
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">Messages</a>
+            <div id="dropdown_boostrap_notification" style=" visibility: hidden;" class="dropdown-menu notification" aria-labelledby="navbarDropdown">
+              <div id="dropdown_messages" class="container">
+                <div class="row">
+                  <span class="message_note_date">16/06/2020 10:10</span>
+                  <p class="message_note_text">lesson create <button class="close"><span>&times;</span></button></p>
+                </div>
+                <div class="dropdown-divider"></div>
+              </div>
+            </div>
+          </li>
 
-            </li>
-          </ul>
-        </div>
+          
+        </ul>
       </div>
-    </nav>
+    </div>
+  </nav>
 
     <!-- Header -->
     <header class="bg-primary py-5 mb-5">

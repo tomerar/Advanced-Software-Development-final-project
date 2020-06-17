@@ -2,4 +2,20 @@
     direction: ltr;
     text-align: left;
 }
-
+/* CSS used here will be applied after bootstrap.css */
+html
+{
+ height: 100%;
+}
+.dropdown-menu{
+  max-height:300px;
+  overflow-y: scroll;
+}
+.message_note_text{
+    font-size: 14px;
+    font-weight: bold;
+}
+.message_note_date{
+  font-size: 12px;
+  font-weight: bold;
+}

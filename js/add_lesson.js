@@ -125,7 +125,7 @@ function initEvent() {
           lesson_id: lesson_id,
           lesson_title:lesson_title
         });
-
+        firebase_init.update_message_to_list(userID ,"lesson add")
       });
 
     }

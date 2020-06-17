@@ -78,12 +78,25 @@
             <a class="nav-link" href="search_lesson.html">Search lesson</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="my_lessons.html">My history</a </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Statistics</a>
+            <a class="nav-link" href="my_lessons.html">My history</a >
+          </li>
+          <li class="nav-item dropdown ">
+            <span id="message_note" class="badge badge-pill badge-primary"
+              style="float:right;margin-bottom:-10px; visibility: hidden;">1</span> <!-- your badge -->
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">Messages</a>
+            <div id="dropdown_boostrap_notification" style=" visibility: hidden;" class="dropdown-menu notification" aria-labelledby="navbarDropdown">
+              <div id="dropdown_messages" class="container">
+                <div class="row">
+                  <span class="message_note_date">16/06/2020 10:10</span>
+                  <p class="message_note_text">lesson create <button class="close"><span>&times;</span></button></p>
+                </div>
+                <div class="dropdown-divider"></div>
+              </div>
+            </div>
           </li>
 
-          </li>
+          
         </ul>
       </div>
     </div>

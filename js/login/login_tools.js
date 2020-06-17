@@ -166,11 +166,76 @@ var FirebaseInit = function () {
     });
   }
 
+var add_html_message_list = function (message_list) {
+  var message_list_size = Object.keys(message_list).length;
+  console.log("add_html_message_list");
+  $("#message_note").html(message_list_size);
+  $("#message_note").css("visibility","visible");
+  $("#dropdown_boostrap_notification").css("visibility","visible");
+  create_message_list(message_list);
+}
+var add_event_delete_msg =function () {
+  $(".delete_message").on("click",function () {
+    message_id_to_remove = $(this).parent().parent().attr("id")
+    firebase.database().ref("/user/client/"+user_class.uid+"/message_list/"+message_id_to_remove).remove();
+    update_messages_nav(user_class.uid);
+  })
+}
+var create_message_list = function (message_list) {
+  $("#dropdown_messages").html("");
+  for(key in message_list){
+    $("#dropdown_messages").append(
+    '<div id="'+key+'" class="row">'+
+    '<span class="message_note_date">'+message_list[key].date_msg+'</span>'+
+    ' <p class="message_note_text">'+message_list[key].data_msg+'<button class="close delete_message"><span>&times;</span></button></p>'+
+    '</div>'
+    );
+  }
+  add_event_delete_msg();
+}
+var hide_html_message_list = function () {
+  $("#message_note").css("visibility","hidden");
+  $("#dropdown_boostrap_notification").css("visibility","hidden");
+}
+  this.update_message_to_list = async function (current_user_uid ,message_contect) {
+      let currentdate_message = new Date();    
+      let currnet_date = (currentdate_message.getMonth() + 1) + "/"
+                      + currentdate_message.getDate() + "/"
+                      + currentdate_message.getFullYear() + "-"
+                      + currentdate_message.getHours() + ":"
+                      + currentdate_message.getMinutes() + ":"
+                      + currentdate_message.getSeconds();
+
+      let new_message = {
+        date_msg : currnet_date,
+        data_msg : message_contect
+      }
+      var rootRef = firebase.database().ref();
+      var storesRef = rootRef.child('/user/client/'+current_user_uid+'/message_list');
+        var newStoreRef = storesRef.push();
+        newStoreRef.set(new_message);
+    
+    }
+
+  var update_messages_nav = function (current_user_uid) {
+    var client_user_db;
+     firebase.database().ref("/user/client/"+current_user_uid).once('value', function(snapshot) {
+      client_user_db = snapshot.val();
+    }).then(function () {
+      if ("message_list" in client_user_db) {
+        add_html_message_list(client_user_db.message_list);
+      }else{
+        hide_html_message_list();
+      }
+
+    });
+  }
   this.is_login = function name(login_page, logout_page) {
     /// is login check
-
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
+        //update messages
+        update_messages_nav(user.uid);
         user_class = user
         console.log(user);
         update_on_disconnect_status_db(user.uid,"offline");
