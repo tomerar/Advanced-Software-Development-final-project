@@ -1,5 +1,5 @@
 class Lesson{
-  constructor(lessonSnapshot, key,lessonIdInDom){
+  constructor(lessonSnapshot, key,lessonIdInDom,rateList){
     this.data = lessonSnapshot;
     this.class_list = [];
     if ("class_list" in this.data){
@@ -9,9 +9,20 @@ class Lesson{
     this.lessonIdInDom = lessonIdInDom;
     this.about_me_class;
     this.profile_pic_class;
+    this.rateList = rateList;
+    this.teacherRate = this.calculateRate();
     this.addToDom();
   }
 
+  calculateRate(){
+    let counter = 0;
+    let sum = 0;
+    for (var key in this.rateList) {
+      sum += this.rateList[key].rateNum;
+      counter++;
+    }
+    return Math.ceil(sum/counter);
+  }
   addToDom(){
 
     var about_me
@@ -43,10 +54,28 @@ class Lesson{
         '<h6 class="card-text"> Date: ' + this.data.date + ' , ' + this.data.time + '</h6>'+
       '</div>'+
       '<div class="card-footer">'+
-        '<small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>'+
+        '<small class="text-muted-new" >' + this.getStar() + '</small>'+
         ' </div>'+
       '</div>'+
   '</div>';
+  }
+
+  getStar(){
+    //&#9733; &#9733; &#9733; &#9733; &#9734;
+    switch (this.teacherRate) {
+      case 1:
+        return '&#9733;';
+        case 2:
+        return '&#9733;&#9733;';
+        case 3:
+        return '&#9733;&#9733;&#9733;';  
+        case 4:
+        return '&#9733;&#9733;&#9733;&#9733;';
+        case 5:
+        return '&#9733;&#9733;&#9733;&#9733;&#9733;';
+      default:
+        return '';
+    }
   }
   getAvailablePlaces(){
     if (parseInt(this.data.number_of_student) > this.class_list.length){
