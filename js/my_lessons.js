@@ -91,31 +91,32 @@ function fetch_lessons(userID, as_teacher) {
         for (var lesson_details in lessons_user) {
           let lesson_teacher = lessons_user[lesson_details].teacherId;
           let lesson_ID = lessons_user[lesson_details].lessonId;
-
-          lesson = as_teacher_data[lesson_teacher].lessons[lesson_ID];
-          let time = lesson.time;
-          let subjectName = "Student - Subject: "
-            + lesson.subject
-            + ", Title: " + lesson.lesson_title;
-          let date = lesson.date;
-          let splitDate = date.split("/");
-          var currentLesson = ({
-            title: subjectName,
-            start: `${splitDate[2]}-${splitDate[0]}-${splitDate[1]}T${time}:00`,
-            extendedProps: {
-              date: date,
-              time: time,
-              lessonId: lesson.lesson_id,
-              lesson_title: lesson.lesson_title,
-              link: lesson.link,
-              nos: lesson.number_of_student,
-              subject: lesson.subject,
-              teacher_name: lesson.teacher_name,
-              teacher_uid: lesson.teacher_uid,
-              about: lesson.about_me,
-            },
-          });
-          my_lessons_as_student.push(currentLesson);
+          if ("lessons" in as_teacher_data[lesson_teacher]) {
+            lesson = as_teacher_data[lesson_teacher].lessons[lesson_ID];
+            let time = lesson.time;
+            let subjectName = "Student - Subject: "
+              + lesson.subject
+              + ", Title: " + lesson.lesson_title;
+            let date = lesson.date;
+            let splitDate = date.split("/");
+            var currentLesson = ({
+              title: subjectName,
+              start: `${splitDate[2]}-${splitDate[0]}-${splitDate[1]}T${time}:00`,
+              extendedProps: {
+                date: date,
+                time: time,
+                lessonId: lesson.lesson_id,
+                lesson_title: lesson.lesson_title,
+                link: lesson.link,
+                nos: lesson.number_of_student,
+                subject: lesson.subject,
+                teacher_name: lesson.teacher_name,
+                teacher_uid: lesson.teacher_uid,
+                about: lesson.about_me,
+              },
+            });
+            my_lessons_as_student.push(currentLesson);
+          }
         }
       }
       break;
@@ -195,7 +196,10 @@ function delete_from_DB_click(event) {
       let student_path = "user/client/" + user_uid + "/my_lessons_list/" + event.lessonId;
       let ref = firebase.database().ref(student_path);
       ref.remove();
-      searchAndDeleteFromList(teacher_path, user_uid)
+      searchAndDeleteFromList(teacher_path, user_uid);
+      let teacherId = event.teacher_uid;
+      let message = `Student just cancel his participate in '${event.subject}'`;
+      firebase_init.update_message_to_list(teacherId, message);
       updateCalendar();
       break;
   }
@@ -203,7 +207,6 @@ function delete_from_DB_click(event) {
 
 function searchAndDeleteLessonPatrticipate(path, user_uid, lesson_id) {
   let participates;
-
   firebase.database().ref(path).once('value', function (snapshot) {
     lesson = snapshot.val();
   }).then(function () {
@@ -214,6 +217,7 @@ function searchAndDeleteLessonPatrticipate(path, user_uid, lesson_id) {
     }
     let ref = firebase.database().ref(path);
     ref.remove();
+
     updateCalendar();
   });
 }
@@ -367,5 +371,20 @@ function updateEvent(prevEvent) {
     about_me: updateAbout
   }).then(function () {
     updateCalendar();
+    updateMessagesForStudents(pathToUpdate)
+  });
+}
+
+function updateMessagesForStudents(path) {
+  firebase.database().ref(path).once('value').then(function (snapshot) {
+    lesson = snapshot.val();
+  }).then(function () {
+    if ("class_list" in lesson) {
+      for (var key in lesson.class_list) {
+        let studentId = lesson.class_list[key];
+        let message = `'${lesson.subject}' lesson was updated by ${lesson.teacher_name}, please check`;
+        firebase_init.update_message_to_list(studentId, message);
+      }
+    }
   });
 }
