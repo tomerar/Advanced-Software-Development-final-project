@@ -20,15 +20,17 @@ firebase.initializeApp(fbConfig);
 attachCustomCommands({ Cypress, cy, firebase });
 
 Cypress.Commands.add('addLesson', () => {
+  var m = new Date();
+  var dateString = (m.getUTCMonth()+1) +"/"+ (m.getUTCDate()+1) +"/"+ m.getUTCFullYear()
     const fake = {
         "-MA1vZIf7K7P-62tIDzS" : {
           "about_me" : "",
           "class_list" : [ "NX0ILP24WxXSfAjxlLhFDI8EJZd2" ],
-          "date" : "06/25/2020",
+          "date" : dateString,
           "lesson_id" : "-MA1vZIf7K7P-62tIDzS",
-          "lesson_title" : "",
+          "lesson_title" : "test lesson",
           "link" : "",
-          "number_of_student" : "1",
+          "number_of_student" : "10",
           "pic_url" : "https://firebasestorage.googleapis.com/v0/b/privatelessons-telhai.appspot.com/o/users%2Fprofile_img%2F913291download%20(1).jpg?alt=media&token=d2515bde-d895-42c0-83dc-c50f211e8dd3",
           "subject" : "Art",
           "teacher_name" : "test",
@@ -43,3 +45,17 @@ Cypress.Commands.add('addLesson', () => {
   Cypress.Commands.add('removeLesson', () => {
     cy.callRtdb("remove", "/user/teacher/akYmJTGxg0Pg5PRMGwlVmV47kB92/lessons");
   })
+
+  Cypress.Commands.add('addLessonasStudent', () => {
+      const fake = {
+          "-MA1vZIf7K7P-62tIDzS" : {
+            "lessonId" : "-MA1vZIf7K7P-62tIDzS",
+            "teacherId" : "akYmJTGxg0Pg5PRMGwlVmV47kB92"
+          }
+        }
+        cy.callRtdb("set", "/user/client/akYmJTGxg0Pg5PRMGwlVmV47kB92/my_lessons_list", fake);
+    })
+
+    Cypress.Commands.add('removeLessonasStudent', () => {
+      cy.callRtdb("remove", "/user/client/akYmJTGxg0Pg5PRMGwlVmV47kB92/my_lessons_list");
+    })
