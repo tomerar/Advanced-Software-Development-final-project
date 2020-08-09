@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Private teachers Tel Hai</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/business-frontpage.css" rel="stylesheet">
+
+  <link href="css/engCss.css" rel="stylesheet">
+  <!-- Bootstrap 4 Chosen jQuery Plugin-->
+  <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+  <link href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" rel="stylesheet"
+    type="text/css">
+  <!-- <link rel="stylesheet" type="text/css" href="https://bootswatch.com/superhero/bootstrap.min.css"> -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/bootstrap-select.css">
+    <link href="dist/css/styles.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet"
+        crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"
+        crossorigin="anonymous"></script>
+    <link href="css/loader.css" rel="stylesheet">
+    <link href="css/rating_flow.css" rel="stylesheet">
+</head>
+
+<body class="sb-nav-fixed">
+    <div id="loader"></div>
+    <div id="allContent">
+        <!-- Navigation -->
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Private teachers Tel Hai</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a id="hello-user" class="nav-link" href="#"
+              style="font-weight: bold;color: white;border-radius:14px;display: none;"></a>
+          </li>
+          <li class="nav-item">
+            <a id="login-btn" class="nav-link" href="#"
+              style="font-weight: bold;color: green;border-radius:14px;display: none;">Login</a>
+          </li>
+          <li class="nav-item">
+            <a id="logout-btn" class="nav-link" href="#"
+              style="font-weight: bold;color: red;border-radius:14px;display: none;">Logout</a>
+          </li>
+          <li class="nav-item">
+            <a id="switch-btn" class="nav-link" href="#"
+              style="font-weight: bold;color: #46afcc;border-radius:14px;">Switch roll</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="index.html">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="profile.html">Profile
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="add_lesson.html">Add a lesson</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="search_lesson.html">Search lesson</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="my_lessons.html">My history</a >
+          </li>
+          <li class="nav-item dropdown ">
+            <span id="message_note" class="badge badge-pill badge-primary"
+              style="float:right;margin-bottom:-10px; visibility: hidden;">1</span> <!-- your badge -->
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">Messages</a>
+            <div id="dropdown_boostrap_notification" style=" visibility: hidden;" class="dropdown-menu notification" aria-labelledby="navbarDropdown">
+              <div id="dropdown_messages" class="container">
+                <div class="row">
+                  <span class="message_note_date">16/06/2020 10:10</span>
+                  <p class="message_note_text">lesson create <button class="close"><span>&times;</span></button></p>
+                </div>
+                <div class="dropdown-divider"></div>
+              </div>
+            </div>
+          </li>
+
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <header class="bg-primary py-5 mb-5">
+    <div class="container h-100">
+      <div class="row h-100 align-items-center">
+        <div class="col-lg-12">
+          <h1 class="display-4 text-white mt-5 mb-2">Private teachers Tel Hai <br> Students for students</h1>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="container">
+    <div id="layoutSidenav_content">
+      <main>
+          <div class="container-fluid">
+              <div class="card mb-4">
+                  <div class="card-header"><i class="fas fa-table mr-1"></i>Rate lesson from current table:</div>
+                  <div class="card-body">
+                      <div class="table-responsive">
+                          <table class="table table-bordered" id="dataTable_lesson" width="100%"
+                              cellspacing="0">
+                              <thead>
+                                  <tr>
+                                      <th>date</th>
+                                      <th>subject</th>
+                                      <th>teacher name</th>
+                                      <th>url photo</th>
+                                      <th>rate</th>
+                                      <th>save button</th>
+                                  </tr>
+                              </thead>
+                              <tfoot>
+                                  <tr>
+                                    <th>date</th>
+                                      <th>subject</th>
+                                      <th>teacher name</th>
+                                      <th>url photo</th>
+                                      <th>rate</th>
+                                      <th>save button</th>
+                                  </tr>
+                              </tfoot>
+                              <tbody id="lesson_data_table">
+                                  <tr>
+                                  </tr>
+
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </main>
+     
+      <footer class="py-4 bg-light mt-auto">
+          <div class="container-fluid">
+              <div class="d-flex align-items-center justify-content-between small">
+                  <div class="text-muted">Copyright &copy; Your Website 2019</div>
+                  <div>
+                      <a href="#">Privacy Policy</a>
+                      &middot;
+                      <a href="#">Terms &amp; Conditions</a>
+                  </div>
+              </div>
+          </div>
+      </footer>
+  </div>
+  </div>
+            
+            <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+        </div>
+        
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="js/login/login_tools.js"></script>
+    <script src="js/ratingFlow.js"></script>
+    <script src="starRating/star.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+
+    <!--firebase-->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.5.2/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.5.2/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+    <!-- Add Firebase products that you want to use -->
+</body>
+
+</html>

@@ -3,7 +3,7 @@ var subjectMapById = new Map();
 var counterLesson = 0;
 var teachers_data_form_DB;
 var subject_data;
-
+var teachersFullData;
 $(document).ready(function () {
   var fillter_and_sort = new FillterAndSort();
   var firebase_init = new FirebaseInit();
@@ -17,8 +17,9 @@ $(document).ready(function () {
   });
 
   firebase.database().ref("/user/teacher/").once('value', function (snapshot) {
+    teachersFullData = snapshot.val();
     teachers_data_form_DB = fillter_and_sort.remove_old_lessons(snapshot.val());
-    fillter_and_sort.set_data(teachers_data_form_DB);
+    fillter_and_sort.set_data(teachers_data_form_DB,teachersFullData);
   }).then(function () {
     getLessonsFromDB(teachers_data_form_DB);
     disaplayContent();
@@ -38,7 +39,7 @@ function getLessonsFromDB(teachers_data) {
     if (lessons != null) {
       for (var key in lessons) {
         let subjectName = lessons[key].subject;
-        let newLesson = new Lesson(lessons[key], key, counterLesson)
+        let newLesson = new Lesson(lessons[key], key, counterLesson,teachersFullData[lessons[key].teacher_uid].rateList)
         if (!subjectMapByGroup.has(subjectName)) {
           let newSubject = new Subject();
           subjectMapByGroup.set(subjectMapByGroup, newSubject);

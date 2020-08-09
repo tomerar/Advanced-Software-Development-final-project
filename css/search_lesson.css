@@ -10,3 +10,7 @@ body {
 #allContent{
   display: none;
 }
+
+.text-muted-new{
+  color: #ffc700 !important;    
+}
