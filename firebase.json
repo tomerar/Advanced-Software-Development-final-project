@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "public",
+    "public": "/",
     "ignore": [
       "firebase.json",
       "cypress.env.json",
@@ -10,7 +10,7 @@
     "rewrites": [
       {
         "source": "**",
-        "destination": "/login.html"
+        "destination": "login.html"
       }
     ]
   },
