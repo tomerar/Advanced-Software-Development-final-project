@@ -20,7 +20,10 @@ context('Actions', () => {
     })
 
     it('login with user not in db: should fail', () => {
+        cy.logout();
+        cy.wait(5000);
         cy.visit('/login.html', {timeout: 30000});
+
 
         cy.get('#first-name').type('fake@test.com').should('have.value', 'fake@test.com');
         cy.get('#pass').type('fake');
