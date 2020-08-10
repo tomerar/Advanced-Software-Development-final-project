@@ -17,11 +17,10 @@ context('Actions', () => {
         cy.get('#login').click();
 
         cy.url().should('include', '/index.html');
+        cy.get('#logout-btn').click();
     })
 
     it('login with user not in db: should fail', () => {
-        cy.logout();
-        cy.wait(5000);
         cy.visit('/login.html', {timeout: 30000});
 
 
