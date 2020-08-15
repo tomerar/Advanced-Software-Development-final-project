@@ -21,7 +21,7 @@ attachCustomCommands({ Cypress, cy, firebase });
 
 Cypress.Commands.add('addLesson', () => {
   var m = new Date();
-  var dateString = (m.getUTCMonth()+1) +"/"+ (m.getUTCDate()+1) +"/"+ m.getUTCFullYear()
+  var dateString = (m.getUTCMonth()+1) +"/"+ (m.getUTCDate()) +"/"+ m.getUTCFullYear()
     const fake = {
         "-MA1vZIf7K7P-62tIDzS" : {
           "about_me" : "",
@@ -35,7 +35,7 @@ Cypress.Commands.add('addLesson', () => {
           "subject" : "Art",
           "teacher_name" : "test",
           "teacher_uid" : "akYmJTGxg0Pg5PRMGwlVmV47kB92",
-          "time" : "12:00"
+          "time" : "23:59"
         }
       }
       cy.callRtdb("set", "/user/teacher/akYmJTGxg0Pg5PRMGwlVmV47kB92/lessons", fake);

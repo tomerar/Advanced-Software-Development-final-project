@@ -11,7 +11,7 @@ context('Actions', () => {
   
     it('login with test user: should succeed', () => {
         cy.visit('/login.html', {timeout: 30000});
-
+        
         cy.get('#first-name').type('test@test.com').should('have.value', 'test@test.com');
         cy.get('#pass').type('12345678');
         cy.get('#login').click();
