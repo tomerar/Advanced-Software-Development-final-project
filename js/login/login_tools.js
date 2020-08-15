@@ -75,12 +75,12 @@ var FirebaseInit = function () {
 
 
   }
-  var what_client_see = function () {
+  var what_tracher_see = function () {
     $("#search_a_lesson").css("display", "block");
     $("#add_a_lesson").css("display", "none");
   }
 
-  var what_tracher_see = function () {
+  var what_client_see = function () {
     $("#search_a_lesson").css("display", "none");
     $("#add_a_lesson").css("display", "block");
   }
@@ -103,7 +103,7 @@ var FirebaseInit = function () {
           } else {
             $("#hello-user").text("hi student " + data_client.name);
             $("#hello-user").css("display", "block");
-            $("#hello-user").css("color", "blue");
+            $("#hello-user").css("color", "#66ffff");
             what_tracher_see();
           }
         }
