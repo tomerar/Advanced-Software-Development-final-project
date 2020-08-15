@@ -79,9 +79,7 @@ class Lesson{
   }
   getAvailablePlaces(){
     if (parseInt(this.data.number_of_student) > this.class_list.length){
-      console.log(this.data.number_of_student);
-      console.log(this.class_list.length);
-
+     
       return '<h5 class="text-success">Available places: '+(parseInt(this.data.number_of_student) - this.class_list.length)+'</h5>';
     }else{
       return '<h5 class="text-danger">Available places: '+0+'</h5>';

@@ -92,7 +92,7 @@ async function add_to_calender(lesson, userID) {
     user_in_db = snapshot.val();
   })
 
-  //check if in the lesson
+  //check if lesson is full
   if ("class_list" in lesson_in_db) {
     if ((parseInt(lesson_in_db.number_of_student) - lesson_in_db.class_list.length) <= 0) {
       $(".modal-eror").html("lesson is full!!")
@@ -116,6 +116,21 @@ async function add_to_calender(lesson, userID) {
       return false;
     }
   }
+  //check if techer and client the same
+  console.log(userID);
+  console.log(lesson.getLessonTeacherUid());
+  console.log(userID.localeCompare(lesson.getLessonTeacherUid()));
+  if (userID.localeCompare(lesson.getLessonTeacherUid())==0) {
+    $(".modal-eror").html("it your class you cant enter")
+
+    setTimeout(() => {
+      $(".modal-eror").html("");
+    }, 3000);
+    $("#add-lesson-btn").unbind('click');
+    return false;
+  }
+
+
   //update db
   if ("class_list" in lesson_in_db) {
 

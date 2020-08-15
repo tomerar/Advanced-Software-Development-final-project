@@ -137,6 +137,7 @@ var FirebaseInit = function () {
             }).then(function () {
 
               add_user_name_on_nav(user_class)
+              window.location.href ="index.html"
             });
           });
         });
