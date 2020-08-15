@@ -4,9 +4,10 @@ var counterLesson = 0;
 var teachers_data_form_DB;
 var subject_data;
 var teachersFullData;
+var firebase_init
 $(document).ready(function () {
   var fillter_and_sort = new FillterAndSort();
-  var firebase_init = new FirebaseInit();
+  firebase_init = new FirebaseInit();
   firebase_init.is_login(null, "login.html");
 
   firebase.database().ref("/lessons/").once('value', function (snapshot) {
@@ -153,7 +154,7 @@ async function add_to_calender(lesson, userID) {
   lesson.class_list.push(userID)
   $('.modal-available').html(lesson.getAvailablePlaces());
   $('#myModal').modal('hide');
-
+  firebase_init.update_message_to_list(userID ,"you add to class "+lesson.getLessonTitle())
 }
 function addLessonBtn(lessonId) {
   let lesson = subjectMapById.get($(lessonId).attr('id'));
