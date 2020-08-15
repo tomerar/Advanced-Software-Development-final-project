@@ -75,6 +75,15 @@ var FirebaseInit = function () {
 
 
   }
+  var what_tracher_see = function () {
+    $("#search_a_lesson").css("display", "block");
+    $("#add_a_lesson").css("display", "none");
+  }
+
+  var what_client_see = function () {
+    $("#search_a_lesson").css("display", "none");
+    $("#add_a_lesson").css("display", "block");
+  }
 
   var add_user_name_on_nav = function (user) {
     let data_client;
@@ -90,10 +99,12 @@ var FirebaseInit = function () {
             $("#hello-user").text("hi teacher " + data_teacher.name);
             $("#hello-user").css("display", "block");
             $("#hello-user").css("color", "yellow");
+            what_client_see();
           } else {
             $("#hello-user").text("hi student " + data_client.name);
             $("#hello-user").css("display", "block");
-            $("#hello-user").css("color", "blue");
+            $("#hello-user").css("color", "#66ffff");
+            what_tracher_see();
           }
         }
 
@@ -126,6 +137,7 @@ var FirebaseInit = function () {
             }).then(function () {
 
               add_user_name_on_nav(user_class)
+              window.location.href ="index.html"
             });
           });
         });

@@ -4,9 +4,10 @@ var counterLesson = 0;
 var teachers_data_form_DB;
 var subject_data;
 var teachersFullData;
+var firebase_init
 $(document).ready(function () {
   var fillter_and_sort = new FillterAndSort();
-  var firebase_init = new FirebaseInit();
+  firebase_init = new FirebaseInit();
   firebase_init.is_login(null, "login.html");
 
   firebase.database().ref("/lessons/").once('value', function (snapshot) {
@@ -92,7 +93,7 @@ async function add_to_calender(lesson, userID) {
     user_in_db = snapshot.val();
   })
 
-  //check if in the lesson
+  //check if lesson is full
   if ("class_list" in lesson_in_db) {
     if ((parseInt(lesson_in_db.number_of_student) - lesson_in_db.class_list.length) <= 0) {
       $(".modal-eror").html("lesson is full!!")
@@ -116,6 +117,21 @@ async function add_to_calender(lesson, userID) {
       return false;
     }
   }
+  //check if techer and client the same
+  console.log(userID);
+  console.log(lesson.getLessonTeacherUid());
+  console.log(userID.localeCompare(lesson.getLessonTeacherUid()));
+  if (userID.localeCompare(lesson.getLessonTeacherUid())==0) {
+    $(".modal-eror").html("it your class you cant enter")
+
+    setTimeout(() => {
+      $(".modal-eror").html("");
+    }, 3000);
+    $("#add-lesson-btn").unbind('click');
+    return false;
+  }
+
+
   //update db
   if ("class_list" in lesson_in_db) {
 
@@ -138,7 +154,7 @@ async function add_to_calender(lesson, userID) {
   lesson.class_list.push(userID)
   $('.modal-available').html(lesson.getAvailablePlaces());
   $('#myModal').modal('hide');
-
+  firebase_init.update_message_to_list(userID ,"you add to class "+lesson.getLessonTitle())
 }
 function addLessonBtn(lessonId) {
   let lesson = subjectMapById.get($(lessonId).attr('id'));
