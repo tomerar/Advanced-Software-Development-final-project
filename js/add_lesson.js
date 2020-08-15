@@ -143,7 +143,7 @@ function isValidTime(){
   let day = selectedDate.split("/")[1];
   let selectedTime = document.getElementById("mettingTime").value;
   let hour = selectedTime.split(":")[0];
-  let minute = selectedTime.split(":")[0];
+  let minute = selectedTime.split(":")[1];
   let actualDate = new Date();
   if(year < actualDate.getFullYear()) return false;
   else if(year > actualDate.getFullYear()) return true;
