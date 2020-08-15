@@ -2,6 +2,7 @@ var subjectList = [];
 var firebase_init;
 var current = 1;
 var DATE_CUURENT_TAB = 2;
+
 $(document).ready(function () {
   firebase_init = new FirebaseInit();
   firebase_init.is_login(null,"login.html");
@@ -15,6 +16,7 @@ function initProgressBar(){
   var opacity;
 
   var steps = $("fieldset").length;
+
   setProgressBar(current);
   new LoginTools();
   $(".next").click(function () {
@@ -69,6 +71,7 @@ function initProgressBar(){
 
   function setProgressBar(curStep) {
     var percent = parseFloat(100 / steps) * curStep;
+
     percent = percent.toFixed();
     $(".progress-bar")
       .css("width", percent + "%")
@@ -84,8 +87,10 @@ async function setSelectOptions() {
       subjectList.push(item.key);
     });
     let optionsElements = document.getElementById("selectSubject");
+
     for (var i = 0; i < subjectList.length; i++) {
       var opt = document.createElement('option');
+
       opt.value = subjectList[i];
       opt.innerHTML = subjectList[i];
       optionsElements.appendChild(opt);
@@ -98,20 +103,28 @@ function initEvent() {
     if(isValidTime()){
       var userID = firebase.auth().currentUser.uid;
       var teacher_data;
+
       firebase.database().ref("/user/teacher/" + userID ).once('value').then(function (snapshot) {
         teacher_data = snapshot.val();
       }).then(function () {
         let selectedDate = document.getElementById("selctedDate").value;
+
         let selectedSubject = document.getElementById("selectSubject").value;
+
         let numberOfStudent = document.getElementById("numberOfStudent").value;
+
         let urlLink = document.getElementById("urlLink").value;
+
         let aboutMe = document.getElementById("aboutMe").value;
+
         let selectedTime = document.getElementById("mettingTime").value;
+
         let lesson_title = document.getElementById("selectTitle").value;
         var rootRef = firebase.database().ref();
         var storesRef = rootRef.child('/user/teacher/' + userID + '/lessons');
         var newStoreRef = storesRef.push();
         var lesson_id = newStoreRef.key;
+
         newStoreRef.set({
           date: selectedDate,
           subject: selectedSubject,
@@ -138,13 +151,21 @@ function initEvent() {
 function isValidTime(){
   if(current != DATE_CUURENT_TAB) return true;
   let selectedDate = document.getElementById("selctedDate").value;
+
   let year = selectedDate.split("/")[2];
+
   let month = selectedDate.split("/")[0];
+
   let day = selectedDate.split("/")[1];
+
   let selectedTime = document.getElementById("mettingTime").value;
+
   let hour = selectedTime.split(":")[0];
+
   let minute = selectedTime.split(":")[1];
+
   let actualDate = new Date();
+
   if(year < actualDate.getFullYear()) return false;
   else if(year > actualDate.getFullYear()) return true;
   else if(month < actualDate.getMonth() + 1) return false;

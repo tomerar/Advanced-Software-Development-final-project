@@ -22,9 +22,7 @@ var FirebaseInit = function () {
   this.construct = function () {
     this.init_firebase();
     this.logout();
-    
 
-    
 
   };
 
@@ -33,21 +31,24 @@ var FirebaseInit = function () {
   }
 
   this.getCurrentClientVariable = async function (func,variableName="") {
-    firebase.database().ref("/user/client/" + user_class.uid + "/" + variableName ).once('value').then(function (snapshot) {
-      func(snapshot.val())
-    });
+    firebase.database().ref("/user/client/" + user_class.uid + "/" + variableName ).once('value').then(
+      function (snapshot) {
+        func(snapshot.val())
+      });
   }
 
   this.getCurrentTeacherVariable =async function (func,variableName="") {
-    return firebase.database().ref("/user/teacher/" + user_class.uid + "/" + variableName ).once('value').then(function (snapshot) {
-      func( snapshot.val());
-    });
+    return firebase.database().ref("/user/teacher/" + user_class.uid + "/" + variableName ).once('value').then(
+      function (snapshot) {
+        func( snapshot.val());
+      });
   }
 
   this.getCurrentTeacherLessons = async function (myFunc) {
-    firebase.database().ref("/user/teacher/" + user_class.uid + "/lessons" ).once('value').then(function (snapshot) {
-      myFunc( snapshot.val());
-    });
+    firebase.database().ref("/user/teacher/" + user_class.uid + "/lessons" ).once('value').then(
+      function (snapshot) {
+        myFunc( snapshot.val());
+      });
   }
 
   this.setTeacherVariable = async function (myFunc,map) {
@@ -87,7 +88,9 @@ var FirebaseInit = function () {
 
   var add_user_name_on_nav = function (user) {
     let data_client;
+
     let data_teacher;
+
     firebase.database().ref("user/client/" + user.uid).once('value').then(function (snapshot) {
       data_client = snapshot.val();
     }).then(function () {
@@ -160,6 +163,7 @@ var FirebaseInit = function () {
       measurementId: "G-9T7YLMS7X7"
     };
     //   Initialize Firebase
+
     firebase.initializeApp(firebaseConfig);
     if (!firebase.apps.length) {
       firebase.initializeApp({});
@@ -178,60 +182,66 @@ var FirebaseInit = function () {
     });
   }
 
-var add_html_message_list = function (message_list) {
-  var message_list_size = Object.keys(message_list).length;
-  console.log("add_html_message_list");
-  $("#message_note").html(message_list_size);
-  $("#message_note").css("visibility","visible");
-  $("#dropdown_boostrap_notification").css("visibility","visible");
-  create_message_list(message_list);
-}
-var add_event_delete_msg =function () {
-  $(".delete_message").on("click",function () {
-    message_id_to_remove = $(this).parent().parent().attr("id")
-    firebase.database().ref("/user/client/"+user_class.uid+"/message_list/"+message_id_to_remove).remove();
-    update_messages_nav(user_class.uid);
-  })
-}
-var create_message_list = function (message_list) {
-  $("#dropdown_messages").html("");
-  for(key in message_list){
-    $("#dropdown_messages").append(
-    '<div id="'+key+'" class="row">'+
-    '<span class="message_note_date">'+message_list[key].date_msg+'</span>'+
-    ' <p class="message_note_text">'+message_list[key].data_msg+'<button class="close delete_message"><span>&times;</span></button></p>'+
-    '</div>'
-    );
+  var add_html_message_list = function (message_list) {
+    var message_list_size = Object.keys(message_list).length;
+
+    console.log("add_html_message_list");
+    $("#message_note").html(message_list_size);
+    $("#message_note").css("visibility","visible");
+    $("#dropdown_boostrap_notification").css("visibility","visible");
+    create_message_list(message_list);
   }
-  add_event_delete_msg();
-}
-var hide_html_message_list = function () {
-  $("#message_note").css("visibility","hidden");
-  $("#dropdown_boostrap_notification").css("visibility","hidden");
-}
+  var add_event_delete_msg =function () {
+    $(".delete_message").on("click",function () {
+      message_id_to_remove = $(this).parent().parent().attr("id")
+      firebase.database().ref("/user/client/"+user_class.uid+"/message_list/"+message_id_to_remove).remove();
+      update_messages_nav(user_class.uid);
+    })
+  }
+  var create_message_list = function (message_list) {
+    $("#dropdown_messages").html("");
+    for(key in message_list){
+      $("#dropdown_messages").append(
+        '<div id="'+key+'" class="row">'+
+    '<span class="message_note_date">'+message_list[key].date_msg+'</span>'+
+    ' <p class="message_note_text">'+message_list[key].data_msg+
+    '<button class="close delete_message"><span>&times;</span></button></p>'+
+    '</div>'
+      );
+    }
+    add_event_delete_msg();
+  }
+  var hide_html_message_list = function () {
+    $("#message_note").css("visibility","hidden");
+    $("#dropdown_boostrap_notification").css("visibility","hidden");
+  }
+
   this.update_message_to_list = async function (current_user_uid ,message_contect) {
-      let currentdate_message = new Date();    
-      let currnet_date = (currentdate_message.getMonth() + 1) + "/"
+    let currentdate_message = new Date();
+
+    let currnet_date = (currentdate_message.getMonth() + 1) + "/"
                       + currentdate_message.getDate() + "/"
                       + currentdate_message.getFullYear() + "-"
                       + currentdate_message.getHours() + ":"
                       + currentdate_message.getMinutes() + ":"
                       + currentdate_message.getSeconds();
 
-      let new_message = {
-        date_msg : currnet_date,
-        data_msg : message_contect
-      }
-      var rootRef = firebase.database().ref();
-      var storesRef = rootRef.child('/user/client/'+current_user_uid+'/message_list');
-        var newStoreRef = storesRef.push();
-        newStoreRef.set(new_message);
-    
+    let new_message = {
+      date_msg : currnet_date,
+      data_msg : message_contect
     }
+    var rootRef = firebase.database().ref();
+    var storesRef = rootRef.child('/user/client/'+current_user_uid+'/message_list');
+    var newStoreRef = storesRef.push();
+
+    newStoreRef.set(new_message);
+
+  }
 
   var update_messages_nav = function (current_user_uid) {
     var client_user_db;
-     firebase.database().ref("/user/client/"+current_user_uid).once('value', function(snapshot) {
+
+    firebase.database().ref("/user/client/"+current_user_uid).once('value', function(snapshot) {
       client_user_db = snapshot.val();
     }).then(function () {
       if ("message_list" in client_user_db) {
@@ -242,6 +252,7 @@ var hide_html_message_list = function () {
 
     });
   }
+
   this.is_login = function name(login_page, logout_page) {
     /// is login check
     firebase.auth().onAuthStateChanged(function (user) {
@@ -301,6 +312,7 @@ var LoginTools = function () {
      * in the class
      */
   var vars = {};
+
   this.firstTime = false;
   /*
      * Can access this.method
@@ -329,6 +341,7 @@ var LoginTools = function () {
 
       const auth = firebase.auth();
       const flag = auth.signInWithEmailAndPassword(emailUser, passwordUser);
+
       flag.catch(function (e) {
 
         $("#login-err").append("<p  class='login100-form-err p-b-15' style='display: block;'>" +
@@ -336,7 +349,7 @@ var LoginTools = function () {
         setTimeout(function () { $("#login-err").empty(); }, 3000);
         console.log(e.message);
         $("#login-err").css("display", "block");
-        return;
+
       });
       console.log(emailUser);
       console.log(passwordUser);
@@ -349,6 +362,7 @@ var LoginTools = function () {
       console.log("click on google btn")
 
       var provider = new firebase.auth.GoogleAuthProvider();
+
       firebase.auth().signInWithRedirect(provider);
     });
   }
@@ -453,9 +467,11 @@ var SignUpTools = function () {
     var urlNow;
     var fileButton = document.getElementById('photo-upload');
     var uploader = document.getElementById('uploader');
+
     fileButton.addEventListener('change', function (e) {
       var file = e.target.files[0];
       var path_pic = 'users/profile_img/'+ Math.floor(100000 + Math.random() * 900000) + file.name ;
+
       console.log(path_pic);
 
       var storageRef = firebase.storage().ref(path_pic);
@@ -465,6 +481,7 @@ var SignUpTools = function () {
       task.on('state_changed',
         function progress(snapshot) {
           var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
           uploader.value = percentage;
         },
         function error(err) {
@@ -497,6 +514,7 @@ var SignUpTools = function () {
       $("#login-err").css("display", "none");
 
       var job;
+
       job = $('input[name=job]:checked', '#job_sign_up').val()
 
       var email = $("#first-nameup").val();
@@ -509,6 +527,7 @@ var SignUpTools = function () {
 
       var pass = "";
       var repass = "";
+
       pass = $("#passup").val();
       repass = $("#pass2").val();
       console.log(pass);
@@ -555,6 +574,7 @@ var SignUpTools = function () {
       }
 
       var okToMove = true;
+
       firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
         // Handle Errors here.
         okToMove = false;
@@ -572,9 +592,12 @@ var SignUpTools = function () {
       }).then(function () {
         console.log("createUserWithEmailAndPassword work sign up the user");
         var userId = firebase.auth().currentUser.uid;
+
         console.log("userId" + userId);
         let job_cilent = true;
+
         let job_teacher = false;
+
         if (job.localeCompare("client") == 0){
           job_cilent = true;
           job_teacher = false;
@@ -583,6 +606,7 @@ var SignUpTools = function () {
           job_teacher = true;
         }
         var currentdate = new Date();
+
         let currnet_date = (currentdate.getMonth() + 1) + "/"
                     + currentdate.getDate() + "/"
                     + currentdate.getFullYear() + "-"
@@ -646,15 +670,6 @@ var SignUpTools = function () {
         window.location.href = goto;
       });
     });
-  }
-
-  var IsEmail = function (email) {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    if (!email.match(re)) {
-      return false;
-    } else {
-      return true;
-    }
   }
 
   var isDate18orMoreYearsOld = function (day, month, year) {

@@ -5,8 +5,10 @@ var teachers_data_form_DB;
 var subject_data;
 var teachersFullData;
 var firebase_init
+
 $(document).ready(function () {
   var fillter_and_sort = new FillterAndSort();
+
   firebase_init = new FirebaseInit();
   firebase_init.is_login(null, "login.html");
 
@@ -37,12 +39,16 @@ function getLessonsFromDB(teachers_data) {
   $("#teachersPictures").html("")
   $.each(teachers_data, function (index, user) {
     let lessons = user.lessons;
+
     if (lessons != null) {
       for (var key in lessons) {
         let subjectName = lessons[key].subject;
+
         let newLesson = new Lesson(lessons[key], key, counterLesson,teachersFullData[lessons[key].teacher_uid].rateList)
+
         if (!subjectMapByGroup.has(subjectName)) {
           let newSubject = new Subject();
+
           subjectMapByGroup.set(subjectMapByGroup, newSubject);
           newSubject.addLesson(newLesson);
         }
@@ -50,6 +56,7 @@ function getLessonsFromDB(teachers_data) {
           subjectMapByGroup.get(subjectName).addLesson(newLesson);
         }
         let lessonId = 'lesson_' + counterLesson + '';
+
         subjectMapById.set(lessonId, newLesson);
         counterLesson++;
       }
@@ -57,13 +64,16 @@ function getLessonsFromDB(teachers_data) {
   });
   for (let index = 0; index < counterLesson; index++) {
     let lessonId = '#lesson_' + index + '';
+
     $(lessonId).click(function () {
       event.preventDefault();
       addLessonBtn(lessonId);
       var e = $(this);
       var title = e.data('title');
       var body = e.data('value');
+
       let lesson = subjectMapById.get(this.id);
+
       $("#myModal").modal("show");
       $('.modal-title').html(lesson.getLessonTitle());
       $('.modal-subject').html(lesson.getLessonSubject());
@@ -81,11 +91,13 @@ function getLessonsFromDB(teachers_data) {
 }
 async function add_to_calender(lesson, userID) {
   let ref_lesson_addres = "/user/teacher/" + lesson.getLessonTeacherUid() + "/lessons/" + lesson.getLessonID();
+
   let ref_student_addres = "/user/client/" + userID;
   var lesson_in_db;
   var user_in_db;
   var updates_class_list;
   var updates_my_lessons_list;
+
   await firebase.database().ref(ref_lesson_addres).once('value', function (snapshot) {
     lesson_in_db = snapshot.val();
   });
@@ -146,6 +158,7 @@ async function add_to_calender(lesson, userID) {
   var storesRef = rootRef.child(ref_student_addres + "/my_lessons_list/" + lesson.getLessonID());
   // var newStoreRef = storesRef;
   // newStoreRef.set({
+
   storesRef.set({
     lessonId: lesson.getLessonID(),
     teacherId: lesson.getLessonTeacherUid()

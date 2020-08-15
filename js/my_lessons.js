@@ -15,6 +15,7 @@ $(document).ready(function () {
   var dd = String(today.getDate()).padStart(2, '0');
   var mm = String(today.getMonth() + 1).padStart(2, '0');
   var yyyy = today.getFullYear();
+
   today_date = yyyy + '-' + mm + '-' + dd;
   firebase_init = new FirebaseInit();
   firebase_init.is_login(null, "login.html");
@@ -39,6 +40,7 @@ function updateCalendar() {
     fetch_lessons(user_uid, true);
   }).then(function () {
     let path = "/user/client/" + user_uid + "/"
+
     firebase.database().ref(path).once('value').then(function (snapshot) {
       as_student_data = snapshot.val();
 
@@ -52,74 +54,85 @@ function updateCalendar() {
 
 function fetch_lessons(userID, as_teacher) {
   switch (as_teacher) {
-    case true:
+  case true:
 
-      if ("lessons" in as_teacher_data[userID]) {
-        let lessons_user = as_teacher_data[userID].lessons
-        for (var key in lessons_user) {
-          let time = lessons_user[key].time;
-          let subjectName = "Teacher - Subject: "
+    if ("lessons" in as_teacher_data[userID]) {
+      let lessons_user = as_teacher_data[userID].lessons
+
+      for (var key in lessons_user) {
+        let time = lessons_user[key].time;
+
+        let subjectName = "Teacher - Subject: "
             + lessons_user[key].subject + ", Title: "
             + lessons_user[key].lesson_title;
-          let date = lessons_user[key].date;
+
+        let date = lessons_user[key].date;
+
+        let splitDate = date.split("/");
+        var currentLesson = ({
+          title: subjectName,
+          start: `${splitDate[2]}-${splitDate[0]}-${splitDate[1]}T${time}:00`, //parse date for FullCalendar format
+          extendedProps: {
+            date: date,
+            time: time,
+            lessonId: lessons_user[key].lesson_id,
+            lesson_title: lessons_user[key].lesson_title,
+            link: lessons_user[key].link,
+            nos: lessons_user[key].number_of_student,
+            subject: lessons_user[key].subject,
+            teacher_name: lessons_user[key].teacher_name,
+            teacher_uid: lessons_user[key].teacher_uid,
+            about: lessons_user[key].about_me,
+          },
+        });
+
+        my_lessons_as_teacher.push(currentLesson);
+      }
+    }
+    break;
+
+  case false:
+    if ("my_lessons_list" in as_student_data) {
+      let lessons_user = as_student_data.my_lessons_list
+
+      for (var lesson_details in lessons_user) {
+        let lesson_teacher = lessons_user[lesson_details].teacherId;
+
+        let lesson_ID = lessons_user[lesson_details].lessonId;
+
+        if ("lessons" in as_teacher_data[lesson_teacher]) {
+          lesson = as_teacher_data[lesson_teacher].lessons[lesson_ID];
+          let time = lesson.time;
+
+          let subjectName = "Student - Subject: "
+              + lesson.subject
+              + ", Title: " + lesson.lesson_title;
+
+          let date = lesson.date;
 
           let splitDate = date.split("/");
           var currentLesson = ({
             title: subjectName,
-            start: `${splitDate[2]}-${splitDate[0]}-${splitDate[1]}T${time}:00`, //parse date for FullCalendar format
+            start: `${splitDate[2]}-${splitDate[0]}-${splitDate[1]}T${time}:00`,
             extendedProps: {
               date: date,
               time: time,
-              lessonId: lessons_user[key].lesson_id,
-              lesson_title: lessons_user[key].lesson_title,
-              link: lessons_user[key].link,
-              nos: lessons_user[key].number_of_student,
-              subject: lessons_user[key].subject,
-              teacher_name: lessons_user[key].teacher_name,
-              teacher_uid: lessons_user[key].teacher_uid,
-              about: lessons_user[key].about_me,
+              lessonId: lesson.lesson_id,
+              lesson_title: lesson.lesson_title,
+              link: lesson.link,
+              nos: lesson.number_of_student,
+              subject: lesson.subject,
+              teacher_name: lesson.teacher_name,
+              teacher_uid: lesson.teacher_uid,
+              about: lesson.about_me,
             },
           });
-          my_lessons_as_teacher.push(currentLesson);
-        }
-      }
-      break;
 
-    case false:
-      if ("my_lessons_list" in as_student_data) {
-        let lessons_user = as_student_data.my_lessons_list
-        for (var lesson_details in lessons_user) {
-          let lesson_teacher = lessons_user[lesson_details].teacherId;
-          let lesson_ID = lessons_user[lesson_details].lessonId;
-          if ("lessons" in as_teacher_data[lesson_teacher]) {
-            lesson = as_teacher_data[lesson_teacher].lessons[lesson_ID];
-            let time = lesson.time;
-            let subjectName = "Student - Subject: "
-              + lesson.subject
-              + ", Title: " + lesson.lesson_title;
-            let date = lesson.date;
-            let splitDate = date.split("/");
-            var currentLesson = ({
-              title: subjectName,
-              start: `${splitDate[2]}-${splitDate[0]}-${splitDate[1]}T${time}:00`,
-              extendedProps: {
-                date: date,
-                time: time,
-                lessonId: lesson.lesson_id,
-                lesson_title: lesson.lesson_title,
-                link: lesson.link,
-                nos: lesson.number_of_student,
-                subject: lesson.subject,
-                teacher_name: lesson.teacher_name,
-                teacher_uid: lesson.teacher_uid,
-                about: lesson.about_me,
-              },
-            });
-            my_lessons_as_student.push(currentLesson);
-          }
+          my_lessons_as_student.push(currentLesson);
         }
       }
-      break;
+    }
+    break;
   }
   disaplayContent();
   // createCalendar();
@@ -185,37 +198,46 @@ function delete_from_DB_click(event) {
   let teacher_of_selected_lesson = (user_uid.localeCompare(event.teacher_uid) == 0);
 
   switch (teacher_of_selected_lesson) {
-    case true:
-      let lesson_path = "user/teacher/" + user_uid + "/lessons/" + event.lessonId;
-      searchAndDeleteLessonPatrticipate(lesson_path, user_uid, event.lessonId);
-      break;
+  case true:
+    let lesson_path = "user/teacher/" + user_uid + "/lessons/" + event.lessonId;
 
-    case false:
-      let teacher_path = "user/teacher/" + event.teacher_uid
+    searchAndDeleteLessonPatrticipate(lesson_path, user_uid, event.lessonId);
+    break;
+
+  case false:
+    let teacher_path = "user/teacher/" + event.teacher_uid
         + "/lessons/" + event.lessonId + "/class_list";
-      let student_path = "user/client/" + user_uid + "/my_lessons_list/" + event.lessonId;
-      let ref = firebase.database().ref(student_path);
-      ref.remove();
-      searchAndDeleteFromList(teacher_path, user_uid);
-      let teacherId = event.teacher_uid;
-      let message = `Student just cancel his participate in '${event.subject}'`;
-      firebase_init.update_message_to_list(teacherId, message);
-      updateCalendar();
-      break;
+
+    let student_path = "user/client/" + user_uid + "/my_lessons_list/" + event.lessonId;
+
+    let ref = firebase.database().ref(student_path);
+
+    ref.remove();
+    searchAndDeleteFromList(teacher_path, user_uid);
+    let teacherId = event.teacher_uid;
+
+    let message = `Student just cancel his participate in '${event.subject}'`;
+
+    firebase_init.update_message_to_list(teacherId, message);
+    updateCalendar();
+    break;
   }
 }
 
 function searchAndDeleteLessonPatrticipate(path, user_uid, lesson_id) {
   let participates;
+
   firebase.database().ref(path).once('value', function (snapshot) {
     lesson = snapshot.val();
   }).then(function () {
     for (var key in lesson.class_list) {
       update_in_student_path = "user/client/" + lesson.class_list[key] + "/my_lessons_list/" + lesson_id;
       let ref = firebase.database().ref(update_in_student_path);
+
       ref.remove();
     }
     let ref = firebase.database().ref(path);
+
     ref.remove();
 
     updateCalendar();
@@ -258,15 +280,22 @@ function addButtonsFunctions(event) {
 
 function edit_lesson_click(event) {
   let day = event.date.split("/")[1];
+
   let month = event.date.split("/")[0];
+
   let year = event.date.split("/")[2];
+
   let dateControl = document.querySelector('input[type="date"]');
+
   dateControl.value = year + '-' + month + '-' + day;
   let timeControl = document.querySelector('input[type="time"]');
+
   timeControl.value = event.time + ":00.00";
   let linkControl = document.querySelector('input[type="url"]');
+
   linkControl.value = event.link;
   let nosControl = document.querySelector('input[type="number"]');
+
   nosControl.value = event.nos;
 
   addEditButtonsFunctions(event);
@@ -302,15 +331,25 @@ function update_edit_lesson(event) {
 
 function verify_date_edit() {
   let currentDate = new Date();
+
   let dateAlert = "Invalid date&time, must be schedule for future time.\n Please change";
+
   let dateControl = document.querySelector('input[type="date"]');
+
   let pickedDate = dateControl.value;
+
   let year = pickedDate.split('-')[0];
+
   let month = pickedDate.split('-')[1];
+
   let day = pickedDate.split('-')[2];
+
   let timeControl = document.querySelector('input[type="time"]');
+
   let pockedtime = timeControl.value;
+
   let hour = pockedtime.split(":")[0];
+
   let minute = pockedtime.split(":")[1];
 
   if (year < currentDate.getFullYear()) {
@@ -343,7 +382,9 @@ function verify_date_edit() {
 
 function verify_nos_edit(prevEvent) {
   let nosAlert = "Number of students in class can't decrease.\nPlease change"
+
   let nosControl = document.querySelector('input[type="number"]');
+
   let nos = nosControl.value;
 
   if (nos < prevEvent.nos) {
@@ -355,12 +396,18 @@ function verify_nos_edit(prevEvent) {
 
 function updateEvent(prevEvent) {
   let pathToUpdate = "user/teacher/" + user_uid + "/lessons/" + prevEvent.lessonId;
+
   let updateDate = document.querySelector('input[type="date"]').value;
+
   let formatDate = updateDate.split("-")[1] + "/" + updateDate.split("-")[2] + "/" + updateDate.split("-")[0];
+
   let updateTime = document.querySelector('input[type="time"]').value;
+
   updateTime = updateTime.substring(0, 5);
   let updateURL = document.querySelector('input[type="url"]').value;
+
   let updateNOS = document.querySelector('input[type="number"]').value;
+
   let updateAbout = $('#editAboutMe').val();
 
   firebase.database().ref(pathToUpdate).update({
@@ -382,7 +429,9 @@ function updateMessagesForStudents(path) {
     if ("class_list" in lesson) {
       for (var key in lesson.class_list) {
         let studentId = lesson.class_list[key];
+
         let message = `'${lesson.subject}' lesson was updated by ${lesson.teacher_name}, please check`;
+
         firebase_init.update_message_to_list(studentId, message);
       }
     }

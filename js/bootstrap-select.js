@@ -184,6 +184,7 @@
             enumerable: true,
             configurable: true
           };
+
           try {
             objCtr.defineProperty(elemCtrProto, classListProp, classListPropDesc);
           } catch (ex) { // IE 8 doesn't support enumerable:true
@@ -262,6 +263,7 @@
             throw new TypeError();
           }
           var string = String(this);
+
           if (search && toString.call(search) == '[object RegExp]') {
             throw new TypeError();
           }
@@ -271,15 +273,18 @@
           var position = arguments.length > 1 ? arguments[1] : undefined;
           // `ToInteger`
           var pos = position ? Number(position) : 0;
+
           if (pos != pos) { // better `isNaN`
             pos = 0;
           }
           var start = Math.min(Math.max(pos, 0), stringLength);
           // Avoid the `indexOf` call if no match is possible
+
           if (searchLength + start > stringLength) {
             return false;
           }
           var index = -1;
+
           while (++index < searchLength) {
             if (string.charCodeAt(start + index) != searchString.charCodeAt(index)) {
               return false;
@@ -287,6 +292,7 @@
           }
           return true;
         };
+
         if (defineProperty) {
           defineProperty(String.prototype, 'startsWith', {
             'value': startsWith,
@@ -303,7 +309,7 @@
       Object.keys = function (
         o, // object
         k, // key
-        r  // result array
+        r // result array
       ) {
         // initialize object and result
         r = [];
@@ -441,56 +447,56 @@
     /** Used to map Latin Unicode letters to basic Latin letters. */
     var deburredLetters = {
       // Latin-1 Supplement block.
-      '\xc0': 'A',  '\xc1': 'A', '\xc2': 'A', '\xc3': 'A', '\xc4': 'A', '\xc5': 'A',
-      '\xe0': 'a',  '\xe1': 'a', '\xe2': 'a', '\xe3': 'a', '\xe4': 'a', '\xe5': 'a',
-      '\xc7': 'C',  '\xe7': 'c',
-      '\xd0': 'D',  '\xf0': 'd',
-      '\xc8': 'E',  '\xc9': 'E', '\xca': 'E', '\xcb': 'E',
-      '\xe8': 'e',  '\xe9': 'e', '\xea': 'e', '\xeb': 'e',
-      '\xcc': 'I',  '\xcd': 'I', '\xce': 'I', '\xcf': 'I',
-      '\xec': 'i',  '\xed': 'i', '\xee': 'i', '\xef': 'i',
-      '\xd1': 'N',  '\xf1': 'n',
-      '\xd2': 'O',  '\xd3': 'O', '\xd4': 'O', '\xd5': 'O', '\xd6': 'O', '\xd8': 'O',
-      '\xf2': 'o',  '\xf3': 'o', '\xf4': 'o', '\xf5': 'o', '\xf6': 'o', '\xf8': 'o',
-      '\xd9': 'U',  '\xda': 'U', '\xdb': 'U', '\xdc': 'U',
-      '\xf9': 'u',  '\xfa': 'u', '\xfb': 'u', '\xfc': 'u',
-      '\xdd': 'Y',  '\xfd': 'y', '\xff': 'y',
+      '\xc0': 'A', '\xc1': 'A', '\xc2': 'A', '\xc3': 'A', '\xc4': 'A', '\xc5': 'A',
+      '\xe0': 'a', '\xe1': 'a', '\xe2': 'a', '\xe3': 'a', '\xe4': 'a', '\xe5': 'a',
+      '\xc7': 'C', '\xe7': 'c',
+      '\xd0': 'D', '\xf0': 'd',
+      '\xc8': 'E', '\xc9': 'E', '\xca': 'E', '\xcb': 'E',
+      '\xe8': 'e', '\xe9': 'e', '\xea': 'e', '\xeb': 'e',
+      '\xcc': 'I', '\xcd': 'I', '\xce': 'I', '\xcf': 'I',
+      '\xec': 'i', '\xed': 'i', '\xee': 'i', '\xef': 'i',
+      '\xd1': 'N', '\xf1': 'n',
+      '\xd2': 'O', '\xd3': 'O', '\xd4': 'O', '\xd5': 'O', '\xd6': 'O', '\xd8': 'O',
+      '\xf2': 'o', '\xf3': 'o', '\xf4': 'o', '\xf5': 'o', '\xf6': 'o', '\xf8': 'o',
+      '\xd9': 'U', '\xda': 'U', '\xdb': 'U', '\xdc': 'U',
+      '\xf9': 'u', '\xfa': 'u', '\xfb': 'u', '\xfc': 'u',
+      '\xdd': 'Y', '\xfd': 'y', '\xff': 'y',
       '\xc6': 'Ae', '\xe6': 'ae',
       '\xde': 'Th', '\xfe': 'th',
       '\xdf': 'ss',
       // Latin Extended-A block.
-      '\u0100': 'A',  '\u0102': 'A', '\u0104': 'A',
-      '\u0101': 'a',  '\u0103': 'a', '\u0105': 'a',
-      '\u0106': 'C',  '\u0108': 'C', '\u010a': 'C', '\u010c': 'C',
-      '\u0107': 'c',  '\u0109': 'c', '\u010b': 'c', '\u010d': 'c',
-      '\u010e': 'D',  '\u0110': 'D', '\u010f': 'd', '\u0111': 'd',
-      '\u0112': 'E',  '\u0114': 'E', '\u0116': 'E', '\u0118': 'E', '\u011a': 'E',
-      '\u0113': 'e',  '\u0115': 'e', '\u0117': 'e', '\u0119': 'e', '\u011b': 'e',
-      '\u011c': 'G',  '\u011e': 'G', '\u0120': 'G', '\u0122': 'G',
-      '\u011d': 'g',  '\u011f': 'g', '\u0121': 'g', '\u0123': 'g',
-      '\u0124': 'H',  '\u0126': 'H', '\u0125': 'h', '\u0127': 'h',
-      '\u0128': 'I',  '\u012a': 'I', '\u012c': 'I', '\u012e': 'I', '\u0130': 'I',
-      '\u0129': 'i',  '\u012b': 'i', '\u012d': 'i', '\u012f': 'i', '\u0131': 'i',
-      '\u0134': 'J',  '\u0135': 'j',
-      '\u0136': 'K',  '\u0137': 'k', '\u0138': 'k',
-      '\u0139': 'L',  '\u013b': 'L', '\u013d': 'L', '\u013f': 'L', '\u0141': 'L',
-      '\u013a': 'l',  '\u013c': 'l', '\u013e': 'l', '\u0140': 'l', '\u0142': 'l',
-      '\u0143': 'N',  '\u0145': 'N', '\u0147': 'N', '\u014a': 'N',
-      '\u0144': 'n',  '\u0146': 'n', '\u0148': 'n', '\u014b': 'n',
-      '\u014c': 'O',  '\u014e': 'O', '\u0150': 'O',
-      '\u014d': 'o',  '\u014f': 'o', '\u0151': 'o',
-      '\u0154': 'R',  '\u0156': 'R', '\u0158': 'R',
-      '\u0155': 'r',  '\u0157': 'r', '\u0159': 'r',
-      '\u015a': 'S',  '\u015c': 'S', '\u015e': 'S', '\u0160': 'S',
-      '\u015b': 's',  '\u015d': 's', '\u015f': 's', '\u0161': 's',
-      '\u0162': 'T',  '\u0164': 'T', '\u0166': 'T',
-      '\u0163': 't',  '\u0165': 't', '\u0167': 't',
-      '\u0168': 'U',  '\u016a': 'U', '\u016c': 'U', '\u016e': 'U', '\u0170': 'U', '\u0172': 'U',
-      '\u0169': 'u',  '\u016b': 'u', '\u016d': 'u', '\u016f': 'u', '\u0171': 'u', '\u0173': 'u',
-      '\u0174': 'W',  '\u0175': 'w',
-      '\u0176': 'Y',  '\u0177': 'y', '\u0178': 'Y',
-      '\u0179': 'Z',  '\u017b': 'Z', '\u017d': 'Z',
-      '\u017a': 'z',  '\u017c': 'z', '\u017e': 'z',
+      '\u0100': 'A', '\u0102': 'A', '\u0104': 'A',
+      '\u0101': 'a', '\u0103': 'a', '\u0105': 'a',
+      '\u0106': 'C', '\u0108': 'C', '\u010a': 'C', '\u010c': 'C',
+      '\u0107': 'c', '\u0109': 'c', '\u010b': 'c', '\u010d': 'c',
+      '\u010e': 'D', '\u0110': 'D', '\u010f': 'd', '\u0111': 'd',
+      '\u0112': 'E', '\u0114': 'E', '\u0116': 'E', '\u0118': 'E', '\u011a': 'E',
+      '\u0113': 'e', '\u0115': 'e', '\u0117': 'e', '\u0119': 'e', '\u011b': 'e',
+      '\u011c': 'G', '\u011e': 'G', '\u0120': 'G', '\u0122': 'G',
+      '\u011d': 'g', '\u011f': 'g', '\u0121': 'g', '\u0123': 'g',
+      '\u0124': 'H', '\u0126': 'H', '\u0125': 'h', '\u0127': 'h',
+      '\u0128': 'I', '\u012a': 'I', '\u012c': 'I', '\u012e': 'I', '\u0130': 'I',
+      '\u0129': 'i', '\u012b': 'i', '\u012d': 'i', '\u012f': 'i', '\u0131': 'i',
+      '\u0134': 'J', '\u0135': 'j',
+      '\u0136': 'K', '\u0137': 'k', '\u0138': 'k',
+      '\u0139': 'L', '\u013b': 'L', '\u013d': 'L', '\u013f': 'L', '\u0141': 'L',
+      '\u013a': 'l', '\u013c': 'l', '\u013e': 'l', '\u0140': 'l', '\u0142': 'l',
+      '\u0143': 'N', '\u0145': 'N', '\u0147': 'N', '\u014a': 'N',
+      '\u0144': 'n', '\u0146': 'n', '\u0148': 'n', '\u014b': 'n',
+      '\u014c': 'O', '\u014e': 'O', '\u0150': 'O',
+      '\u014d': 'o', '\u014f': 'o', '\u0151': 'o',
+      '\u0154': 'R', '\u0156': 'R', '\u0158': 'R',
+      '\u0155': 'r', '\u0157': 'r', '\u0159': 'r',
+      '\u015a': 'S', '\u015c': 'S', '\u015e': 'S', '\u0160': 'S',
+      '\u015b': 's', '\u015d': 's', '\u015f': 's', '\u0161': 's',
+      '\u0162': 'T', '\u0164': 'T', '\u0166': 'T',
+      '\u0163': 't', '\u0165': 't', '\u0167': 't',
+      '\u0168': 'U', '\u016a': 'U', '\u016c': 'U', '\u016e': 'U', '\u0170': 'U', '\u0172': 'U',
+      '\u0169': 'u', '\u016b': 'u', '\u016d': 'u', '\u016f': 'u', '\u0171': 'u', '\u0173': 'u',
+      '\u0174': 'W', '\u0175': 'w',
+      '\u0176': 'Y', '\u0177': 'y', '\u0178': 'Y',
+      '\u0179': 'Z', '\u017b': 'Z', '\u017d': 'Z',
+      '\u017a': 'z', '\u017c': 'z', '\u017e': 'z',
       '\u0132': 'IJ', '\u0133': 'ij',
       '\u0152': 'Oe', '\u0153': 'oe',
       '\u0149': "'n", '\u017f': 's'
@@ -544,6 +550,7 @@
       var source = '(?:' + Object.keys(map).join('|') + ')';
       var testRegexp = RegExp(source);
       var replaceRegexp = RegExp(source, 'g');
+
       return function (string) {
         string = string == null ? '' : '' + string;
         return testRegexp.test(string) ? string.replace(replaceRegexp, escaper) : string;
@@ -818,6 +825,7 @@
 
       // Format window padding
       var winPad = this.options.windowPadding;
+
       if (typeof winPad === 'number') {
         this.options.windowPadding = [winPad, winPad, winPad, winPad];
       }
@@ -1352,6 +1360,7 @@
             // the selected item may have been changed by user or programmatically before the bootstrap select plugin runs,
             // if so, the select will have the data-selected attribute
             var $opt = $(element.options[element.selectedIndex]);
+
             isSelected = $opt.attr('selected') === undefined && this.$element.data('selected') === undefined;
           }
 
@@ -1632,6 +1641,7 @@
             }
           } else {
             var optionSelector = ':not([hidden]):not([data-hidden="true"]):not([data-divider="true"])';
+
             if (this.options.hideDisabled) optionSelector += ':not(:disabled)';
 
             // If this is a multiselect, and selectedTextFormat is count, then show 1 of 2 selected, etc.
@@ -1771,6 +1781,7 @@
         if (header) menu.appendChild(header);
         if (search) {
           var input = document.createElement('input');
+
           search.className = 'bs-searchbox';
           input.className = 'form-control';
           search.appendChild(input);
@@ -1979,6 +1990,7 @@
           offset = this.$menuInner[0].scrollTop;
         } else if (!that.multiple) {
           var element = that.$element[0];
+
           selectedIndex = (element.options[element.selectedIndex] || {}).liIndex;
 
           if (typeof selectedIndex === 'number' && that.options.size !== false) {
@@ -2370,6 +2382,7 @@
 
                     for (var i = 0; i < $optgroupOptions.length; i++) {
                       var option = $optgroupOptions[i];
+
                       that.setSelected($options.index(option), false);
                     }
 
@@ -2382,6 +2395,7 @@
                       $notify = $('<div class="notify"></div>');
                     // If {var} is set in array, replace it
                     /** @deprecated */
+
                     if (maxOptionsArr[2]) {
                       maxTxt = maxTxt.replace('{var}', maxOptionsArr[2][maxOptions > 1 ? 0 : 1]);
                       maxTxtGrp = maxTxtGrp.replace('{var}', maxOptionsArr[2][maxOptionsGrp > 1 ? 0 : 1]);
@@ -2881,6 +2895,7 @@
       refresh: function () {
         // update options if data attributes have been changed
         var config = $.extend({}, this.options, this.$element.data());
+
         this.options = config;
 
         this.checkDisabled();
@@ -2979,6 +2994,7 @@
 
         for (var i = 0; i < toUpdate.length; i++) {
           var option = toUpdate[i];
+
           Selectpicker.DEFAULTS[option.name] = classNames[option.className];
         }
       }
@@ -2986,6 +3002,7 @@
       var value;
       var chain = this.each(function () {
         var $this = $(this);
+
         if ($this.is('select')) {
           var data = $this.data('selectpicker'),
             options = typeof _option == 'object' && _option;
@@ -3000,6 +3017,7 @@
             }
 
             var config = $.extend({}, Selectpicker.DEFAULTS, $.fn.selectpicker.defaults || {}, dataAttributes, options);
+
             config.template = $.extend({}, Selectpicker.DEFAULTS.template, ($.fn.selectpicker.defaults ? $.fn.selectpicker.defaults.template : {}), dataAttributes.template, options.template);
             $this.data('selectpicker', (data = new Selectpicker(this, config)));
           } else if (options) {
@@ -3029,6 +3047,7 @@
     }
 
     var old = $.fn.selectpicker;
+
     $.fn.selectpicker = Plugin;
     $.fn.selectpicker.Constructor = Selectpicker;
 
@@ -3051,6 +3070,7 @@
     $(window).on('load' + EVENT_KEY + '.data-api', function () {
       $('.selectpicker').each(function () {
         var $selectpicker = $(this);
+
         Plugin.call($selectpicker, $selectpicker.data());
       })
     });

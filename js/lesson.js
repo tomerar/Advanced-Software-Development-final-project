@@ -16,7 +16,9 @@ class Lesson{
 
   calculateRate(){
     let counter = 0;
+
     let sum = 0;
+
     for (var key in this.rateList) {
       sum += this.rateList[key].rateNum;
       counter++;
@@ -26,7 +28,8 @@ class Lesson{
   addToDom(){
 
     var about_me
-    var profile_pic  = "images/blank-profile.png";
+    var profile_pic = "images/blank-profile.png";
+
     if("pic_url" in this.data){
       if (this.data.pic_url.length != 0) {
         profile_pic = this.data.pic_url;
@@ -45,9 +48,9 @@ class Lesson{
     '<a  id="lesson_' + this.lessonIdInDom +'"><img class="card-img-top" src="'+profile_pic+'" alt=""></a>'+
       '<div class="card-body">'+
         '<h4 class="card-title">'+
-          '<p>' + this.data.subject +  '</p>'+
-          '<p>Title: ' + this.data.lesson_title +  '</p>'+
-          '<p id="lesson_id" style="display:none;">' + this.data.lesson_id +  '</p>'+
+          '<p>' + this.data.subject + '</p>'+
+          '<p>Title: ' + this.data.lesson_title + '</p>'+
+          '<p id="lesson_id" style="display:none;">' + this.data.lesson_id + '</p>'+
         '</h4>'+
         '<h5>Teacher name: '+ this.data.teacher_name+' </h5>'+
         '<h5>about the lesson: '+ about_me+' </h5>'+
@@ -63,24 +66,25 @@ class Lesson{
   getStar(){
     //&#9733; &#9733; &#9733; &#9733; &#9734;
     switch (this.teacherRate) {
-      case 1:
-        return '&#9733;';
-        case 2:
-        return '&#9733;&#9733;';
-        case 3:
-        return '&#9733;&#9733;&#9733;';  
-        case 4:
-        return '&#9733;&#9733;&#9733;&#9733;';
-        case 5:
-        return '&#9733;&#9733;&#9733;&#9733;&#9733;';
-      default:
-        return '';
+    case 1:
+      return '&#9733;';
+    case 2:
+      return '&#9733;&#9733;';
+    case 3:
+      return '&#9733;&#9733;&#9733;';
+    case 4:
+      return '&#9733;&#9733;&#9733;&#9733;';
+    case 5:
+      return '&#9733;&#9733;&#9733;&#9733;&#9733;';
+    default:
+      return '';
     }
   }
   getAvailablePlaces(){
     if (parseInt(this.data.number_of_student) > this.class_list.length){
-     
-      return '<h5 class="text-success">Available places: '+(parseInt(this.data.number_of_student) - this.class_list.length)+'</h5>';
+
+      return '<h5 class="text-success">Available places: '+
+      (parseInt(this.data.number_of_student) - this.class_list.length)+'</h5>';
     }else{
       return '<h5 class="text-danger">Available places: '+0+'</h5>';
     }
