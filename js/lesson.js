@@ -77,7 +77,7 @@ class Lesson{
     case 5:
       return '&#9733;&#9733;&#9733;&#9733;&#9733;';
     default:
-      return '';
+      return 'No rating yet';
     }
   }
   getAvailablePlaces(){
