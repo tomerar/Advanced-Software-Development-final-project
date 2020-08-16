@@ -79,11 +79,13 @@ var FirebaseInit = function () {
   var what_tracher_see = function () {
     $("#search_a_lesson").css("display", "block");
     $("#add_a_lesson").css("display", "none");
+    $("#rank_a_lesson").css("display", "block");
   }
 
   var what_client_see = function () {
     $("#search_a_lesson").css("display", "none");
     $("#add_a_lesson").css("display", "block");
+    $("#rank_a_lesson").css("display", "none");
   }
 
   var add_user_name_on_nav = function (user) {
