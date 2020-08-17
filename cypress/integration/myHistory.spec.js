@@ -35,7 +35,7 @@ context('Actions', () => {
         cy.get('#selctedDate').clear().type(dateString).should('have.value', dateString);
         cy.get('#submit').click();
         cy.get('.col-7 > .purple-text').scrollIntoView().contains('You Have Successfully Signed Up Your Lesson')
-        cy.get(':nth-child(9) > .nav-link').click();
+        cy.get(':nth-child(10) > .nav-link').click();
         cy.get('.fc-listDay-button').click()
         cy.get('.fc-next-button').click()
         cy.get('.fc-list-item-title > a', {timeout: 15000}).should('be.visible') 
@@ -51,7 +51,7 @@ context('Actions', () => {
                 cy.wait(5000)
             }
         })
-        cy.get(':nth-child(9) > .nav-link').click();
+        cy.get(':nth-child(10) > .nav-link').click();
 
         cy.get('.fc-list-empty', {timeout: 15000}).should('be.visible') 
     })
