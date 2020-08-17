@@ -11,6 +11,7 @@ var FillterAndSort = function () {
 
   var data_lessons;
   var data_lessons_after_filter;
+
   this.set_data = function (data_temp) {
     data_lessons = data_temp;
     data_lessons_after_filter = data_temp;
@@ -28,6 +29,7 @@ var FillterAndSort = function () {
   var counter_date = 0;
   var update_to_db
   var root = this;
+
   this.set_update_to_db =function (params) {
     update_to_db = params;
   };
@@ -36,12 +38,16 @@ var FillterAndSort = function () {
     $("#teachersPictures").html("")
     $.each(teachers_data, function( index, user ) {
       let lessons = user.lessons;
+
       if (lessons != null) {
         for (var key in lessons) {
           let subjectName = lessons[key].subject;
+
           let newLesson = new Lesson(lessons[key], key, counterLesson)
+
           if (!subjectMapByGroup.has(subjectName)) {
             let newSubject = new Subject();
+
             subjectMapByGroup.set(subjectMapByGroup, newSubject);
             newSubject.addLesson(newLesson);
           }
@@ -49,6 +55,7 @@ var FillterAndSort = function () {
             subjectMapByGroup.get(subjectName).addLesson(newLesson);
           }
           let lessonId = 'lesson_' + counterLesson + '';
+
           subjectMapById.set(lessonId, newLesson);
           counterLesson++;
         }
@@ -56,13 +63,16 @@ var FillterAndSort = function () {
     });
     for (let index = 0; index < counterLesson; index++) {
       let lessonId = '#lesson_' + index + '';
+
       $(lessonId).click(function () {
         event.preventDefault();
         addLessonBtn(lessonId);
         var e = $(this);
         var title = e.data('title');
         var body = e.data('value');
+
         let lesson = subjectMapById.get(this.id);
+
         $("#myModal").modal("show");
         $('.modal-title').html(lesson.getLessonTitle());
         $('.modal-subject').html(lesson.getLessonSubject());
@@ -80,11 +90,13 @@ var FillterAndSort = function () {
   }
   var add_to_calender = async function(lesson,userID) {
     let ref_lesson_addres = "/user/teacher/" +lesson.getLessonTeacherUid()+"/lessons/"+lesson.getLessonID();
+
     let ref_student_addres = "/user/client/" + userID;
     var lesson_in_db;
     var user_in_db;
     var updates_class_list;
     var updates_my_lessons_list;
+
     await firebase.database().ref(ref_lesson_addres).once('value', function (snapshot) {
       lesson_in_db = snapshot.val();
     });
@@ -148,6 +160,7 @@ var FillterAndSort = function () {
       $("#add-lesson-btn").unbind('click');
     });
   }
+
   this.active_all_lesson = function () {
     $("#all_lessons_btn").on( "click", function () {
       getLessonsFromDB(data_lessons);
@@ -156,8 +169,10 @@ var FillterAndSort = function () {
   };
   var get_all_lessons =function () {
     let temp_arr_filter = {};
+
     $.each(data_lessons, function( index, user ) {
       let lessons = user.lessons;
+
       if (lessons != null) {
         for (var key in lessons) {
           temp_arr_filter[key] = lessons[key];
@@ -166,11 +181,15 @@ var FillterAndSort = function () {
     });
     return temp_arr_filter;
   }
+
   this.remove_old_lessons = function(get_all_lessons) {
 
     let index_teacher;
+
     let final = {};
+
     let lessons = {};
+
     $.each(get_all_lessons, function (index, co) {
       index_teacher = index
       if ("lessons" in co) {
@@ -190,7 +209,9 @@ var FillterAndSort = function () {
   }
   var date_comp = function( a, b ) {
     let a_date =new Date(Date.parse(a.date+" "+a.time));
+
     let b_date = new Date(Date.parse(b.date+" "+b.time));
+
     if ( a_date < b_date ){
       return -1;
     }
@@ -201,7 +222,9 @@ var FillterAndSort = function () {
   }
   var date_comp2 = function( a, b ) {
     let a_date =new Date(Date.parse(a.date+" "+a.time));
+
     let b_date = new Date(Date.parse(b.date+" "+b.time));
+
     if ( a_date > b_date ){
       return -1;
     }
@@ -212,22 +235,30 @@ var FillterAndSort = function () {
   }
   var is_not_expired = function (lessons_time, lessons_date) {
     let today = new Date()
+
     let date_check = new Date(Date.parse(lessons_date+" "+lessons_time))
+
     return today < date_check;
   }
   var is_in_range= function (date_start,date_end,lessons_time,lessons_date) {
     let date_check = new Date(Date.parse(lessons_date+" "+lessons_time))
+
     return date_check > date_start && date_check < date_end
   }
   var is_big = function (date_one,date_two) {
     return date_one < date_two;
   }
+
   this.filter_by_key = function () {
     $("#search-lesson").keyup('change', function () {
       let current_search = $(this).val();
+
       let index_teacher;
+
       let final= {};
+
       let lessons = {};
+
       $.each(data_lessons, function (index, co) {
         index_teacher = index
         if("lessons" in co){
@@ -258,14 +289,17 @@ var FillterAndSort = function () {
       counter_date++;
       if(counter_date > 1){
 
-        date_range =  $("#daterange").val();
+        date_range = $("#daterange").val();
         date_list = date_range.split("-");
         date_start = new Date(Date.parse(date_list[0]));
         date_end = new Date(Date.parse(date_list[1]));
 
         let index_teacher;
+
         let final= {};
+
         let lessons = {};
+
         $.each(data_lessons, function (index, co) {
           index_teacher = index
           if("lessons" in co){
@@ -294,7 +328,7 @@ var FillterAndSort = function () {
     //update options
     append_options ="<option value='all' selected>All Subjects</option> ";
     for(subject in subject_data){
-      append_options +=  "<option value='"+subject_data[subject] +"'>"+subject_data[subject]+"</option> "
+      append_options += "<option value='"+subject_data[subject] +"'>"+subject_data[subject]+"</option> "
     }
     $("#group-filter-lesson").html(append_options)
     $('.selectpicker').selectpicker('refresh');
@@ -311,8 +345,11 @@ var FillterAndSort = function () {
         return data_lessons;
       }
       let index_teacher;
+
       let final= {};
+
       let lessons = {};
+
       $.each(data_lessons, function (index, co) {
         index_teacher = index
         if("lessons" in co){
@@ -345,8 +382,11 @@ var FillterAndSort = function () {
       let list_to_sort = [];
 
       let index_teacher;
+
       let final= {};
+
       let lessons = {};
+
       $.each(data_lessons_after_filter, function (index, co) {
         index_teacher = index
         if("lessons" in co){
@@ -369,8 +409,11 @@ var FillterAndSort = function () {
       let list_to_sort = [];
 
       let index_teacher;
+
       let final= {};
+
       let lessons = {};
+
       $.each(data_lessons_after_filter, function (index, co) {
         index_teacher = index
         if("lessons" in co){
