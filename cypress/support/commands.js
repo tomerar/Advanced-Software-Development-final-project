@@ -34,28 +34,28 @@ Cypress.Commands.add('addLesson', () => {
           "pic_url" : "https://firebasestorage.googleapis.com/v0/b/privatelessons-telhai.appspot.com/o/users%2Fprofile_img%2F913291download%20(1).jpg?alt=media&token=d2515bde-d895-42c0-83dc-c50f211e8dd3",
           "subject" : "Art",
           "teacher_name" : "test",
-          "teacher_uid" : "akYmJTGxg0Pg5PRMGwlVmV47kB92",
+          "teacher_uid" : "9i8FBG8qhpdRoCrVUa0EtkqN4ei1",
           "time" : "23:59"
         }
       }
-      cy.callRtdb("set", "/user/teacher/akYmJTGxg0Pg5PRMGwlVmV47kB92/lessons", fake);
+      cy.callRtdb("set", "/user/teacher/9i8FBG8qhpdRoCrVUa0EtkqN4ei1/lessons", fake);
   })
 
 
   Cypress.Commands.add('removeLesson', () => {
-    cy.callRtdb("remove", "/user/teacher/akYmJTGxg0Pg5PRMGwlVmV47kB92/lessons");
+    cy.callRtdb("remove", "/user/teacher/9i8FBG8qhpdRoCrVUa0EtkqN4ei1/lessons");
   })
 
   Cypress.Commands.add('addLessonasStudent', () => {
       const fake = {
           "-MA1vZIf7K7P-62tIDzS" : {
             "lessonId" : "-MA1vZIf7K7P-62tIDzS",
-            "teacherId" : "akYmJTGxg0Pg5PRMGwlVmV47kB92"
+            "teacherId" : "9i8FBG8qhpdRoCrVUa0EtkqN4ei1"
           }
         }
-        cy.callRtdb("set", "/user/client/akYmJTGxg0Pg5PRMGwlVmV47kB92/my_lessons_list", fake);
+        cy.callRtdb("set", "/user/client/9i8FBG8qhpdRoCrVUa0EtkqN4ei1/my_lessons_list", fake);
     })
 
     Cypress.Commands.add('removeLessonasStudent', () => {
-      cy.callRtdb("remove", "/user/client/akYmJTGxg0Pg5PRMGwlVmV47kB92/my_lessons_list");
+      cy.callRtdb("remove", "/user/client/9i8FBG8qhpdRoCrVUa0EtkqN4ei1/my_lessons_list");
     })

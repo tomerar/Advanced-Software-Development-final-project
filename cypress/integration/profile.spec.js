@@ -8,7 +8,7 @@ context('Actions', () => {
 
     afterEach(() => {
         cy.logout();
-        cy.callRtdb("set", "/user/teacher/akYmJTGxg0Pg5PRMGwlVmV47kB92/name", 'test');
+        cy.callRtdb("set", "/user/teacher/9i8FBG8qhpdRoCrVUa0EtkqN4ei1/name", 'test');
     })
   
     it('edit profile name, should succeed', () => {
