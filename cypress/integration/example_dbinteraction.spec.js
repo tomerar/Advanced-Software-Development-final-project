@@ -3,7 +3,7 @@
 context('Actions', () => {
     beforeEach(() => {
       //cy.visit('/login.html')
-      cy.login('akYmJTGxg0Pg5PRMGwlVmV47kB92')
+      cy.login('9i8FBG8qhpdRoCrVUa0EtkqN4ei1')
       cy.visit('/search_lesson.html')
       //cy.logout()
     })
