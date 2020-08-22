@@ -270,7 +270,7 @@ var FirebaseInit = function () {
         $("#login-btn").css("display", "none");
         swith_btn();
         if (user.email.localeCompare("admin@admin.com") == 0) {
-          window.location.href = "adminpanel.html";
+          window.location.href = "admin.html";
         }
         if (login_page != null) {
           window.location.href = login_page;
