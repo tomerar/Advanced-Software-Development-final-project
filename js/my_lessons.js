@@ -196,44 +196,42 @@ function event_click_handler(info) {
 
 function delete_from_DB_click(event) {
   let teacher_of_selected_lesson = (user_uid.localeCompare(event.teacher_uid) == 0);
+  let title = event.lesson_title;
+  let teacher_name = event.teacher_name;
 
   switch (teacher_of_selected_lesson) {
   case true:
     let lesson_path = "user/teacher/" + user_uid + "/lessons/" + event.lessonId;
-
-    searchAndDeleteLessonPatrticipate(lesson_path, user_uid, event.lessonId);
+    searchAndDeleteLessonPatrticipate(lesson_path, user_uid, event.lessonId, title, teacher_name);
     break;
 
   case false:
     let teacher_path = "user/teacher/" + event.teacher_uid
         + "/lessons/" + event.lessonId + "/class_list";
-
     let student_path = "user/client/" + user_uid + "/my_lessons_list/" + event.lessonId;
-
     let ref = firebase.database().ref(student_path);
-
     ref.remove();
+
     searchAndDeleteFromList(teacher_path, user_uid);
     let teacherId = event.teacher_uid;
-
     let message = `Student just cancel his participate in '${event.subject}'`;
-
     firebase_init.update_message_to_list(teacherId, message);
     updateCalendar();
     break;
   }
 }
 
-function searchAndDeleteLessonPatrticipate(path, user_uid, lesson_id) {
-  let participates;
+function searchAndDeleteLessonPatrticipate(path, user_uid, lesson_id, title, teacher_name) {
 
   firebase.database().ref(path).once('value', function (snapshot) {
     lesson = snapshot.val();
   }).then(function () {
     for (var key in lesson.class_list) {
-      update_in_student_path = "user/client/" + lesson.class_list[key] + "/my_lessons_list/" + lesson_id;
+      let message = `Lesson '${title}' canceled by ${teacher_name}, check calander`;
+      let studentID = lesson.class_list[key];
+      firebase_init.update_message_to_list(studentID, message);
+      update_in_student_path = "user/client/" + studentID + "/my_lessons_list/" + lesson_id;
       let ref = firebase.database().ref(update_in_student_path);
-
       ref.remove();
     }
     let ref = firebase.database().ref(path);
