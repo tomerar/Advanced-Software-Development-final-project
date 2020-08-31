@@ -21,7 +21,7 @@ attachCustomCommands({ Cypress, cy, firebase });
 
 Cypress.Commands.add('addLesson', () => {
   var m = new Date();
-  var dateString = (m.getUTCMonth()+1) +"/"+ (m.getUTCDate()+1) +"/"+ m.getUTCFullYear()
+  var dateString = (m.getUTCMonth()+1) +"/"+ (m.getUTCDate()) +"/"+ m.getUTCFullYear()
     const fake = {
         "-MA1vZIf7K7P-62tIDzS" : {
           "about_me" : "",
